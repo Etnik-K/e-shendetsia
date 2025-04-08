@@ -1,0 +1,7 @@
+#target/
+*.iml
+# intellij
+.idea/
+*.log
+# nese e qel najkush me vscode
+.code/
