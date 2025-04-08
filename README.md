@@ -8,16 +8,8 @@ Menaxhimi i te gjitha procedurave administratike ne shendetesi dhe jo vetem
 ### Parakushtet:
     
 #### Ne Linux/MacOS:
- - Ne terminalin tuaj, ekskutoni: 
-   - sudo apt update
-   - sudo apt install openjdk-21-jdk # jdk / jre
-   - sudo snap install docker
-   - sudo docker run hello-world
-   - sudo apt install maven
-   - ./mvnw clean package -DskipTests
-   - ./mvnw clean install
-   - sudo docker build -t e-shendetsia .
-   - sudo docker-compose up --build
+ - Per nje setup te thjeshte eksekutoni ne terminal:
+   - git clone https://github.com/Etnik-K/e-shendetsia; cd e-shendetsia; ./setup-linux
 
 
 
