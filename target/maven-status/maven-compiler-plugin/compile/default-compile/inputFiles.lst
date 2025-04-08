@@ -1,0 +1,13 @@
+/home/gentzhushi/GitHub/e-shendetsia/src/main/java/Controller/ClinicController.java
+/home/gentzhushi/GitHub/e-shendetsia/src/main/java/Controller/DoctorController.java
+/home/gentzhushi/GitHub/e-shendetsia/src/main/java/Controller/UserController.java
+/home/gentzhushi/GitHub/e-shendetsia/src/main/java/Model/Clinic.java
+/home/gentzhushi/GitHub/e-shendetsia/src/main/java/Model/Doctor.java
+/home/gentzhushi/GitHub/e-shendetsia/src/main/java/Model/User.java
+/home/gentzhushi/GitHub/e-shendetsia/src/main/java/Repository/ClinicRepository.java
+/home/gentzhushi/GitHub/e-shendetsia/src/main/java/Repository/DoctorRepository.java
+/home/gentzhushi/GitHub/e-shendetsia/src/main/java/Repository/UserRepository.java
+/home/gentzhushi/GitHub/e-shendetsia/src/main/java/Service/ClinicService.java
+/home/gentzhushi/GitHub/e-shendetsia/src/main/java/Service/DoctorService.java
+/home/gentzhushi/GitHub/e-shendetsia/src/main/java/Service/UserService.java
+/home/gentzhushi/GitHub/e-shendetsia/src/main/java/app/Main.java
