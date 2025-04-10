@@ -1,24 +1,35 @@
-# e-shendetsia
-Menaxhimi i te gjitha procedurave administratike ne shendetesi dhe jo vetem
+# eShëndetsia – Backend
 
-## Per me perdor softwerin:
+Ky është backend-i i projektit të lëndës **Sistemet e Shpërndara**, zhvilluar duke përdorur **Java Spring Boot** dhe **PostgreSQL**.
 
-*Ky projekt perdor Docker*
+## Si të ekzekutoni projektin
 
-### Parakushtet:
-    
-#### Ne Linux/MacOS:
- - Per nje setup te thjeshte eksekutoni ne terminal:
-   - git clone https://github.com/Etnik-K/e-shendetsia; cd e-shendetsia; ./setup-linux
+Ndiqni hapat më poshtë në varësi të sistemit tuaj operativ:
 
+### Linux / macOS
 
+#### - Për herë të parë
+```bash
+git clone https://github.com/Etnik-K/e-shendetsia
+cd e-shendetsia
+./setup
+```
+#### - Përndryshe ``./run``
 
+### Windows
+#### - Për herë të parë
+1. Sigurohuni që virtualizimi është i aktivizuar në BIOS (e nevojshme për Docker).
+2. Hapni **Command Prompt (cmd)** si administrator.
+3. Ekzekutoni komandat më poshtë:
+```cmd
+git clone https://github.com/Etnik-K/e-shendetsia
+cd e-shendetsia
+./setup.cmd
+```
+#### - Përndryshe ``./run.cmd``
 
-#### Ne Windows:
-- Ne terminalin tuaj, ekskutoni:
-    - 
-    - 
-    - 
-    - docker run hello-world
-    - 
-    - ./mvnw.cmd clean package -DskipTests
+## Verifikimi
+
+Pasi backend-i të jetë ngritur me sukses, hapni aplikacionin React (frontend) dhe vizitoni:
+https://localhost:8080/api/hello
+Nëse merrni një përgjigje (Hello World!), atëherë backend-i është funksional!

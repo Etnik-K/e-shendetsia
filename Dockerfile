@@ -11,4 +11,5 @@ COPY target/*.jar e-shendetsia.jar
 EXPOSE 8080
 
 # run jar
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-jar", "e-shendetsia.jar"]
+
