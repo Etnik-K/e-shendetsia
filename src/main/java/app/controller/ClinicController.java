@@ -32,8 +32,4 @@ public class ClinicController extends BaseController {
         return clinic.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/test")
-    public String getDoctorByIdTest(){
-        return "ckm :}";
-    }
 }

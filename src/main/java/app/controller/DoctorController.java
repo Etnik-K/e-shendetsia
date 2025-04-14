@@ -18,7 +18,7 @@ import java.util.Optional;
 @Getter
 @RestController
 @RequestMapping("/api/doctors")
-public class DoctorController {
+public class DoctorController extends BaseController{
 
     private final DoctorService doctorService;
 

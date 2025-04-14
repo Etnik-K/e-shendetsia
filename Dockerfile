@@ -12,4 +12,3 @@ EXPOSE 8080
 
 # run jar
 ENTRYPOINT ["java", "-jar", "e-shendetsia.jar"]
-
