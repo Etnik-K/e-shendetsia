@@ -1,5 +1,5 @@
 # java development kit - lightweight
-FROM openjdk:17-jdk-slim
+FROM openjdk:21-jdk-slim
 
 # workdir
 WORKDIR /app
