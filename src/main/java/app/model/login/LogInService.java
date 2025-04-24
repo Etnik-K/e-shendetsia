@@ -1,9 +1,7 @@
-package app.Service;
+package app.model.login;
 
-import app.Controller.UserController;
-import app.Model.User;
-import app.Repository.UserRepository;
-import jakarta.security.auth.message.callback.PasswordValidationCallback;
+import app.model.user.UserService;
+import app.util.PasswordHasher;
 import org.springframework.stereotype.Service;
 
 @Service

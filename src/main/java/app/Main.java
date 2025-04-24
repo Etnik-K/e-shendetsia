@@ -1,13 +1,10 @@
 package app;
 
 
-import app.Service.LogInService;
-import app.Service.PasswordHasher;
-import app.Service.UserService;
-import org.apache.commons.logging.Log;
+import app.model.login.LogInService;
+import app.model.user.UserService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.context.ConfigurableApplicationContext;
 
 //@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})

@@ -1,7 +1,4 @@
-package app.Service;
-
-import app.Model.Doctor;
-import app.Repository.DoctorRepository;
+package app.model.doctor;
 
 import java.util.List;
 import java.util.Optional;
