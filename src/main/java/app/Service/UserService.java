@@ -29,4 +29,12 @@ public class UserService {
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
     }
+
+    public String getSaltByUsername(String username) {
+        return userRepository.getSaltByUsername(username);
+    }
+
+    public String getHashByUsername(String username) {
+        return userRepository.getHashByUsername(username);
+    }
 }
