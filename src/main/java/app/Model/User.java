@@ -2,6 +2,9 @@ package app.Model;
 
 import jakarta.persistence.*;
 
+import java.util.Optional;
+import java.util.UUID;
+
 
 @Entity
 @Table(name = "users")
@@ -27,14 +30,18 @@ public class User {
     @Column(nullable = false)
     private int phoneNumber;
 
+    @Column(nullable = false)
+    private String salt;
+
     public User() {}
 
-    public User(String name, String email, String password, String surname, int phoneNumber) {
+    public User(String name, String email, String password, String surname, int phoneNumber, String salt) {
         this.name = name;
         this.surname = surname;
         this.email = email;
         this.password = password;
         this.phoneNumber = phoneNumber;
+        this.salt = salt;
     }
 
     Long getId(){
@@ -51,5 +58,12 @@ public class User {
     }
     int getPhoneNumber(){
         return phoneNumber;
+    }
+    public String getSalt(){
+        return salt;
+    }
+
+    public Optional<Object> map(String salt) {
+        return Optional.ofNullable(this.salt);
     }
 }

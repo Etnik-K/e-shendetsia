@@ -14,27 +14,39 @@ import java.util.Optional;
 public class UserController {
 
     @Autowired
-    private UserService userService;
+    private UserService userService = new UserService();
 
-    @GetMapping  // GET all users
+
+    @GetMapping
     public List<User> getAllUsers() {
         return userService.getAllUsers();
     }
 
-    @GetMapping("/{id}")  // GET user by ID
+    @GetMapping("/{id}")
     public ResponseEntity<User> getUserById(@PathVariable Long id) {
         Optional<User> user = userService.getUserById(id);
         return user.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @PostMapping  // Create a new user
+    @PostMapping
     public User createUser(@RequestBody User user) {
         return userService.saveUser(user);
     }
 
-    @DeleteMapping("/{id}")  // DELETE user by ID
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping("/{username}/salt")
+    public String getSalt(@PathVariable String username) {
+        return userService.getSaltByUsername(username);
+    }
+
+    @GetMapping("/{username}/hashedPassword")
+    public String getHashedPassword(@PathVariable String username) {
+        return userService.getHashByUsername(username);
+    }
+
 }
