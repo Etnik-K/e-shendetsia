@@ -5,20 +5,14 @@ echo "Updating system packages..."
 sudo apt update && sudo apt upgrade -y
 echo "Installing OpenJDK21 (includes Java Development Kit and Java Runtime Environment)..."
 sudo apt install -y openjdk-21-jdk # jdk / jre
-# sudo snap install docker
-echo "Installing Docker..."
-sudo apt install -y docker-compose
+echo "Installing Docker and Docker Compose..."
+sudo apt install -y docker.io docker-compose
 echo "Testing Docker installation"
 sudo docker run hello-world
-echo "Installing Maven..."
-sudo apt install -y maven
 echo "Installing the project..."
 ./mvnw clean install
-# qikjo e nderton ni jar tri qe e merr docker file dinamikishts
-echo "Building Docker image..."
-sudo docker build -t e-shendetsia .
 echo "Running Docker Compose..."
 sudo docker-compose down -v --remove-orphans
-sudo docker system prune -f
+echo "Building Docker image..."
 sudo docker-compose up --build
 echo "All done!"

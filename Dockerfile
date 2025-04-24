@@ -1,5 +1,5 @@
 # java development kit - lightweight
-FROM openjdk:17-jdk-slim
+FROM openjdk:21-jdk-slim
 
 # workdir
 WORKDIR /app
@@ -12,4 +12,3 @@ EXPOSE 8080
 
 # run jar
 ENTRYPOINT ["java", "-jar", "e-shendetsia.jar"]
-
