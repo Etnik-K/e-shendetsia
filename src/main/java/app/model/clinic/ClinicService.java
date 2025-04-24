@@ -1,7 +1,4 @@
-package app.Service;
-
-import app.Model.Clinic;
-import app.Repository.ClinicRepository;
+package app.model.clinic;
 
 
 import java.util.List;

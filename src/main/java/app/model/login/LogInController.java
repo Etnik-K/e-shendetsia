@@ -1,4 +1,4 @@
-package app.Controller;
+package app.model.login;
 
 public class LogInController {
 

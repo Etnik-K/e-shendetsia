@@ -1,8 +1,6 @@
-package app.Controller;
+package app.model.doctor;
 
 
-import app.Model.Doctor;
-import app.Service.DoctorService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

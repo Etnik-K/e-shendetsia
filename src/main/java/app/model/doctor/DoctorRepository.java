@@ -1,6 +1,5 @@
-package app.Repository;
+package app.model.doctor;
 
-import app.Model.Doctor;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
