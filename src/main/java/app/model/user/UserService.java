@@ -9,8 +9,12 @@ import java.util.Optional;
 @Service
 public class UserService {
 
+    private final UserRepository userRepository;
+
     @Autowired
-    private UserRepository userRepository;
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     public List<User> getAllUsers() {
         return userRepository.findAll();
@@ -24,15 +28,17 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public void deleteUser(Long id) {
+    public void deleteUser(long id) {
         userRepository.deleteById(id);
     }
 
-    public String getSaltByUsername(String username) {
-        return userRepository.getSaltByUsername(username);
+    public String getHashById(long id) {
+        Optional<User> user = userRepository.findById(id);
+        return user.map(User::getPasswordHash).orElse(null); // if user is present return user.get.getpasswordhash jojo, null babo
     }
 
-    public String getHashByUsername(String username) {
-        return userRepository.getHashByUsername(username);
+    public String getSaltById(long id) {
+        Optional<User> user = userRepository.findById(id);
+        return user.map(User::getPasswordHash).orElse(null);
     }
 }

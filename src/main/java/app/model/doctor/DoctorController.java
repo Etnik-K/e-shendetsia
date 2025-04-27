@@ -1,6 +1,9 @@
 package app.model.doctor;
 
 
+import app.util.ApiResponse;
+import app.util.BaseController;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,20 +14,25 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/doctors")
-public class DoctorController {
+@RequestMapping("/doctors")
+public class DoctorController extends BaseController {
 
-    private DoctorService doctorService;
+    private final DoctorService doctorService;
+
+    @Autowired
+    public DoctorController(DoctorService doctorService) {
+        this.doctorService = doctorService;
+    }
 
     @GetMapping
     public List<Doctor> getAllDoctors(){
         return doctorService.getAllDoctors();
     }
 
-    @GetMapping("/{mid}")
-    public ResponseEntity<Doctor> getDoctorById(@PathVariable("mid") Long mid){
-        Optional<Doctor> doctor = doctorService.getDoctorById(mid);
-        return doctor.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    @GetMapping("/{doctorId}")
+    public ResponseEntity<ApiResponse<Doctor>> getDoctorById(@PathVariable("doctorId") Long doctorId){
+        Optional<Doctor> doctor = doctorService.getDoctorById(doctorId);
+        return doctor.map(this::ok).orElseGet(() -> this.notFound(STR."Doktorri me id \{doctorId} nuk ekziston"));
     }
 
 }

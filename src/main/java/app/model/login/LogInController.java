@@ -1,5 +1,11 @@
 package app.model.login;
 
-public class LogInController {
+import app.util.BaseController;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/login")
+public class LogInController extends BaseController {
 
 }
