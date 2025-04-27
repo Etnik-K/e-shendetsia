@@ -1,7 +1,10 @@
-#target/
+target/
 *.iml
-# intellij
+# ide
 .idea/
-*.log
-# nese e qel najkush me vscode
 .code/
+# git
+.git/
+.gitignore
+#log
+*.log

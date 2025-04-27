@@ -8,10 +8,10 @@ public class Doctor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
     @Column(nullable = false)
-    private int clinicId;
+    private long clinicId;
 
     @Column(nullable = false)
     private String profesioni;
@@ -19,26 +19,13 @@ public class Doctor {
     @Column(nullable = false)
     private String licensa;
 
-    @Column(nullable = false)
-    private int experinceYears;
-
     public Doctor() {}
 
-    public Doctor(Long id, int clinicId, String profesioni, String licensa, int experinceYears) {
-        this.id = id;
-        this.clinicId = clinicId;
-        this.profesioni = profesioni;
-        this.licensa = licensa;
-        this.experinceYears = experinceYears;
-    }
-
-    public Long getId() {
+    public long getId() {
         return id;
     }
-    public void setId(Long id) {
-        this.id = id;
-    }
-    public int getClinicId() {
+
+    public long getClinicId() {
         return clinicId;
     }
 
@@ -49,9 +36,4 @@ public class Doctor {
     public String getLicensa() {
         return licensa;
     }
-
-    public int getexperinceYears() {
-        return experinceYears;
-    }
-
 }

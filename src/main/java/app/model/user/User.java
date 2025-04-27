@@ -2,11 +2,8 @@ package app.model.user;
 
 import jakarta.persistence.*;
 
-import java.util.Optional;
-
-
 @Entity
-@Table(name = "users")
+@Table(name = "user")
 public class User {
 
     @Id
@@ -14,17 +11,17 @@ public class User {
     private Long id;
 
     @Column(nullable = false)
-    private String name;
+    private String firstName;
 
     @Column(nullable = false)
-    private String surname;
+    private String lastName;
 
 
     @Column(unique = true, nullable = false)
     private String email;
 
     @Column(nullable = false)
-    private String password;
+    private String passwordHash;
 
     @Column(nullable = false)
     private int phoneNumber;
@@ -34,35 +31,31 @@ public class User {
 
     public User() {}
 
-    public User(String name, String email, String password, String surname, int phoneNumber, String salt) {
-        this.name = name;
-        this.surname = surname;
-        this.email = email;
-        this.password = password;
-        this.phoneNumber = phoneNumber;
-        this.salt = salt;
-    }
-
-    Long getId(){
+    public Long getId() {
         return id;
     }
-    String getName(){
-        return name;
-    }
-    String getSurname(){
-        return surname;
-    }
-    String getEmail(){
-        return email;
-    }
-    int getPhoneNumber(){
-        return phoneNumber;
-    }
-    public String getSalt(){
-        return salt;
+
+    public String getFirstName() {
+        return this.firstName;
     }
 
-    public Optional<Object> map(String salt) {
-        return Optional.ofNullable(this.salt);
+    public String getLastName() {
+        return this.lastName;
+    }
+
+    public String getEmail() {
+        return this.email;
+    }
+
+    public String getPasswordHash() {
+        return this.passwordHash;
+    }
+
+    public int getPhoneNumber() {
+        return this.phoneNumber;
+    }
+
+    public String getSalt() {
+        return this.salt;
     }
 }

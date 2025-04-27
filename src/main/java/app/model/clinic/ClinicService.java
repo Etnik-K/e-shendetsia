@@ -1,13 +1,22 @@
 package app.model.clinic;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class ClinicService {
 
+    private final ClinicRepository clinicRepository;
 
-    private ClinicRepository clinicRepository;
+    @Autowired
+    public ClinicService(ClinicRepository clinicRepository) {
+        this.clinicRepository = clinicRepository;
+    }
+
     public List<Clinic> getAllClinics() {
         return clinicRepository.findAll();
     }
@@ -15,6 +24,5 @@ public class ClinicService {
     public Optional<Clinic> getClinicById(Long id) {
         return clinicRepository.findById(id);
     }
-
 
 }
