@@ -21,8 +21,10 @@ public class BaseController {
 				.body(new ApiResponse<>(false, null, errorMessage));
 	}
 
+
+
 	@GetMapping("/test")
 	public String test(){
-		return "Pershendetje nga " + this.getClass().getSimpleName();
+		return "Test nga " + this.getClass().getSimpleName();
 	}
 }
