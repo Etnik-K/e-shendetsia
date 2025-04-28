@@ -2,10 +2,12 @@ package app.model.user;
 
 import app.util.ApiResponse;
 import app.util.BaseController;
+import app.util.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,5 +42,22 @@ public class UserController extends BaseController{
     public ResponseEntity<ApiResponse<User>> deleteUser(@PathVariable Long userId) {
         userService.deleteUser(userId);
         return ResponseEntity.ok().build();
+    }
+    // ----------- nashta duhet me hi me ni login controller vet
+    @PostMapping("/login")
+    public ResponseEntity<ApiResponse<String>> login(@RequestBody User user) {
+
+        User validUser = userService.authenticate(user.getId(), user.getPassword());
+
+        if (validUser == null) {
+            return this.notFound(STR."Perdoruesi/Fjalekalimi eshte gabim.");
+        }
+
+        // Generate JWT token
+        HashMap<String, String> claims = new HashMap<>();
+        claims.put("role", validUser.getRole()); // Add any additional claims if needed
+        String token = JWTUtil.createToken(claims, String.valueOf(validUser.getId()));
+
+        return ResponseEntity.ok(new ApiResponse<>(true, token, null));
     }
 }

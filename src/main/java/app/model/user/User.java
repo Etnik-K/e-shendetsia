@@ -8,7 +8,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
     @Column(nullable = false)
     private String firstName;
@@ -16,12 +16,11 @@ public class User {
     @Column(nullable = false)
     private String lastName;
 
-
     @Column(unique = true, nullable = false)
     private String email;
 
     @Column(nullable = false)
-    private String passwordHash;
+    private String password;
 
     @Column(nullable = false)
     private int phoneNumber;
@@ -29,9 +28,12 @@ public class User {
     @Column(nullable = false)
     private String salt;
 
+    @Column(nullable = false)
+    private String role;
+
     public User() {}
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
@@ -47,8 +49,8 @@ public class User {
         return this.email;
     }
 
-    public String getPasswordHash() {
-        return this.passwordHash;
+    public String getPassword() {
+        return this.password;
     }
 
     public int getPhoneNumber() {
@@ -58,4 +60,6 @@ public class User {
     public String getSalt() {
         return this.salt;
     }
+
+    public String getRole() {return this.role;}
 }

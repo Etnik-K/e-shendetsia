@@ -1,5 +1,6 @@
 package app.model.user;
 
+import app.util.Hasher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,11 +35,24 @@ public class UserService {
 
     public String getHashById(long id) {
         Optional<User> user = userRepository.findById(id);
-        return user.map(User::getPasswordHash).orElse(null); // if user is present return user.get.getpasswordhash jojo, null babo
+        return user.map(User::getPassword).orElse(null); // if user is present return user.get.getpasswordhash jojo, null babo
     }
 
     public String getSaltById(long id) {
         Optional<User> user = userRepository.findById(id);
-        return user.map(User::getPasswordHash).orElse(null);
+        return user.map(User::getPassword).orElse(null);
+    }
+
+    public User authenticate(Long id, String password) {
+        Optional<User> user = userRepository.findById(id);
+
+        if (user.isEmpty()) return null;
+
+        String salt = user.map(User::getPassword).orElse(null);
+        String passwordHash = Hasher.generateSaltedHash(password, salt);
+
+        if (!passwordHash.equals(user.get().getPassword())) return null;
+
+        return user.get();
     }
 }
