@@ -16,4 +16,6 @@
 
 # Git internals
 .git/
-*.md~
+
+# krejt backup files (redudante)
+*.~
