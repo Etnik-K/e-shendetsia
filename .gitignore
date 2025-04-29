@@ -18,4 +18,4 @@
 .git/
 
 # krejt backup files (redudante)
-*.~
+*~
