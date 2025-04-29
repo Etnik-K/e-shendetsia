@@ -16,3 +16,4 @@
 
 # Git internals
 .git/
+*.md~
