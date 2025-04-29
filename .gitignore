@@ -1,10 +1,18 @@
-# Default ignored files
-/shelf/
-/.code/
-/.idea/workspace.xml
-/target/
-# Editor-based HTTP Client requests
-/httpRequests/
-# Datasource local storage ignored files
-/dataSources/
-/dataSources.local.xml
+# VSCode
+.code/
+
+# IntelliJ
+.idea/
+*.iml
+
+# OS files
+.DS_Store
+
+# Logs
+*.log
+
+# Environment
+.env
+
+# Git internals
+.git/

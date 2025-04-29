@@ -1,7 +1,19 @@
-#target/
-*.iml
-# intellij
-.idea/
-*.log
-# nese e qel najkush me vscode
-.code/
+# VCS
+.git
+.gitignore
+
+# IDE config
+.idea
+.code
+
+# OS files
+.DS_Store
+
+# Documentation
+README.md
+
+# Docker scripts not needed in image
+docker-install-kali
+docker-install-ubuntu
+# Dockerfile <- spo bojka, se i vyn me dit qka me ekzekutu
+docker-compose.yml
