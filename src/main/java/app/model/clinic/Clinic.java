@@ -1,4 +1,8 @@
+<<<<<<<< HEAD:src/main/java/app/model/clinic/Clinic.java
 package app.model.clinic;
+========
+package app.model;
+>>>>>>>> main:src/main/java/app/model/Clinic.java
 
 import jakarta.persistence.*;
 
