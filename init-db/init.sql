@@ -1,1 +1,0 @@
-create database e_shendetsia;

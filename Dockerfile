@@ -1,14 +1,14 @@
-# java development kit - lightweight
-FROM openjdk:21-jdk-slim
+FROM maven:3.9-eclipse-temurin-21 AS build
 
-# workdir
 WORKDIR /app
+COPY . .
+RUN mvn clean install
 
-# kopjo maven build jar
-COPY target/*.jar e-shendetsia.jar
+# runtime stage
+FROM eclipse-temurin:21-jdk-jammy
 
-# porti ku run
+WORKDIR /app
+COPY --from=build /app/target/*.jar e-shendetsia.jar
+
 EXPOSE 8080
-
-# run jar
-ENTRYPOINT ["java", "-jar", "e-shendetsia.jar"]
+ENTRYPOINT ["java", "--enable-preview", "-jar", "e-shendetsia.jar"]

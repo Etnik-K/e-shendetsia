@@ -1,12 +1,13 @@
+
 version: '3.8'
 
 services:
   postgres:
     image: postgres:15
-    container_name: dev_postgres
+    container_name: e-shendetsia-database
     restart: always
     environment:
-      POSTGRES_DB: myappdb
+      POSTGRES_DB: e_shendetsia
       POSTGRES_USER: devuser
       POSTGRES_PASSWORD: devpass
     ports:
@@ -19,7 +20,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: springboot_app
+    container_name: e-shendetsia-backend
     ports:
       - "8080:8080"
     depends_on:
