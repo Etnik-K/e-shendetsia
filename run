@@ -1,4 +1,4 @@
 #!/bin/bash
-sudo docker-compose down -v --remove-orphans
-sudo docker system prune -f
-sudo docker-compose up --build
+set -e
+sudo docker compose down --remove-orphans
+sudo docker compose up --build
