@@ -30,7 +30,7 @@ public class UserController extends BaseController{
     @GetMapping("/{userId}")
     public ResponseEntity<ApiResponse<User>> getUserById(@PathVariable Long userId) {
         Optional<User> user = userService.getUserById(userId);
-        return user.map(this::ok).orElseGet(() -> this.notFound(STR."Useri me ID \{userId} nuk eksiston"));
+        return user.map(this::ok).orElseGet(() -> this.error(STR."Useri me ID \{userId} nuk eksiston"));
     }
 
     @PostMapping
@@ -43,23 +43,25 @@ public class UserController extends BaseController{
         userService.deleteUser(userId);
         return ResponseEntity.ok().build();
     }
-    // ----------- nashta duhet me hi me ni login controller vet
-    @PostMapping("/login")
-    public ResponseEntity<ApiResponse<String>> login(@RequestBody User user) {
 
-        User validUser = userService.authenticate(user.getId(), user.getPassword());
+    @PostMapping("/login")
+    public ResponseEntity<ApiResponse<String>> login(@RequestBody UserLoginDTO userLoginDTO) {
+        System.out.println(STR."Prsh nga /api/login endpoint! - UserLoginDTO eshte: \{userLoginDTO}");
+//        User validUser = userService.authenticateNoHash(userLoginDTO.id(), userLoginDTO.password());
+        User validUser = userService.authenticate(userLoginDTO.id(), userLoginDTO.password());
 
         if (validUser == null) {
-            return this.notFound(STR."Perdoruesi/Fjalekalimi eshte gabim.");
+            return this.error("Perdoruesi/Fjalekalimi eshte gabim.");
         }
 
+        System.out.println(STR."validUser: \{validUser.toString()}");
         // jwt
-        HashMap<String, String> claims = new HashMap<>();
 
+        HashMap<String, String> claims = new HashMap<>();
         claims.put("role", validUser.getRole());
 
         String token = JWTUtil.createToken(claims, validUser.getId());
 
-        return ResponseEntity.ok(new ApiResponse<>(true, token, null));
+        return this.ok(token);
     }
 }
