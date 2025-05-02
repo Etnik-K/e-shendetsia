@@ -17,14 +17,14 @@ public class JWTUtil {
     private static final String SECRET_KEY = JWTUtil.generateSecretKey();
     private static final String ISSUER = "e-shendetsia.rks-gov.net";
 
-    public static String createToken(Map<String, String> claims, String subject) {
+    public static String createToken(Map<String, String> claims, long id) {
         Algorithm algorithm = Algorithm.HMAC256(SECRET_KEY);
 
         Date expirationDate = new Date(System.currentTimeMillis() + 3600000);
 
         JWTCreator.Builder builder = JWT.create()
                 .withIssuer(ISSUER)
-                .withSubject(subject)
+                .withSubject(String.valueOf(id))
                 .withExpiresAt(expirationDate);
 
         for (Map.Entry<String, String> entry : claims.entrySet()) {

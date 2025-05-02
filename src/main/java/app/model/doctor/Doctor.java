@@ -1,7 +1,9 @@
 package app.model.doctor;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 
+@Getter
 @Entity
 @Table(name = "doctor")
 public class Doctor {
@@ -19,21 +21,4 @@ public class Doctor {
     @Column(nullable = false)
     private String licensa;
 
-    public Doctor() {}
-
-    public long getId() {
-        return id;
-    }
-
-    public long getClinicId() {
-        return clinicId;
-    }
-
-    public String getProfesioni() {
-        return profesioni;
-    }
-
-    public String getLicensa() {
-        return licensa;
-    }
 }

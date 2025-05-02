@@ -53,10 +53,12 @@ public class UserController extends BaseController{
             return this.notFound(STR."Perdoruesi/Fjalekalimi eshte gabim.");
         }
 
-        // Generate JWT token
+        // jwt
         HashMap<String, String> claims = new HashMap<>();
-        claims.put("role", validUser.getRole()); // Add any additional claims if needed
-        String token = JWTUtil.createToken(claims, String.valueOf(validUser.getId()));
+
+        claims.put("role", validUser.getRole());
+
+        String token = JWTUtil.createToken(claims, validUser.getId());
 
         return ResponseEntity.ok(new ApiResponse<>(true, token, null));
     }
