@@ -27,6 +27,6 @@ public class BaseController {
 
     @GetMapping("/test")
     public String test(){
-        return STR."Pershendetje nga \{this.getClass().getSimpleName()}";
+        return "Pershendetje nga Backend";
     }
 }

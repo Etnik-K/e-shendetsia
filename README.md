@@ -1,31 +1,22 @@
+
 # eShëndetsia – Backend
 
 Ky është backend-i i projektit të lëndës **Sistemet e Shpërndara**, zhvilluar duke përdorur **Java Spring Boot** dhe **PostgreSQL**.
 
 ## Si të ekzekutoni projektin
-
-Ndiqni hapat më poshtë në varësi të sistemit tuaj operativ:
-
-### Linux / macOS
-
-#### Klononi kete Repository ne Pajisjen tuaj:
-```bash
-git clone https://github.com/Etnik-K/e-shendetsia
-cd e-shendetsia
-```
-
-#### Instaloni Docker: (nese nuk e keni)
-```bash
-./docker-install
-```
-
-#### Nisni projektin:
-```bash
-./run
-```
+- ### Se pari, sigurohuni qe e keni **Docker** te instaluar ne pajisjen tuaj. 
+  - Nese nuk e keni, mund ta instaloni permes skriptave  
+  `./docker-install-ubuntu` dhe `./docker-install-kali`
+- ### Pas instalimit te **Docker**:
+  - Ne terminalin tuaj, ekzekutoni:\
+      `docker compose up --build` ose `./run`
 
 ## Verifikimi
 
-Pasi backend-i të jetë ngritur me sukses, hapni aplikacionin React (frontend) dhe vizitoni:
-https://localhost:8080/api/test
-Nëse merrni një përgjigje (Hello World!), atëherë backend-i është funksional!
+Pasi backend-i të jetë ngritur me sukses, hapni shfletuesin tuaj te internetit dhe vizitoni:
+
+- https://localhost:8080/api/test
+
+Nëse merrni një përgjigje pershendetese (Pershendetje nga Backend), atëherë backend-i është funksional!
+
+Tani mund te nisni projektin tjeter ([frontend](http://github.com/gentzhushi/e-shendetsia-front-end)) dhe te perdorni web aplikacionin **e-shendetsia**.

@@ -1,14 +1,11 @@
-<<<<<<<< HEAD:src/main/java/app/model/clinic/Clinic.java
 package app.model.clinic;
-========
-package app.model;
->>>>>>>> main:src/main/java/app/model/Clinic.java
 
 import jakarta.persistence.*;
+import lombok.Getter;
 
+@Getter
 @Entity
 @Table(name = "clinics")
-
 public class Clinic {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,33 +26,4 @@ public class Clinic {
     @Column(nullable = false)
     public String website;
 
-    Long getId(){
-        return id;
-    }
-    public String getDrejtori(){
-        return drejtori;
-    }
-    public String getAddress(){
-        return address;
-    }
-    public String getEmail(){
-        return email;
-    }
-    public int getPhone(){
-        return phone;
-    }
-    public String getWebsite(){
-        return website;
-    }
-
-    public Clinic(){}
-
-    public Clinic(Long id, String drejtori, String address, String email, int phone, String website){
-        this.id = id;
-        this.drejtori = drejtori;
-        this.address = address;
-        this.email = email;
-        this.phone = phone;
-        this.website = website;
-    }
 }
