@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 public class User {
 
     @Id
@@ -33,4 +33,8 @@ public class User {
     @Column(nullable = false)
     private String role;
 
+    @Override
+    public String toString() {
+        return STR."User{id=\{id}, firstName='\{firstName}', lastName='\{lastName}', email='\{email}', password='\{password}', phoneNumber=\{phoneNumber}, salt='\{salt}', role='\{role}'}";
+    }
 }

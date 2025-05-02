@@ -55,4 +55,20 @@ public class UserService {
 
         return user.get();
     }
+
+    /**
+     * Kjo metode eshte e supozuar me u perdor per me testu loginin permes insertimit direkt te userave permes databazes.
+     * @param id id e userit
+     * @param password passwordi(pa hash)
+     * @return Userin me id perkatese nese ka sukses, pperndryshe null
+     */
+    public User authenticateNoHash(Long id, String password) {
+        Optional<User> user = userRepository.findById(id);
+
+        if (user.isEmpty()) return null;
+
+        if (!password.equals(user.get().getPassword())) return null;
+
+        return user.get();
+    }
 }

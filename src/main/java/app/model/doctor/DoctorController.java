@@ -32,7 +32,7 @@ public class DoctorController extends BaseController {
     @GetMapping("/{doctorId}")
     public ResponseEntity<ApiResponse<Doctor>> getDoctorById(@PathVariable("doctorId") Long doctorId){
         Optional<Doctor> doctor = doctorService.getDoctorById(doctorId);
-        return doctor.map(this::ok).orElseGet(() -> this.notFound(STR."Doktorri me id \{doctorId} nuk ekziston"));
+        return doctor.map(this::ok).orElseGet(() -> this.error(STR."Doktorri me id \{doctorId} nuk ekziston"));
     }
 
 }
