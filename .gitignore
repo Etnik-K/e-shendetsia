@@ -1,5 +1,5 @@
 /shelf/
-/.idea
+/.idea/
 /.vscode/
 
 .DS_Store
@@ -11,3 +11,5 @@ Thumbs.db
 *.war
 *.iml
 .env
+*.swp
+.idea/workspace.xml

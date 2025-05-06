@@ -1,7 +1,10 @@
 package app.model.clinic;
 
+import app.model.user.User;
 import jakarta.persistence.*;
 import lombok.Getter;
+
+import java.util.Set;
 
 @Getter
 @Entity
@@ -11,19 +14,20 @@ public class Clinic {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private String drejtori;
+    @ManyToOne
+    @JoinColumn(name = "drejtori_id")
+    private User drejtori;
 
     @Column(nullable = false)
-    public String address;
+    private String address;
 
     @Column(nullable = false)
-    public String email;
+    private String email;
 
     @Column(nullable = false)
-    public int phone;
+    private int phone;
 
     @Column(nullable = false)
-    public String website;
+    private String website;
 
 }

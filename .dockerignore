@@ -1,10 +1,8 @@
 target/
 *.iml
-# ide
 .idea/
-.code/
-# git
+.vscode/
 .git/
 .gitignore
-#log
 *.log
+*.swp
