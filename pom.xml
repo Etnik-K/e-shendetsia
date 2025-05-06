@@ -54,6 +54,11 @@
             <artifactId>spring-boot-starter-data-jpa</artifactId> <!-- kjo e perfshin edhe flyway core (per migrime) -->
         </dependency>
         <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+            <version>9.16.0</version> <!-- Check for the latest version -->
+        </dependency>
+        <dependency>
             <groupId>com.auth0</groupId>
             <artifactId>java-jwt</artifactId>
             <version>3.18.1</version>

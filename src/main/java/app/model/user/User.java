@@ -3,6 +3,8 @@ package app.model.user;
 import jakarta.persistence.*;
 import lombok.Getter;
 
+import app.model.authorization.Role;
+
 @Getter
 @Entity
 @Table(name = "users")
@@ -30,8 +32,9 @@ public class User {
     @Column(nullable = false)
     private String salt;
 
-    @Column(nullable = false)
-    private String role;
+    @ManyToOne
+    @JoinColumn(name = "role_id")
+    private Role role;
 
     @Override
     public String toString() {

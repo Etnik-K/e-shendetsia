@@ -1,7 +1,10 @@
 package app.model.doctor;
 
+import app.model.clinic.Clinic;
 import jakarta.persistence.*;
 import lombok.Getter;
+
+import java.util.Set;
 
 @Getter
 @Entity
@@ -12,8 +15,13 @@ public class Doctor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(nullable = false)
-    private long clinicId;
+    @ManyToMany
+    @JoinTable(
+            name = "employed_by",
+            joinColumns = @JoinColumn(name = "doctor_id"),
+            inverseJoinColumns = @JoinColumn(name = "clinic_id")
+    )
+    private Set<Clinic> employedBy;
 
     @Column(nullable = false)
     private String profesioni;

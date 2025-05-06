@@ -46,9 +46,9 @@ public class UserController extends BaseController{
 
     @PostMapping("/login")
     public ResponseEntity<ApiResponse<String>> login(@RequestBody UserLoginDTO userLoginDTO) {
-        System.out.println(STR."Prsh nga /api/login endpoint! - UserLoginDTO eshte: \{userLoginDTO}");
-//        User validUser = userService.authenticateNoHash(userLoginDTO.id(), userLoginDTO.password());
-        User validUser = userService.authenticate(userLoginDTO.id(), userLoginDTO.password());
+        System.out.println(STR."Prsh nga /api/login endpoint! - UserLoginDTO eshte: \{userLoginDTO} - tu auth pa hash");
+        User validUser = userService.authenticateNoHash(userLoginDTO.id(), userLoginDTO.password());
+//        User validUser = userService.authenticate(userLoginDTO.id(), userLoginDTO.password());
 
         if (validUser == null) {
             return this.error("Perdoruesi/Fjalekalimi eshte gabim.");
@@ -58,7 +58,7 @@ public class UserController extends BaseController{
         // jwt
 
         HashMap<String, String> claims = new HashMap<>();
-        claims.put("role", validUser.getRole());
+        claims.put("role", validUser.getRole().getName());
 
         String token = JWTUtil.createToken(claims, validUser.getId());
 
