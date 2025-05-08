@@ -18,7 +18,7 @@ public class BaseController {
     }
 
     protected <T> ResponseEntity<ApiResponse<T>> error(String errorMessage) {
-        return ResponseEntity.status(HttpdockerStatus.NOT_FOUND)
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(new ApiResponse<>(false, null, errorMessage));
     }
 

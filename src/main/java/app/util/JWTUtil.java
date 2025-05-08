@@ -11,6 +11,7 @@ import com.auth0.jwt.interfaces.JWTVerifier;
 import java.security.SecureRandom;
 import java.util.Base64;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 public class JWTUtil {
@@ -34,6 +35,10 @@ public class JWTUtil {
         }
 
         return builder.sign(algorithm);
+    }
+
+    public static String createToken(long id) {
+        return createToken(new HashMap<String, String>(), id);
     }
 
     public static DecodedJWT verifyToken(String token) throws JWTVerificationException {
