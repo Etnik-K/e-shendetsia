@@ -3,6 +3,8 @@ package app.model.user;
 import app.util.ApiResponse;
 import app.util.BaseController;
 import app.util.JWTUtil;
+import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -39,9 +41,16 @@ public class UserController extends BaseController{
     }
 
     @DeleteMapping("/{userId}")
-    public ResponseEntity<ApiResponse<User>> deleteUser(@PathVariable Long userId) {
-        userService.deleteUser(userId);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<ApiResponse<String>> deleteUser(@PathVariable long deleteUserId, @RequestHeader("Authorization") String requestJwt) {
+        try{
+            DecodedJWT jwt = JWTUtil.verifyToken(requestJwt);
+            long userId = Long.parseLong(jwt.getSubject());
+            // if ( deleteuserid == userid || role service . get role (userId) . equals ("admin") )
+            // userService.deleteUser(delteuserid);
+            return this.ok("Perdoruesi u fshi me sukses");
+        } catch (JWTVerificationException j) {
+            return this.error("Ani kishe une pe forgi tokenin");
+        }
     }
 
     @PostMapping("/login")
