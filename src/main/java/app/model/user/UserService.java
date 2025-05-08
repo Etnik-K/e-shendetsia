@@ -1,5 +1,6 @@
 package app.model.user;
 
+import app.model.authorization.Role;
 import app.util.Hasher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -70,5 +71,9 @@ public class UserService {
         if (!password.equals(user.get().getPassword())) return null;
 
         return user.get();
+    }
+
+    public Role getRoleById(long id) {
+        return userRepository.getRoleById(id);
     }
 }

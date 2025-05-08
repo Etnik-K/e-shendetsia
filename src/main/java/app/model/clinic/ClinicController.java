@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,7 +42,7 @@ public class ClinicController extends BaseController {
     }
 
     @PostMapping
-    public ResponseEntity<ApiResponse<Clinic>> createClinic(@RequestHeader("Authorization") String authHeader, @Valid @RequestBody Clinic clinic) {
+    public ResponseEntity<ApiResponse<Clinic>> createClinic(@RequestHeader("Authorization") String authHeader, @RequestBody Clinic clinic) {
         DecodedJWT jwt = verifyToken(authHeader);
         if (!isAdminOrDirector(jwt)) {
             return ResponseEntity.status(403).body(new ApiResponse<>(false, null, "Unauthorized: Admin or Director role required"));
@@ -53,7 +52,7 @@ public class ClinicController extends BaseController {
     }
 
     @PutMapping("/{clinicId}")
-    public ResponseEntity<ApiResponse<Clinic>> updateClinic(@RequestHeader("Authorization") String authHeader, @PathVariable("clinicId") Long clinicId, @Valid @RequestBody Clinic clinic) {
+    public ResponseEntity<ApiResponse<Clinic>> updateClinic(@RequestHeader("Authorization") String authHeader, @PathVariable("clinicId") Long clinicId, @RequestBody Clinic clinic) {
         DecodedJWT jwt = verifyToken(authHeader);
         if (!isAdminOrDirector(jwt)) {
             return ResponseEntity.status(403).body(new ApiResponse<>(false, null, "Unauthorized: Admin or Director role required"));
