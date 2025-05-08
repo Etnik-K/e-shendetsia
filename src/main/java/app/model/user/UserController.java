@@ -1,5 +1,6 @@
 package app.model.user;
 
+import app.dto.request.LoginRequest;
 import app.util.ApiResponse;
 import app.util.BaseController;
 import app.util.JWTUtil;
@@ -54,9 +55,9 @@ public class UserController extends BaseController{
     }
 
     @PostMapping("/login")
-    public ResponseEntity<ApiResponse<String>> login(@RequestBody UserLoginDTO userLoginDTO) {
-        System.out.println(STR."Prsh nga /api/login endpoint! - UserLoginDTO eshte: \{userLoginDTO} - tu auth pa hash");
-        User validUser = userService.authenticateNoHash(userLoginDTO.id(), userLoginDTO.password());
+    public ResponseEntity<ApiResponse<String>> login(@RequestBody LoginRequest loginRequest) {
+        System.out.println(STR."Prsh nga /api/login endpoint! - UserLoginDTO eshte: \{loginRequest} - tu auth pa hash");
+        User validUser = userService.authenticateNoHash(loginRequest.id(), loginRequest.password());
 //        User validUser = userService.authenticate(userLoginDTO.id(), userLoginDTO.password());
 
         if (validUser == null) {
