@@ -5,13 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="156dacc0-46b1-48b5-b6cf-92abd184894a" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/app/exception/InvalidCredentialsException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/app/exception/NotFoundException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/app/exception/UnauthorizedException.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/model/clinic/ClinicController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/model/clinic/ClinicController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/app/model/user/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/model/user/UserController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/app/model/user/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/model/user/UserRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/app/model/user/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/model/user/UserService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/app/util/BaseController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/util/BaseController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/util/JWTUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/util/JWTUtil.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,6 +26,7 @@
         <option value="Enum" />
         <option value="com.intellij.jpb.FlywayMigrationScript" />
         <option value="Class" />
+        <option value="Exception" />
       </list>
     </option>
   </component>
@@ -96,6 +98,8 @@
       <workItem from="1746543397686" duration="1046000" />
       <workItem from="1746617816777" duration="644000" />
       <workItem from="1746643485352" duration="2381000" />
+      <workItem from="1746715717242" duration="154000" />
+      <workItem from="1746742931041" duration="7760000" />
     </task>
     <servers />
   </component>

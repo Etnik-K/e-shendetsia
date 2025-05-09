@@ -1,10 +1,16 @@
 package app.model.user;
 
-import app.model.authorization.Role;
+import app.exception.InvalidCredentialsException;
+import app.exception.NotFoundException;
+import app.exception.UnauthorizedException;
 import app.util.Hasher;
+import app.util.JWTUtil;
+import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,62 +24,125 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    /**
+     * Kjo metode eshte implementimi i logjikes per endpointin GET /api/users/
+     * @param requestJwt Tokeni authentifikues
+     * @return Nje Liste me te gjithe Userat
+     * @throws UnauthorizedException Ne momentin kur Useri qe e invokon metoden nuk ka privilegje te adminit
+     * @throws JWTVerificationException Ne momentin kur kemi token invalid
+     */
+    public List<User> getAllUsers(String requestJwt) throws UnauthorizedException, JWTVerificationException {
+
+        DecodedJWT jwt = JWTUtil.verifyToken(requestJwt);
+        long userId = Long.parseLong(jwt.getSubject());
+
+        if (!this.userRepository.getRoleById(userId).getName().equals("admin"))
+            throw new UnauthorizedException();
+
+        return this.userRepository.findAll();
+
     }
 
-    public Optional<User> getUserById(Long id) {
-        return userRepository.findById(id);
+    /**
+     * Kjo metode eshte implementimi i logjikes per endpointin GET /api/users/{viewUserId}
+     * @param viewUserId ID e Userit per t'u kthyer
+     * @param requestJwt Tokeni authentifikues
+     * @return Userin me ID perkatese
+     * @throws UnauthorizedException Ne momentin kur nje User tenton qe lexoj nje profil per te cilin nuk eshte i autorizuar
+     * @throws JWTVerificationException Ne momentin kur kemi token invalid
+     * @throws NotFoundException ne momenitn kur nuk ka profil me id viewUserId
+     */
+    public User getUserById(Long viewUserId, String requestJwt) throws UnauthorizedException, JWTVerificationException, NotFoundException {
+
+        DecodedJWT jwt = JWTUtil.verifyToken(requestJwt);
+        long userId = Long.parseLong(jwt.getSubject());
+
+        if (!(viewUserId == userId || this.userRepository.getRoleById(userId).getName().equals("admin")))
+            throw new UnauthorizedException();
+
+        Optional<User> optUser = this.userRepository.findById(userId);
+
+        if (optUser.isEmpty())
+            throw new NotFoundException("Useri nuk u gjet");
+
+        return optUser.get();
+
     }
 
-    public User saveUser(User user) {
-        return userRepository.save(user);
+    /**
+     * Kjo metode eshte implementimi i logjikes per endpointin DELETE /api/users/{deleteUserId}
+     * @param deleteUserId ID per fshirje
+     * @param requestJwt Tokeni authentifikues
+     * @return Mesazh konfirmues
+     * @throws UnauthorizedException Ne momentin kur nje user tentoj te fshije nje llogari mbi te cilat nuk ka qasje administrative
+     * @throws JWTVerificationException Ne momentin qe tokeni eshte i skaduar, apo jo-valid
+     */
+    public String deleteUser(long deleteUserId, String requestJwt) throws UnauthorizedException, JWTVerificationException {
+
+        DecodedJWT jwt = JWTUtil.verifyToken(requestJwt);
+        long userId = Long.parseLong(jwt.getSubject());
+
+        if (!(deleteUserId == userId || this.userRepository.getRoleById(userId).getName().equals("admin")))
+            throw new UnauthorizedException("Nuk jeni i autorizuar!");
+
+        this.userRepository.deleteById(deleteUserId);
+        return "Perdoruesi u fshi me sukses";
     }
 
-    public void deleteUser(long id) {
-        userRepository.deleteById(id);
+    /**
+     * Kjo metode eshte implementimi i logjikes per endpointin POST /api/users/login
+     * @param id ID e userit
+     * @param password Fjalekalimi
+     * @return JWT tokenin authentifikues
+     * @throws NotFoundException Ne rast te userit jo ekzistent
+     * @throws InvalidCredentialsException Ne rast te fjalekalimit te gabuar
+     */
+    public String login(long id, String password) throws InvalidCredentialsException, NotFoundException{
+        User validUser = this.authenticateNoHash(id, password);
+//        User validUser = this.authenticate(id, password);
+
+        HashMap<String, String> claims = new HashMap<>();
+        claims.put("first_name", validUser.getFirstName());
+        claims.put("last_name", validUser.getLastName());
+        claims.put("email", validUser.getEmail());
+
+        return JWTUtil.createToken(claims, validUser.getId());
     }
 
-    public String getHashById(long id) {
-        Optional<User> user = userRepository.findById(id);
-        return user.map(User::getPassword).orElse(null); // if user is present return user.get.getpasswordhash jojo, null babo
-    }
+    /**
+     * Kjo metode shfrytzohet per me authentifiku nje user
+     * @param id ID e userit
+     * @param password fjalekalimi i userit
+     * @return Userin me id perkatese nese ka sukses, pperndryshe null
+     */
+    private User authenticate(long id, String password) throws NotFoundException, InvalidCredentialsException {
 
-    public String getSaltById(long id) {
-        Optional<User> user = userRepository.findById(id);
-        return user.map(User::getPassword).orElse(null);
-    }
+        Optional<User> user = this.userRepository.findById(id);
 
-    public User authenticate(Long id, String password) {
-        Optional<User> user = userRepository.findById(id);
-
-        if (user.isEmpty()) return null;
+        if (user.isEmpty()) throw new NotFoundException("Useri nuk u gjet");
 
         String salt = user.map(User::getPassword).orElse(null);
         String passwordHash = Hasher.generateSaltedHash(password, salt);
 
-        if (!passwordHash.equals(user.get().getPassword())) return null;
+        if (!passwordHash.equals(user.get().getPassword())) throw new InvalidCredentialsException();
 
         return user.get();
     }
 
     /**
-     * Kjo metode eshte e supozuar me u perdor per me testu loginin permes insertimit direkt te userave permes databazes.
-     * @param id id e userit
-     * @param password passwordi(pa hash)
+     * Kjo metode shfrytzohet eksluzivisht per perdorim zhvillues.
+     * Me qellim per me testu loginin permes insertimit te userave pa passwordav te hashuar direkt ne databaze.
+     * @param id ID e userit
+     * @param password fjalekalimi i userit
      * @return Userin me id perkatese nese ka sukses, pperndryshe null
      */
-    public User authenticateNoHash(Long id, String password) {
-        Optional<User> user = userRepository.findById(id);
+    private User authenticateNoHash(long id, String password) throws InvalidCredentialsException, NotFoundException {
+        Optional<User> user = this.userRepository.findById(id);
 
-        if (user.isEmpty()) return null;
+        if (user.isEmpty()) throw new NotFoundException("Useri nuk u gjet");
 
-        if (!password.equals(user.get().getPassword())) return null;
+        if (!password.equals(user.get().getPassword())) throw new InvalidCredentialsException();
 
         return user.get();
-    }
-
-    public Role getRoleById(long id) {
-        return userRepository.getRoleById(id);
     }
 }

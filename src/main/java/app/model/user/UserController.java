@@ -1,18 +1,18 @@
 package app.model.user;
 
 import app.dto.request.LoginRequest;
+import app.exception.InvalidCredentialsException;
+import app.exception.NotFoundException;
+import app.exception.UnauthorizedException;
 import app.util.ApiResponse;
 import app.util.BaseController;
-import app.util.JWTUtil;
 import com.auth0.jwt.exceptions.JWTVerificationException;
-import com.auth0.jwt.interfaces.DecodedJWT;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/users")
@@ -33,17 +33,10 @@ public class UserController extends BaseController{
     @GetMapping
     public ResponseEntity<ApiResponse<List<User>>> getAllUsers(@RequestHeader("Authorization") String requestJwt) {
         try{
-            DecodedJWT jwt = JWTUtil.verifyToken(requestJwt);
-            long userId = Long.parseLong(jwt.getSubject());
-
-            if (!userService.getRoleById(userId).getName().equals("admin"))
-                return this.error("Nuk jeni i autorizuar!");
-
-            List<User> users = userService.getAllUsers();
-            ApiResponse<List<User>> apiResponse = new ApiResponse<>(true, users, null);
-            return ResponseEntity.ok(apiResponse);
-        } catch (JWTVerificationException j) {
-            return this.error("JWT eshte i pavleftshem!");
+            List<User> users = userService.getAllUsers(requestJwt);
+            return this.ok(users);
+        } catch (JWTVerificationException  | UnauthorizedException exception) {
+            return this.error("Nuk jeni i autorizuar!", HttpStatus.UNAUTHORIZED);
         }
     }
 
@@ -55,27 +48,13 @@ public class UserController extends BaseController{
     @GetMapping("/{userId}")
     public ResponseEntity<ApiResponse<User>> getUserById(@PathVariable("userId") Long viewUserId, @RequestHeader("Authorization") String requestJwt) {
         try{
-            DecodedJWT jwt = JWTUtil.verifyToken(requestJwt);
-            long userId = Long.parseLong(jwt.getSubject());
-
-            if (!(viewUserId == userId || userService.getRoleById(userId).getName().equals("admin")))
-                return this.error("Nuk jeni i autorizuar!");
-
-            Optional<User> optUser = userService.getUserById(userId);
-            if (!optUser.isPresent())
-                return this.error("Perdoruesi nuk u gjet");
-            User user = optUser.get();
-            ApiResponse<User> apiResponse = new ApiResponse<>(true, user, null);
-            return ResponseEntity.ok(apiResponse);
-        } catch (JWTVerificationException j) {
-            return this.error("JWT eshte i pavleftshem!");
+            User user = userService.getUserById(viewUserId, requestJwt);
+            return this.ok(user);
+        } catch (JWTVerificationException | UnauthorizedException exception) {
+            return this.error("Nuk jeni i autorizuar", HttpStatus.UNAUTHORIZED);
+        } catch (NotFoundException exception) {
+            return this.error("Nuk u gjet useri", HttpStatus.NOT_FOUND);
         }
-    }
-
-    // me gjase duhet me fshi
-    @PostMapping
-    public User createUser(@RequestBody User user) {
-        return userService.saveUser(user);
     }
 
     /**
@@ -88,16 +67,9 @@ public class UserController extends BaseController{
     @DeleteMapping("/{userId}")
     public ResponseEntity<ApiResponse<String>> deleteUser(@PathVariable("userId") long deleteUserId, @RequestHeader("Authorization") String requestJwt) {
         try{
-            DecodedJWT jwt = JWTUtil.verifyToken(requestJwt);
-            long userId = Long.parseLong(jwt.getSubject());
-
-            if (!(deleteUserId == userId || userService.getRoleById(userId).getName().equals("admin")))
-                return this.error("Nuk jeni i autorizuar!");
-
-            userService.deleteUser(deleteUserId);
-            return this.ok("Perdoruesi u fshi me sukses");
-        } catch (JWTVerificationException j) {
-            return this.error("JWT eshte i pavleftshem!");
+            return this.ok(userService.deleteUser(deleteUserId, requestJwt));
+        } catch (JWTVerificationException | UnauthorizedException exception) {
+            return this.error("Nuk jeni i autorizuar", HttpStatus.UNAUTHORIZED);
         }
     }
 
@@ -108,17 +80,10 @@ public class UserController extends BaseController{
      */
     @PostMapping("/login")
     public ResponseEntity<ApiResponse<String>> login(@RequestBody LoginRequest loginRequest) {
-        System.out.println(STR."Prsh nga /api/login endpoint! - UserLoginDTO eshte: \{loginRequest} - tu auth pa hash");
-        User validUser = userService.authenticateNoHash(loginRequest.id(), loginRequest.password());
-//        User validUser = userService.authenticate(userLoginDTO.id(), userLoginDTO.password());
-
-        if (validUser == null) {
-            return this.error("Perdoruesi/Fjalekalimi eshte gabim.");
+        try{
+            return this.ok(this.userService.login(loginRequest.id(), loginRequest.password()));
+        } catch (NotFoundException | InvalidCredentialsException exception) {
+            return this.error(InvalidCredentialsException.MESSAGE, HttpStatus.UNAUTHORIZED);
         }
-
-        HashMap<String, String> claims = new HashMap<>();
-        String token = JWTUtil.createToken(claims, validUser.getId());
-
-        return this.ok(token);
     }
 }
