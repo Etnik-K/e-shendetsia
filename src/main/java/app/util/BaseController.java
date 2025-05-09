@@ -24,8 +24,8 @@ public class BaseController {
     }
 
     @GetMapping("/test")
-    public String test(){
-    	return "Pershendetje nga Backend";
+    public ResponseEntity<ApiResponse<String>> test(){
+    	return this.ok("Pershendetje nga Backend");
     }
 
 }
