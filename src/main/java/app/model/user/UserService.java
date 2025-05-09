@@ -52,7 +52,7 @@ public class UserService {
      * @throws JWTVerificationException Ne momentin kur kemi token invalid
      * @throws NotFoundException ne momenitn kur nuk ka profil me id viewUserId
      */
-    public User getUserById(Long viewUserId, String requestJwt) throws UnauthorizedException, JWTVerificationException, NotFoundException {
+    public User getUserById(long viewUserId, String requestJwt) throws UnauthorizedException, JWTVerificationException, NotFoundException {
 
         DecodedJWT jwt = JWTUtil.verifyToken(requestJwt);
         long userId = Long.parseLong(jwt.getSubject());
