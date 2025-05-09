@@ -4,12 +4,9 @@
 Ky është backend-i i projektit të lëndës **Sistemet e Shpërndara**, zhvilluar duke përdorur **Java Spring Boot** dhe **PostgreSQL**.
 
 ## Si të ekzekutoni projektin
-- ### Se pari, sigurohuni qe e keni **Docker** te instaluar ne pajisjen tuaj. 
-  - Nese nuk e keni, mund ta instaloni permes skriptave  
-  `./docker-install-ubuntu` dhe `./docker-install-kali`
-- ### Pas instalimit te **Docker**:
-  - Ne terminalin tuaj, ekzekutoni:\
-      `docker compose up --build` ose `./run`
+Se pari, sigurohuni qe e keni **Docker** te instaluar ne pajisjen tuaj.
+- Ne terminalin tuaj, ekzekutoni:\
+    `docker compose up --build` ose `./run`
 
 ## Verifikimi
 
