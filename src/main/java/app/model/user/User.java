@@ -4,8 +4,10 @@ import jakarta.persistence.*;
 import lombok.Getter;
 
 import app.model.authorization.Role;
+import lombok.Setter;
 
 @Getter
+@Setter
 @Entity
 @Table(name = "users")
 public class User {
@@ -35,6 +37,9 @@ public class User {
     @ManyToOne
     @JoinColumn(name = "role_id")
     private Role role;
+
+    @Column
+    private String history;
 
     @Override
     public String toString() {
