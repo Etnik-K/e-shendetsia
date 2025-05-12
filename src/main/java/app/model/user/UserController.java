@@ -13,9 +13,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/users")
 public class UserController extends BaseController{
 
     private final UserService userService;
@@ -86,4 +87,25 @@ public class UserController extends BaseController{
             return this.error(InvalidCredentialsException.MESSAGE, HttpStatus.UNAUTHORIZED);
         }
     }
+
+    @GetMapping("{id}/history")
+    public ResponseEntity<?> getUserHistory(@PathVariable long id) {
+        try {
+            Optional<User> user = userService.getUserHistory(id);
+
+            if (user.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+            }
+
+            User u = user.get();
+            System.out.println("Returning user: " + u.getId() + ", " + u.getEmail() + ", " + u.getHistory());
+
+            return ResponseEntity.ok(u);
+        } catch (Exception e) {
+            e.printStackTrace(); // Print to console
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("💥 " + e.getClass().getSimpleName() + ": " + e.getMessage());
+        }
+    }
+
 }

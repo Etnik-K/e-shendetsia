@@ -8,6 +8,7 @@ import app.util.JWTUtil;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -145,4 +146,18 @@ public class UserService {
 
         return user.get();
     }
+
+    /**
+    * Kjo metode shfrytezohet per caching
+    * Me qellim per me ruajt historine e userit ne cache
+     * @param userId ID e userit
+     * @return Historine e userit
+    *
+     * */
+    @Cacheable(value = "history", key = "#userId")
+    public Optional<User> getUserHistory(long userId) {
+        System.out.println("⏳ Fetching user from DB for ID: " + userId);
+        return userRepository.findById(userId);
+    }
+
 }
