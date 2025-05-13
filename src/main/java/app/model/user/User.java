@@ -36,6 +36,9 @@ public class User {
     @JoinColumn(name = "role_id")
     private Role role;
 
+    @Column(nullable = false)
+    private String history;
+
     @Override
     public String toString() {
         return STR."User{id=\{id}, firstName='\{firstName}', lastName='\{lastName}', email='\{email}', password='\{password}', phoneNumber=\{phoneNumber}, salt='\{salt}', role='\{role}'}";
