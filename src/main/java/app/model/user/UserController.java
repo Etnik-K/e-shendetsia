@@ -66,9 +66,10 @@ public class UserController extends BaseController{
      * @return - Mesazh konfirmues se a eshte fshire useri, ne baze te
      */
     @DeleteMapping("/{userId}")
-    public ResponseEntity<ApiResponse<String>> deleteUser(@PathVariable("userId") long deleteUserId, @RequestHeader("Authorization") String requestJwt) {
+    public ResponseEntity<ApiResponse<String>> deleteUser(@PathVariable("userId") Long deleteUserId, @RequestHeader("Authorization") String requestJwt) {
         try{
-            return this.ok(userService.deleteUser(deleteUserId, requestJwt));
+            this.userService.deleteUser(deleteUserId, requestJwt);
+            return this.ok("Perdoruesi u fshi me sukses");
         } catch (JWTVerificationException | UnauthorizedException exception) {
             return this.error("Nuk jeni i autorizuar", HttpStatus.UNAUTHORIZED);
         }
@@ -89,22 +90,13 @@ public class UserController extends BaseController{
     }
 
     @GetMapping("{id}/history")
-    public ResponseEntity<?> getUserHistory(@PathVariable long id) {
+    public ResponseEntity<ApiResponse<User>> getUserHistory(@PathVariable Long id, @RequestHeader("Authorization") String requestJwt) {
         try {
-            Optional<User> user = userService.getUserHistory(id);
-
-            if (user.isEmpty()) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
-            }
-
-            User u = user.get();
-            System.out.println("Returning user: " + u.getId() + ", " + u.getEmail() + ", " + u.getHistory());
-
-            return ResponseEntity.ok(u);
-        } catch (Exception e) {
-            e.printStackTrace(); // Print to console
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("💥 " + e.getClass().getSimpleName() + ": " + e.getMessage());
+            return this.ok(this.userService.getUserHistory(id, requestJwt));
+        } catch (JWTVerificationException | UnauthorizedException e) {
+            return this.error("Nuk jeni i autorizuar", HttpStatus.UNAUTHORIZED);
+        } catch (NotFoundException exception) {
+            return this.error("Nuk u gjet useri", HttpStatus.NOT_FOUND);
         }
     }
 
