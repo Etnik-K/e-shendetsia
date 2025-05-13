@@ -14,7 +14,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(nullable = false)
     private String firstName;
@@ -38,7 +38,7 @@ public class User {
     @JoinColumn(name = "role_id")
     private Role role;
 
-    @Column
+    @Column(nullable = false)
     private String history;
 
     @Override
