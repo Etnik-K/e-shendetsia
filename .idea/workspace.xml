@@ -5,9 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="156dacc0-46b1-48b5-b6cf-92abd184894a" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-install" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-install-kali" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/app/model/clinic/ClinicServiceImplementation.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/app/model/doctor/DoctorServiceImplementation.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/app/model/user/UserServiceImplementation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/dto/request/LoginRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/dto/request/LoginRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/dto/request/ViewProfileRequest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/model/clinic/ClinicController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/model/clinic/ClinicController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/model/clinic/ClinicRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/model/clinic/ClinicRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/model/clinic/ClinicService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/model/clinic/ClinicService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/model/doctor/DoctorRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/model/doctor/DoctorRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/model/doctor/DoctorService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/model/doctor/DoctorService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/model/user/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/model/user/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/model/user/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/model/user/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/model/user/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/model/user/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/util/BaseController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/util/BaseController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,7 +63,7 @@
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "mvc,-update",
     "ignore.preview.features.used": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
