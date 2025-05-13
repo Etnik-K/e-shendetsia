@@ -13,7 +13,7 @@ public class Main {
     private static int version = 1;
 
     public static void main(String[] args){
-        System.out.println(STR."Versioni i aplikacionit: \{Main.version}");
+        System.out.println("Versioni i aplikacionit:"+ Main.version);
         SpringApplication.run(Main.class, args);
     }
 }
