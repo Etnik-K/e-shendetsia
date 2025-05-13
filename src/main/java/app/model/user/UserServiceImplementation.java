@@ -159,4 +159,23 @@ public class UserServiceImplementation implements UserService {
         return userRepository.findById(userId);
     }
 
+    @Cacheable(value = "history", key = "#id")
+    public User getUserHistory(Long userId, String requestJwt) throws JWTVerificationException, UnauthorizedException, NotFoundException {
+        DecodedJWT jwt = JWTUtil.verifyToken(requestJwt);
+        long jwtSubject = Long.parseLong(jwt.getSubject());
+
+        if (!(this.userRepository.getRoleById(jwtSubject).getName().equals("admin") ||
+                jwtSubject == userId))
+            throw new UnauthorizedException();
+
+        Optional<User> validUser = this.userRepository.findById(userId);
+
+        if (validUser.isEmpty())
+            throw new NotFoundException("User not found");
+
+        User user = validUser.get();
+        System.out.println(STR."Returning user: \{user.getId()}, \{user.getEmail()}, \{user.getHistory()}");
+
+        return user;
+    }
 }

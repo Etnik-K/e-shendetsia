@@ -33,4 +33,6 @@ public interface UserService {
      * @return JWT tokenin authentifikues
      */
     String login(Long id, String password);
+
+    User getUserHistory(Long id, String requestJwt);
 }
