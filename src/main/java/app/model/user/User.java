@@ -4,8 +4,10 @@ import jakarta.persistence.*;
 import lombok.Getter;
 
 import app.model.authorization.Role;
+import lombok.Setter;
 
 @Getter
+@Setter
 @Entity
 @Table(name = "users")
 public class User {
