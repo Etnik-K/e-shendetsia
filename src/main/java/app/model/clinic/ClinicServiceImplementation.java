@@ -6,6 +6,7 @@ import app.model.user.UserRepository;
 import app.util.JWTUtil;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import org.checkerframework.checker.units.qual.C;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,8 +40,8 @@ public class ClinicServiceImplementation implements ClinicService {
         DecodedJWT jwt = JWTUtil.verifyToken(authHeader);
         long jwtSubject = Long.parseLong(jwt.getSubject());
 
-        if (!(this.clinicRepository.getById(clinicId).getDrejtori().getId() == jwtSubject || // is drejtor
-                this.userRepository.getRoleById(jwtSubject).getName().equals("admin"))) // is admin
+        if (!(this.clinicRepository.findById(clinicId).get().getDrejtori().getId() == jwtSubject || // is drejtor
+                this.userRepository.getRoleById(jwtSubject).getName().equals("admin"))) // isadmin
             throw new UnauthorizedException("Nuk jeni i autorizuar");
 
         Optional<Clinic> validClinic = clinicRepository.findById(clinicId);
@@ -54,9 +55,15 @@ public class ClinicServiceImplementation implements ClinicService {
         DecodedJWT jwt = JWTUtil.verifyToken(authHeader);
         long jwtSubject = Long.parseLong(jwt.getSubject());
 
+        Optional<Clinic> validClinic = this.clinicRepository.findById(clinic.getId());
+
+//        TODO: qita duhet me bo qe ni her me kqyr a ki autorizim, tani me kqyr a ka klinik. po ni her pe lajm qishtu
+        if (validClinic.isEmpty())
+            throw new NotFoundException("Klinika nuk u gjet");
+
 //        !isAdminOrDirector(jwt)
-        if (!(this.clinicRepository.getById(clinic.getId()).getDrejtori().getId() == jwtSubject || // is drejtor
-                this.userRepository.getRoleById(jwtSubject).getName().equals("admin"))) // is admin
+        if (!(validClinic.get().getDrejtori().getId() == jwtSubject || // is drejtor
+                this.userRepository.getRoleById(jwtSubject).getName().equals("admin"))) // isadmin
             throw new UnauthorizedException("Nuk jeni i autorizuar");
 
         clinicRepository.save(clinic);
@@ -66,14 +73,15 @@ public class ClinicServiceImplementation implements ClinicService {
         DecodedJWT jwt = JWTUtil.verifyToken(authHeader);
         long jwtSubject = Long.parseLong(jwt.getSubject());
 
-        if (!(this.clinicRepository.getById(updateClinic.getId()).getDrejtori().getId() == jwtSubject || // is drejtor
-                this.userRepository.getRoleById(jwtSubject).getName().equals("admin")))
-            throw new UnauthorizedException("Nuk jeni i autorizuar");
-
         Optional<Clinic> validClinic = clinicRepository.findById(updateClinicId);
 
+//        TODO: qita duhet me bo qe ni her me kqyr a ki autorizim, tani me kqyr a ka klinik. po ni her pe lajm qishtu
         if (validClinic.isEmpty())
             throw new NotFoundException("Klinika nuk u gjet");
+
+        if (!(validClinic.get().getDrejtori().getId() == jwtSubject || // is drejtor
+                this.userRepository.getRoleById(jwtSubject).getName().equals("admin")))
+            throw new UnauthorizedException("Nuk jeni i autorizuar");
 
         Clinic clinic = validClinic.get();
         clinic.setAddress(updateClinic.getAddress());
@@ -92,7 +100,13 @@ public class ClinicServiceImplementation implements ClinicService {
         DecodedJWT jwt = JWTUtil.verifyToken(authHeader);
         long jwtSubject = Long.parseLong(jwt.getSubject());
 
-        if (!(this.clinicRepository.getById(id).getDrejtori().getId() == jwtSubject ||
+        Optional<Clinic> validClinic = clinicRepository.findById(id);
+
+//        TODO: qita duhet me bo qe ni her me kqyr a ki autorizim, tani me kqyr a ka klinik. po ni her pe lajm qishtu
+        if (validClinic.isEmpty())
+            throw new NotFoundException("Klinika nuk u gjet");
+
+        if (!(validClinic.get().getDrejtori().getId() == jwtSubject ||
                 this.userRepository.getRoleById(jwtSubject).getName().equals("admin")))
             throw new UnauthorizedException("Nuk jeni i autorizuar");
 
