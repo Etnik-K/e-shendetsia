@@ -1,3 +1,3 @@
 package app.dto.request;
 
-public record LoginRequest(long id, String password) { }
+public record LoginRequest(Long id, String password) { }

@@ -67,7 +67,8 @@ public class UserController extends BaseController{
     @DeleteMapping("/{userId}")
     public ResponseEntity<ApiResponse<String>> deleteUser(@PathVariable("userId") long deleteUserId, @RequestHeader("Authorization") String requestJwt) {
         try{
-            return this.ok(userService.deleteUser(deleteUserId, requestJwt));
+            userService.deleteUser(deleteUserId, requestJwt);
+            return this.ok("Perdoruesi u fshi me sukses");
         } catch (JWTVerificationException | UnauthorizedException exception) {
             return this.error("Nuk jeni i autorizuar", HttpStatus.UNAUTHORIZED);
         }
