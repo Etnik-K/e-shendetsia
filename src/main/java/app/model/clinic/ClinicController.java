@@ -19,7 +19,7 @@ public class ClinicController extends BaseController {
     private final ClinicService clinicService;
 
     @Autowired
-    public ClinicController(ClinicServiceImplementation clinicService) {
+    public ClinicController(ClinicService clinicService) {
         this.clinicService = clinicService;
     }
 
