@@ -5,9 +5,31 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="156dacc0-46b1-48b5-b6cf-92abd184894a" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/app/middleware/AuthFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/app/middleware/LoggingFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/app/model/admin/Admin.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/app/model/authorization/RoleService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/app/util/JWTUtilImplementation.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/db/migration/V1__start.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/model/clinic/ClinicController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/model/clinic/ClinicController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run" beforeDir="false" afterPath="$PROJECT_DIR$/run" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/config/CacheConfing.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/config/CacheConfing.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/exception/InvalidCredentialsException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/exception/InvalidCredentialsException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/exception/UnauthorizedException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/exception/UnauthorizedException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/model/authorization/Role.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/model/authorization/Role.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/model/clinic/Clinic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/model/clinic/Clinic.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/app/model/clinic/ClinicServiceImplementation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/model/clinic/ClinicServiceImplementation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/model/doctor/Doctor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/model/doctor/Doctor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/model/user/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/model/user/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/model/user/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/model/user/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/model/user/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/model/user/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/model/user/UserServiceImplementation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/model/user/UserServiceImplementation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/util/JWTUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/util/JWTUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/db/migration/V1__init.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/db/migration/V2__authentication.sql" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,9 +41,10 @@
       <list>
         <option value="Record" />
         <option value="Enum" />
-        <option value="com.intellij.jpb.FlywayMigrationScript" />
         <option value="Exception" />
+        <option value="Interface" />
         <option value="Class" />
+        <option value="com.intellij.jpb.FlywayMigrationScript" />
       </list>
     </option>
   </component>
@@ -34,15 +57,12 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
-  &quot;lastFilter&quot;: {
-    &quot;state&quot;: &quot;OPEN&quot;,
-    &quot;assignee&quot;: &quot;Etnik-K&quot;
-  }
+  &quot;lastFilter&quot;: {}
 }</component>
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/Etnik-K/e-shendetsia&quot;,
-    &quot;accountId&quot;: &quot;50fef5af-70c9-4508-911a-181cc2d3f5f7&quot;
+    &quot;url&quot;: &quot;https://github.com/Etnik-K/e-shendetsia.git&quot;,
+    &quot;accountId&quot;: &quot;73a65303-a2ae-4cb8-8bb1-390a883c874b&quot;
   }
 }</component>
   <component name="MavenImportPreferences">
@@ -53,7 +73,7 @@
     </option>
   </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="Security Analysis" />
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
@@ -66,28 +86,29 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "ignore.preview.features.used": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.0",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.preview.features.used&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "postgresql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;postgresql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="Main" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="e-shendetsia" />
@@ -122,6 +143,8 @@
       <workItem from="1746976516962" duration="1293000" />
       <workItem from="1746977820621" duration="2000000" />
       <workItem from="1747176856739" duration="1508000" />
+      <workItem from="1747178384634" duration="13964000" />
+      <workItem from="1747323547834" duration="6267000" />
     </task>
     <servers />
   </component>

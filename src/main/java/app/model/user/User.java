@@ -1,15 +1,19 @@
 package app.model.user;
 
+import app.model.admin.Admin;
+import app.model.doctor.Doctor;
 import jakarta.persistence.*;
 import lombok.Getter;
 
 import app.model.authorization.Role;
 import lombok.Setter;
 
+import java.util.Set;
+
 @Getter
 @Setter
 @Entity
-@Table(name = "users")
+@Table(name = "user_table")
 public class User {
 
     @Id
@@ -34,12 +38,22 @@ public class User {
     @Column(nullable = false)
     private String salt;
 
-    @ManyToOne
-    @JoinColumn(name = "role_id")
-    private Role role;
+    @ManyToMany
+    @JoinTable(
+            name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private Set<Role> roles;
 
     @Column(nullable = false)
     private String history;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private Doctor doctor;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private Admin admin;
 
     @Override
     public String toString() {

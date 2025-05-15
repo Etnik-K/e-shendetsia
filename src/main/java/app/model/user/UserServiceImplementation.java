@@ -11,19 +11,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import com.auth0.jwt.JWT;
+
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Service
 public class UserServiceImplementation implements UserService {
 
     private final UserRepository userRepository;
+    private final JWTUtil jwtUtil;
 
     @Autowired
-    public UserServiceImplementation(UserRepository userRepository) {
+    public UserServiceImplementation(UserRepository userRepository, JWTUtil jwtUtil) {
         this.userRepository = userRepository;
+        this.jwtUtil = jwtUtil;
     }
 
     /**
@@ -35,12 +38,12 @@ public class UserServiceImplementation implements UserService {
      */
     public List<User> getAllUsers(String requestJwt) throws UnauthorizedException, JWTVerificationException {
 
-        DecodedJWT jwt = JWTUtil.verifyToken(requestJwt);
+        DecodedJWT jwt = JWT.decode(requestJwt);
         long userId = Long.parseLong(jwt.getSubject());
 
         // kushtin duhet me zv me !this.isAdmin(userId)
         if (!this.userRepository.getRoleById(userId).getName().equals("admin"))
-            throw new UnauthorizedException();
+            throw new UnauthorizedException("Nuk jeni i autorizuar!");
 
         return this.userRepository.findAll();
 
@@ -57,11 +60,11 @@ public class UserServiceImplementation implements UserService {
      */
     public User getUserById(Long viewUserId, String requestJwt) throws UnauthorizedException, JWTVerificationException, NotFoundException {
 
-        DecodedJWT jwt = JWTUtil.verifyToken(requestJwt);
-        Long userId = Long.valueOf(jwt.getSubject());
+        DecodedJWT jwt = JWT.decode(requestJwt);
+        long userId = Long.parseLong(jwt.getSubject());
 
-        if (!(Objects.equals(viewUserId, userId) || this.userRepository.getRoleById(userId).getName().equals("admin")))
-            throw new UnauthorizedException();
+        if (!(this.userRepository.getRoleById(userId).getName().equals("admin") || (viewUserId == userId)))
+            throw new UnauthorizedException("Nuk jeni i autorizuar!");
 
         Optional<User> optUser = this.userRepository.findById(userId);
 
@@ -73,6 +76,22 @@ public class UserServiceImplementation implements UserService {
     }
 
     /**
+     * Kjo metode kthen userin me id perkatese. Nuk kerkon authentikim. Perdoret vetem nga serveri per qellime te brendshme dhe *NUK DUHET* te ekspozohet ne endpointa
+     * @param id ID e userit per me kthy
+     * @return Useri me ID perkatese
+     * @throws NotFoundException Ne momentin kur useri me ID perkatese nuk eksiston
+     */
+    @Override
+    public User getUserByIdForServer(Long id) throws NotFoundException {
+        Optional<User> validUser = this.userRepository.findById(id);
+
+        if (validUser.isEmpty())
+            throw new NotFoundException("Useri nuk u gjet");
+
+        return validUser.get();
+    }
+
+    /**
      * Kjo metode eshte implementimi i logjikes per endpointin DELETE /api/users/{deleteUserId}
      * @param deleteUserId ID per fshirje
      * @param requestJwt Tokeni authentifikues
@@ -81,7 +100,7 @@ public class UserServiceImplementation implements UserService {
      */
     public void deleteUser(Long deleteUserId, String requestJwt) throws UnauthorizedException, JWTVerificationException {
 
-        DecodedJWT jwt = JWTUtil.verifyToken(requestJwt);
+        DecodedJWT jwt = JWT.decode(requestJwt);
         long userId = Long.parseLong(jwt.getSubject());
 
         if (!(deleteUserId == userId) || this.userRepository.getRoleById(userId).getName().equals("admin"))
@@ -107,7 +126,7 @@ public class UserServiceImplementation implements UserService {
         claims.put("last_name", validUser.getLastName());
         claims.put("email", validUser.getEmail());
 
-        return JWTUtil.createToken(claims, validUser.getId());
+        return this.jwtUtil.createToken(claims, validUser.getId());
     }
 
     /**
@@ -154,19 +173,13 @@ public class UserServiceImplementation implements UserService {
      * @return Historine e userit
      */
     @Cacheable(value = "history", key = "#userId")
-    public Optional<User> getUserHistory(Long userId) {
-        System.out.println(STR."⏳ Fetching user from DB for ID: \{userId}");
-        return userRepository.findById(userId);
-    }
-
-    @Cacheable(value = "history", key = "#id")
     public User getUserHistory(Long userId, String requestJwt) throws JWTVerificationException, UnauthorizedException, NotFoundException {
-        DecodedJWT jwt = JWTUtil.verifyToken(requestJwt);
+        DecodedJWT jwt = JWT.decode(requestJwt);
         long jwtSubject = Long.parseLong(jwt.getSubject());
 
         if (!(this.userRepository.getRoleById(jwtSubject).getName().equals("admin") ||
                 jwtSubject == userId))
-            throw new UnauthorizedException();
+            throw new UnauthorizedException("Nuk jeni i autorizuar!");
 
         Optional<User> validUser = this.userRepository.findById(userId);
 
