@@ -13,7 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/users")
@@ -85,7 +84,7 @@ public class UserController extends BaseController{
         try{
             return this.ok(this.userService.login(loginRequest.id(), loginRequest.password()));
         } catch (NotFoundException | InvalidCredentialsException exception) {
-            return this.error(InvalidCredentialsException.MESSAGE, HttpStatus.UNAUTHORIZED);
+            return this.error("Perdoruese/Fjalekalimi i gabuar", HttpStatus.UNAUTHORIZED);
         }
     }
 

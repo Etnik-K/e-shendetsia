@@ -1,5 +1,6 @@
 package app.model.authorization;
 
+import app.model.user.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 
@@ -23,4 +24,7 @@ public class Role {
         inverseJoinColumns = @JoinColumn(name = "permission_id")
     )
     private Set<Permissions> permissions;
+
+    @ManyToMany(mappedBy = "roles")
+    private Set<User> users;
 }

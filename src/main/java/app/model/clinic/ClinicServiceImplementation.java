@@ -3,10 +3,8 @@ package app.model.clinic;
 import app.exception.NotFoundException;
 import app.exception.UnauthorizedException;
 import app.model.user.UserRepository;
-import app.util.JWTUtil;
-import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.JWT;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import org.checkerframework.checker.units.qual.C;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,39 +25,40 @@ public class ClinicServiceImplementation implements ClinicService {
 
     public List<Clinic> getAllClinics(String authToken) throws UnauthorizedException {
 
-        DecodedJWT jwt = JWTUtil.verifyToken(authToken);
+        DecodedJWT jwt = JWT.decode(authToken);
         long jwtSubject = Long.parseLong(jwt.getSubject());
 
         if (!this.userRepository.getRoleById(jwtSubject).getName().equals("admin"))
-            throw new UnauthorizedException();
+            throw new UnauthorizedException("Nuk jeni i autorizuar");
 
         return clinicRepository.findAll();
     }
 
-    public Clinic getClinicById(Long clinicId, String authHeader) throws NotFoundException, UnauthorizedException, JWTVerificationException {
-        DecodedJWT jwt = JWTUtil.verifyToken(authHeader);
+    public Clinic getClinicById(Long clinicId, String authHeader) throws UnauthorizedException {
+        DecodedJWT jwt = JWT.decode(authHeader);
         long jwtSubject = Long.parseLong(jwt.getSubject());
 
-        if (!(this.clinicRepository.findById(clinicId).get().getDrejtori().getId() == jwtSubject || // is drejtor
+        Optional<Clinic> validClinic = this.clinicRepository.findById(clinicId);
+
+        if (validClinic.isEmpty())
+            throw new UnauthorizedException("Oops, dicka shkoi gabim");
+
+        if (!(validClinic.get().getDrejtori().getId() == jwtSubject || // is drejtor
                 this.userRepository.getRoleById(jwtSubject).getName().equals("admin"))) // isadmin
             throw new UnauthorizedException("Nuk jeni i autorizuar");
 
-        Optional<Clinic> validClinic = clinicRepository.findById(clinicId);
-        if (validClinic.isEmpty())
-            throw new NotFoundException("Klinika nuk eksiston");
         return validClinic.get();
     }
 
     public void saveClinic(Clinic clinic, String authHeader) throws UnauthorizedException {
 
-        DecodedJWT jwt = JWTUtil.verifyToken(authHeader);
+        DecodedJWT jwt = JWT.decode(authHeader);
         long jwtSubject = Long.parseLong(jwt.getSubject());
 
         Optional<Clinic> validClinic = this.clinicRepository.findById(clinic.getId());
 
-//        TODO: qita duhet me bo qe ni her me kqyr a ki autorizim, tani me kqyr a ka klinik. po ni her pe lajm qishtu
         if (validClinic.isEmpty())
-            throw new NotFoundException("Klinika nuk u gjet");
+            throw new RuntimeException("Oops, dicka shkoi gabim");
 
 //        !isAdminOrDirector(jwt)
         if (!(validClinic.get().getDrejtori().getId() == jwtSubject || // is drejtor
@@ -69,15 +68,14 @@ public class ClinicServiceImplementation implements ClinicService {
         clinicRepository.save(clinic);
     }
 
-    public void updateClinic(Long updateClinicId, Clinic updateClinic, String authHeader) throws UnauthorizedException, NotFoundException {
-        DecodedJWT jwt = JWTUtil.verifyToken(authHeader);
+    public void updateClinic(Long updateClinicId, Clinic updateClinic, String authHeader) throws UnauthorizedException {
+        DecodedJWT jwt = JWT.decode(authHeader);
         long jwtSubject = Long.parseLong(jwt.getSubject());
 
         Optional<Clinic> validClinic = clinicRepository.findById(updateClinicId);
 
-//        TODO: qita duhet me bo qe ni her me kqyr a ki autorizim, tani me kqyr a ka klinik. po ni her pe lajm qishtu
         if (validClinic.isEmpty())
-            throw new NotFoundException("Klinika nuk u gjet");
+            throw new RuntimeException("Oops, dicka shkoi gabim");
 
         if (!(validClinic.get().getDrejtori().getId() == jwtSubject || // is drejtor
                 this.userRepository.getRoleById(jwtSubject).getName().equals("admin")))
@@ -96,15 +94,14 @@ public class ClinicServiceImplementation implements ClinicService {
         clinicRepository.save(clinic);
     }
 
-    public void deleteClinic(Long id, String authHeader) {
-        DecodedJWT jwt = JWTUtil.verifyToken(authHeader);
+    public void deleteClinic(Long id, String authHeader) throws UnauthorizedException, NotFoundException {
+        DecodedJWT jwt = JWT.decode(authHeader);
         long jwtSubject = Long.parseLong(jwt.getSubject());
 
         Optional<Clinic> validClinic = clinicRepository.findById(id);
 
-//        TODO: qita duhet me bo qe ni her me kqyr a ki autorizim, tani me kqyr a ka klinik. po ni her pe lajm qishtu
         if (validClinic.isEmpty())
-            throw new NotFoundException("Klinika nuk u gjet");
+            throw new UnauthorizedException("Oops, dicka shkoi gabim");
 
         if (!(validClinic.get().getDrejtori().getId() == jwtSubject ||
                 this.userRepository.getRoleById(jwtSubject).getName().equals("admin")))
