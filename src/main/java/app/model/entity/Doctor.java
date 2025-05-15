@@ -1,7 +1,5 @@
-package app.model.doctor;
+package app.model.entity;
 
-import app.model.clinic.Clinic;
-import app.model.user.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 

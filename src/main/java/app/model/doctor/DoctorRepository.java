@@ -1,5 +1,6 @@
 package app.model.doctor;
 
+import app.model.entity.Doctor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,5 +1,6 @@
 package app.model.doctor;
 
+import app.model.entity.Doctor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

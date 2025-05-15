@@ -1,9 +1,10 @@
 package app.model.user;
 
-import app.dto.request.LoginRequest;
+import app.http.request.LoginRequest;
 import app.exception.InvalidCredentialsException;
 import app.exception.NotFoundException;
 import app.exception.UnauthorizedException;
+import app.model.entity.User;
 import app.util.ApiResponse;
 import app.util.BaseController;
 import com.auth0.jwt.exceptions.JWTVerificationException;

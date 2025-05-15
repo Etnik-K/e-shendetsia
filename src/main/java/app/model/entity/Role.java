@@ -1,6 +1,5 @@
-package app.model.authorization;
+package app.model.entity;
 
-import app.model.user.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 

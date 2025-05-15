@@ -1,5 +1,7 @@
 package app.model.clinic;
 
+import app.model.entity.Clinic;
+
 import java.util.List;
 
 public interface ClinicService {
