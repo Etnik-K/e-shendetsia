@@ -1,5 +1,6 @@
 package app.model.clinic;
 
+import app.model.doctor.Doctor;
 import app.model.user.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -7,6 +8,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.Set;
 
 @Getter
 @Setter
@@ -20,6 +23,9 @@ public class Clinic {
     @ManyToOne
     @JoinColumn(name = "drejtori_id")
     private User drejtori;
+
+    @ManyToMany
+    private Set<Doctor> employed;
 
     @NotBlank(message = "Address is required")
     @Column(nullable = false)
