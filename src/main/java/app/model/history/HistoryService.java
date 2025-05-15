@@ -1,7 +1,6 @@
 package app.model.history;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import app.model.entity.History;
 
 public interface HistoryService {
     public History save(History history);

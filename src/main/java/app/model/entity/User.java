@@ -1,11 +1,8 @@
-package app.model.user;
+package app.model.entity;
 
-import app.model.admin.Admin;
-import app.model.doctor.Doctor;
 import jakarta.persistence.*;
 import lombok.Getter;
 
-import app.model.authorization.Role;
 import lombok.Setter;
 
 import java.util.Set;

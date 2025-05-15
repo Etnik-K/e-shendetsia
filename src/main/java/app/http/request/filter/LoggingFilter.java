@@ -1,4 +1,4 @@
-package app.middleware;
+package app.http.request.filter;
 
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;

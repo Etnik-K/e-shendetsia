@@ -2,6 +2,7 @@ package app.model.clinic;
 
 import app.exception.NotFoundException;
 import app.exception.UnauthorizedException;
+import app.model.entity.Clinic;
 import app.util.ApiResponse;
 import app.util.BaseController;
 import com.auth0.jwt.exceptions.JWTVerificationException;

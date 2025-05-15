@@ -1,6 +1,7 @@
 package app.model.doctor;
 
 
+import app.model.entity.Doctor;
 import app.util.ApiResponse;
 import app.util.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;

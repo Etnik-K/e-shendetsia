@@ -2,6 +2,7 @@ package app.model.clinic;
 
 import app.exception.NotFoundException;
 import app.exception.UnauthorizedException;
+import app.model.entity.Clinic;
 import app.model.user.UserRepository;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.interfaces.DecodedJWT;

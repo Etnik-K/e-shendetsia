@@ -1,6 +1,6 @@
-package app.middleware;
+package app.http.request.filter;
 
-import app.model.authorization.Role;
+import app.model.entity.Role;
 import app.model.user.UserService;
 import app.util.JWTUtil;
 import com.auth0.jwt.exceptions.JWTVerificationException;
