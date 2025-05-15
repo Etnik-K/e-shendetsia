@@ -10,10 +10,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication(scanBasePackages = "app")
 public class Main {
 
-    private static int version = 1;
+    private static final int VERSION = 1;
 
     public static void main(String[] args){
-        System.out.println("Versioni i aplikacionit:"+ Main.version);
+        System.out.println(STR."Versioni i aplikacionit:\{Main.VERSION}");
         SpringApplication.run(Main.class, args);
     }
 }

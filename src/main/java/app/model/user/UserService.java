@@ -35,4 +35,6 @@ public interface UserService {
     String login(Long id, String password);
 
     User getUserHistory(Long id, String requestJwt);
+
+    User getUserByIdForServer(Long id);
 }

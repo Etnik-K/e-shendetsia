@@ -1,6 +1,7 @@
 package app.model.doctor;
 
 import app.model.clinic.Clinic;
+import app.model.user.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 
@@ -8,12 +9,16 @@ import java.util.Set;
 
 @Getter
 @Entity
-@Table(name = "doctor")
+@Table(name = "doctor_table")
 public class Doctor {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
+
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "id")
+    private User user;
 
     @ManyToMany
     @JoinTable(
