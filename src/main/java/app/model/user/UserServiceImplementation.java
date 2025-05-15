@@ -3,6 +3,7 @@ package app.model.user;
 import app.exception.InvalidCredentialsException;
 import app.exception.NotFoundException;
 import app.exception.UnauthorizedException;
+import app.model.entity.User;
 import app.util.Hasher;
 import app.util.JWTUtil;
 import com.auth0.jwt.exceptions.JWTVerificationException;

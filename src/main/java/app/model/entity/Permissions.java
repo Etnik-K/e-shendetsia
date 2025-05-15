@@ -1,5 +1,6 @@
-package app.model.authorization;
+package app.model.entity;
 
+import app.model.authorization.HttpMethod;
 import jakarta.persistence.*;
 
 import java.util.Set;

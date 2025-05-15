@@ -1,7 +1,5 @@
-package app.model.clinic;
+package app.model.entity;
 
-import app.model.doctor.Doctor;
-import app.model.user.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

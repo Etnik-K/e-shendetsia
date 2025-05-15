@@ -1,5 +1,6 @@
 package app.model.history;
 
+import app.model.entity.History;
 import app.util.ApiResponse;
 import app.util.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;

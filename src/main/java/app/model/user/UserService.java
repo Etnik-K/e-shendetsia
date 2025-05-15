@@ -1,5 +1,7 @@
 package app.model.user;
 
+import app.model.entity.User;
+
 import java.util.List;
 
 public interface UserService {

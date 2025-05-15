@@ -1,6 +1,7 @@
 package app.model.history;
 
 import app.exception.UnauthorizedException;
+import app.model.entity.History;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

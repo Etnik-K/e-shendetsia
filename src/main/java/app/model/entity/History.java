@@ -1,4 +1,4 @@
-package app.model.history;
+package app.model.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
