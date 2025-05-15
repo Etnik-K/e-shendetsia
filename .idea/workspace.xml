@@ -5,9 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="156dacc0-46b1-48b5-b6cf-92abd184894a" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/app/model/history/History.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/app/model/history/HistoryController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/app/model/history/HistoryDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/app/model/history/HistoryRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/app/model/history/HistoryService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/app/model/history/HistoryServiceImplementation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/model/clinic/ClinicController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/model/clinic/ClinicController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/model/clinic/ClinicServiceImplementation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/model/clinic/ClinicServiceImplementation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,7 +59,7 @@
     </option>
   </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="Security Analysis" />
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
@@ -68,10 +74,16 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
+    "Spring Boot.Main.executor": "Run",
+    "git-widget-placeholder": "history-dto-feature",
     "ignore.preview.features.used": "true",
+    "kotlin-language-version-configured": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -100,8 +112,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-fbdcb00ec9e3-intellij.indexing.shared.core-IU-251.25410.129" />
-        <option value="bundled-js-predefined-d6986cc7102b-6a121458b545-JavaScript-IU-251.25410.129" />
+        <option value="bundled-jdk-9823dce3aa75-a94e463ab2e7-intellij.indexing.shared.core-IU-243.26053.27" />
+        <option value="bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-IU-243.26053.27" />
       </set>
     </attachedChunks>
   </component>
@@ -122,6 +134,7 @@
       <workItem from="1746976516962" duration="1293000" />
       <workItem from="1746977820621" duration="2000000" />
       <workItem from="1747176856739" duration="1508000" />
+      <workItem from="1747300560835" duration="6939000" />
     </task>
     <servers />
   </component>
