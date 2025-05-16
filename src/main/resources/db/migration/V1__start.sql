@@ -116,9 +116,9 @@ ALTER TABLE user_roles
     ADD CONSTRAINT fk_userol_on_user FOREIGN KEY (user_id) REFERENCES user_table (id);
 
 INSERT INTO roles (name) VALUES
+                             ('PATIENT'),
                              ('DOCTOR'),
                              ('SYSTEM_ADMIN'),
                              ('PHARMACIST'),
-                             ('PATIENT'),
                              ('NURSE'),
                              ('CLINIC_DIRECTOR');
