@@ -8,6 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * Kontrolluesi per menaxhimin e historikut te perdoruesit
+ * Ofron API per ruajtjen dhe menaxhimin e te dhenave historike
+ */
 @RestController
 @RequestMapping("/history")
 public class HistoryController extends BaseController {
@@ -19,6 +23,12 @@ public class HistoryController extends BaseController {
         this.historyService = historyService;
     }
 
+    /**
+     * Ruan historikun e ri te perdoruesit ne sistem
+     *
+     * @param history te dhenat e historikut per tu ruajtur
+     * @return pergjigjen me historikun e ruajtur
+     */
     @PostMapping("/save")
     public ResponseEntity<ApiResponse<History>> saveUserHistory(@RequestBody History history){
         History saved = historyService.save(history);
