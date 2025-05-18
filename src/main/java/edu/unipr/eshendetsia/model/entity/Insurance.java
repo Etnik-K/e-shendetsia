@@ -5,6 +5,16 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Klasa Insurance perfaqeson informacionin e sigurimit te pacientit ne sistem.
+ * Permban te dhenat e sigurimit duke perfshire:
+ * - ID unike te sigurimit
+ * - ID e perdoruesit
+ * - Emrin e ofruesit te sigurimit
+ * - Numrin e policise
+ * - Detajet e mbulimit
+ * - Statusin aktiv/joaktiv
+ */
 @Getter
 @Setter
 @Entity

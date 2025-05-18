@@ -5,6 +5,10 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Klasa qe perfaqeson informacionin e alergjeneve te pacientit
+ * Permban informacionin per tipin e alergjise dhe reaksionet perkatese
+ */
 @Getter
 @Setter
 @Entity
@@ -18,12 +22,21 @@ public class Allergy {
     @Column(nullable = false)
     private Long userId;
 
+    /**
+     * Substanca apo medikamenti ndaj te cilit pacienti ka alergji
+     */
     @Column(nullable = false)
-    private String allergen; //medikamenti
+    private String allergen;
 
+    /**
+     * Pershkrimi i reaksionit alergjik
+     */
     @Column
-    private String reaction; //pasoja/afterefekti
+    private String reaction;
 
+    /**
+     * Shenime shtese per alergjin
+     */
     @Column
     private String notes;
 }

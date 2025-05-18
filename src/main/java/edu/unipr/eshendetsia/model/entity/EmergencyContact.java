@@ -5,6 +5,10 @@ import lombok.Getter;
 import lombok.Setter;
 
 
+/**
+ * Entiteti qe perfaqeson kontaktin emergjent te pacientit
+ * Permban informacionet kryesore te personit qe duhet kontaktuar ne raste emergjente
+ */
 @Getter
 @Setter
 @Entity
