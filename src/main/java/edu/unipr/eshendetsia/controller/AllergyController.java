@@ -8,6 +8,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Kontrolluesi per menaxhimin e alergjive te pacienteve
+ * Sherben si nderfaqe API per operacione CRUD te alergjive
+ */
 @RestController
 @RequestMapping("/allergies")
 public class AllergyController {
@@ -19,16 +23,34 @@ public class AllergyController {
         this.allergyService = allergyService;
     }
 
+    /**
+     * Krijon nje alergji te re per pacientin
+     *
+     * @param allergy Alergjia qe do te ruhet
+     * @return Alergjia e krijuar me sukses
+     */
     @PostMapping
     public ResponseEntity<Allergy> create(@RequestBody Allergy allergy) {
         return ResponseEntity.ok(allergyService.save(allergy));
     }
 
+    /**
+     * Merr listen e alergjive per nje pacient specifik
+     *
+     * @param userId ID e pacientit
+     * @return Lista e alergjive te pacientit
+     */
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<Allergy>> getByUser(@PathVariable Long userId) {
         return ResponseEntity.ok(allergyService.getByUserId(userId));
     }
 
+    /**
+     * Fshin nje alergji nga sistemi
+     *
+     * @param id ID e alergjise qe do te fshihet
+     * @return Pergjigje pa permbajtje
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         allergyService.delete(id);
