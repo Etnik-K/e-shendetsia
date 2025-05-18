@@ -14,18 +14,35 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Implementimi i sherbimit per menaxhimin e klinikave mjekesore.
+ * Sherben si nderlidhes mes shtresave te kontrollerit dhe repositories.
+ */
 @Service
 public class ClinicServiceImplementation implements ClinicService {
 
     private final ClinicRepository clinicRepository;
     private final UserRepository userRepository;
 
+    /**
+     * Konstruktori per inicializimin e sherbimit te klinikave.
+     *
+     * @param clinicRepository repository per qasje ne te dhenat e klinikave
+     * @param userRepository   repository per qasje ne te dhenat e perdoruesve
+     */
     @Autowired
     public ClinicServiceImplementation(ClinicRepository clinicRepository, UserRepository userRepository) {
         this.clinicRepository = clinicRepository;
         this.userRepository = userRepository;
     }
 
+    /**
+     * Merr listen e te gjitha klinikave ne sistem.
+     *
+     * @param authToken tokeni i autentifikimit
+     * @return lista e klinikave
+     * @throws UnauthorizedException nese perdoruesi nuk eshte admin
+     */
     public List<Clinic> getAllClinics(String authToken) throws UnauthorizedException {
 
         DecodedJWT jwt = JWT.decode(authToken);
@@ -37,6 +54,14 @@ public class ClinicServiceImplementation implements ClinicService {
         return clinicRepository.findAll();
     }
 
+    /**
+     * Merr kliniken sipas ID-se.
+     *
+     * @param clinicId   ID e klinikes
+     * @param authHeader tokeni i autentifikimit
+     * @return klinika e kerkuar
+     * @throws UnauthorizedException nese perdoruesi nuk eshte admin ose drejtor i klinikes
+     */
     public Clinic getClinicById(Long clinicId, String authHeader) throws UnauthorizedException {
         DecodedJWT jwt = JWT.decode(authHeader);
         long jwtSubject = Long.parseLong(jwt.getSubject());
@@ -53,6 +78,13 @@ public class ClinicServiceImplementation implements ClinicService {
         return validClinic.get();
     }
 
+    /**
+     * Ruan te dhenat e klinikes ne sistem.
+     *
+     * @param clinic     klinika per tu ruajtur
+     * @param authHeader tokeni i autentifikimit
+     * @throws UnauthorizedException nese perdoruesi nuk eshte admin ose drejtor i klinikes
+     */
     public void saveClinic(Clinic clinic, String authHeader) throws UnauthorizedException {
 
         DecodedJWT jwt = JWT.decode(authHeader);
@@ -71,6 +103,14 @@ public class ClinicServiceImplementation implements ClinicService {
         clinicRepository.save(clinic);
     }
 
+    /**
+     * Perditeson te dhenat e klinikes.
+     *
+     * @param updateClinicId ID e klinikes per tu perditesuar
+     * @param updateClinic   klinika me te dhenat e reja
+     * @param authHeader     tokeni i autentifikimit
+     * @throws UnauthorizedException nese perdoruesi nuk eshte admin ose drejtor i klinikes
+     */
     public void updateClinic(Long updateClinicId, Clinic updateClinic, String authHeader) throws UnauthorizedException {
         DecodedJWT jwt = JWT.decode(authHeader);
         long jwtSubject = Long.parseLong(jwt.getSubject());
@@ -97,6 +137,14 @@ public class ClinicServiceImplementation implements ClinicService {
         clinicRepository.save(clinic);
     }
 
+    /**
+     * Fshin kliniken nga sistemi.
+     *
+     * @param id         ID e klinikes per tu fshire
+     * @param authHeader tokeni i autentifikimit
+     * @throws UnauthorizedException nese perdoruesi nuk eshte admin ose drejtor i klinikes
+     * @throws NotFoundException     nese klinika nuk gjendet
+     */
     public void deleteClinic(Long id, String authHeader) throws UnauthorizedException, NotFoundException {
         DecodedJWT jwt = JWT.decode(authHeader);
         long jwtSubject = Long.parseLong(jwt.getSubject());
