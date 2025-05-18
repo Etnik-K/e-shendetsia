@@ -7,6 +7,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Kontrolluesi i njoftimeve menaxhon te gjitha kerkesat e lidhura me njoftimet.
+ * Mundeson dergimin, marrjen, shenimin si te lexuar dhe fshirjen e njoftimeve.
+ */
 @RestController
 @RequestMapping("/notifications")
 public class NotificationController {

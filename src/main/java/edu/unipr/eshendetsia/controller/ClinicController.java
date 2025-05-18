@@ -14,6 +14,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Kontrolleri qe menaxhon kerkesat HTTP per resursin e Klinikave.
+ * Ofron funksionalitete per krijimin, leximin, perditesimin dhe fshirjen e klinikave.
+ * Sherben si nderfaqe RESTful per menaxhimin e te dhenave te klinikave.
+ */
 @RestController
 @RequestMapping("/clinics")
 public class ClinicController extends BaseController {
@@ -25,6 +30,12 @@ public class ClinicController extends BaseController {
         this.clinicService = clinicService;
     }
 
+    /**
+     * Kthen listen e te gjitha klinikave
+     *
+     * @param authHeader tokeni i autentikimit
+     * @return lista e klinikave
+     */
     @GetMapping
     public ResponseEntity<ApiResponse<List<Clinic>>> getAllClinics(@RequestHeader("Authorization") String authHeader) {
         try{
@@ -34,6 +45,13 @@ public class ClinicController extends BaseController {
         }
     }
 
+    /**
+     * Kthen kliniken me ID-ne e specifikuar
+     *
+     * @param authHeader tokeni i autentikimit
+     * @param clinicId   ID e klinikes
+     * @return klinika e kerkuar
+     */
     @GetMapping("/{clinicId}")
     public ResponseEntity<ApiResponse<Clinic>> getClinicById(@RequestHeader("Authorization") String authHeader, @PathVariable("clinicId") Long clinicId) {
         try{
@@ -46,6 +64,13 @@ public class ClinicController extends BaseController {
         }
     }
 
+    /**
+     * Krijon nje klinike te re
+     *
+     * @param authHeader tokeni i autentikimit
+     * @param clinic     detajet e klinikes
+     * @return mesazhi i suksesit
+     */
     @PostMapping
     public ResponseEntity<ApiResponse<String>> createClinic(@RequestHeader("Authorization") String authHeader, @RequestBody Clinic clinic) {
         try {
@@ -56,6 +81,14 @@ public class ClinicController extends BaseController {
         }
     }
 
+    /**
+     * Perditeson kliniken ekzistuese
+     *
+     * @param authHeader tokeni i autentikimit
+     * @param clinicId   ID e klinikes
+     * @param clinic     te dhenat e reja te klinikes
+     * @return mesazhi i suksesit
+     */
     @PutMapping("/{clinicId}")
     public ResponseEntity<ApiResponse<String>> updateClinic(@RequestHeader("Authorization") String authHeader, @PathVariable("clinicId") Long clinicId, @RequestBody Clinic clinic) {
         try {
@@ -68,6 +101,13 @@ public class ClinicController extends BaseController {
         }
     }
 
+    /**
+     * Fshin kliniken me ID-ne e specifikuar
+     *
+     * @param authHeader tokeni i autentikimit
+     * @param clinicId   ID e klinikes
+     * @return mesazhi i suksesit
+     */
     @DeleteMapping("/{clinicId}")
     public ResponseEntity<ApiResponse<String>> deleteClinic(@RequestHeader("Authorization") String authHeader, @PathVariable("clinicId") Long clinicId) {
         try {
