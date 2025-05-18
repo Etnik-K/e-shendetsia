@@ -6,6 +6,18 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 
+/**
+ * Klasa Perscription perfaqeson receten mjekesore ne sistem.
+ * <p>
+ * Fushat:
+ * - id: Identifikuesi unik i recetes
+ * - userId: Identifikuesi i pacientit
+ * - doctorId: Identifikuesi i mjekut
+ * - medication: Emri i medikamentit
+ * - dosage: Doza e medikamentit
+ * - instructions: Udhezime shtese
+ * - issuedAt: Data dhe ora e leshimit
+ */
 @Getter
 @Setter
 @Entity

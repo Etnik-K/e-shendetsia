@@ -5,6 +5,16 @@ import lombok.Getter;
 import lombok.Setter;
 import java.time.LocalDateTime;
 
+/**
+ * Klasa History perfaqson te dhenat historike te nje vizite mjekesore
+ * dhe permban informacione si:
+ * - ID e perdoruesit
+ * - ID e mjekut
+ * - Pershkrimin
+ * - Diagnozen
+ * - Trajtimin
+ * - Daten e vizites
+ */
 @Getter
 @Setter
 @Entity

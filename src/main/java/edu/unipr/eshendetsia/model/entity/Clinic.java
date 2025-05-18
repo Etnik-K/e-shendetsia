@@ -9,6 +9,19 @@ import lombok.Setter;
 
 import java.util.Set;
 
+/**
+ * Kjo klase perfaqeson nje klinike ne sistemin e shendetesise.
+ * <p>
+ * Permban informacionet kryesore per kliniken:
+ * - drejtorin e klinikes
+ * - doktoret e punesuar
+ * - adresen e klinikes
+ * - emailin zyrtar
+ * - numrin e telefonit
+ * - faqen e internetit
+ * <p>
+ * Te gjithe fushat jane te detyrueshme per tu plotesuar.
+ */
 @Getter
 @Setter
 @Entity
