@@ -6,6 +6,12 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 
+/**
+ * Klasa qe perfaqeson takimet e pacienteve me doktoret ne sistem.
+ * Permban informacionet e nevojshme per menaxhimin e takimeve,
+ * duke perfshire ID e pacientit, doktorit, kohen e takimit,
+ * arsyen dhe statusin e takimit.
+ */
 @Setter
 @Getter
 @Entity

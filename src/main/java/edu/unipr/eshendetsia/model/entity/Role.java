@@ -5,6 +5,11 @@ import lombok.Getter;
 
 import java.util.Set;
 
+/**
+ * Klasa Role perfaqeson rolin e perdoruesit ne sistem.
+ * Permban informacionin bazik si id dhe emer, si dhe
+ * lidhjet me te drejtat e perdoruesit dhe perdoruesit qe kane kete rol.
+ */
 @Getter
 @Entity
 @Table(name = "role_table")
