@@ -1,7 +1,6 @@
 package edu.unipr.eshendetsia.controller;
 
 import edu.unipr.eshendetsia.model.entity.Bill;
-import edu.unipr.eshendetsia.service.implementation.BillServiceImplementation;
 import edu.unipr.eshendetsia.service.interfaces.BillService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,11 +16,11 @@ import java.util.List;
 @RequestMapping("/bills")
 public class BillingController {
 
-        private final BillServiceImplementation billServiceImplementation;
+        private final BillService billService;
 
         @Autowired
-        public BillingController(BillServiceImplementation billServiceImplementation) {
-            this.billServiceImplementation = billServiceImplementation;
+        public BillingController(BillService billService) {
+            this.billService = billService;
         }
 
     /**
@@ -32,7 +31,7 @@ public class BillingController {
      */
     @PostMapping
     public ResponseEntity<Bill> create(@RequestBody Bill bill) {
-        return ResponseEntity.ok(billServiceImplementation.save(bill));
+        return ResponseEntity.ok(billService.save(bill));
     }
 
     /**
@@ -43,7 +42,7 @@ public class BillingController {
      */
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<Bill>> getByUser(@PathVariable Long userId) {
-        return ResponseEntity.ok(billServiceImplementation.getByUser(userId));
+        return ResponseEntity.ok(billService.getByUser(userId));
     }
 
     /**
@@ -54,7 +53,7 @@ public class BillingController {
      */
     @GetMapping("/status")
     public ResponseEntity<List<Bill>> getByStatus(@RequestParam boolean paid) {
-        return ResponseEntity.ok(billServiceImplementation.getByPaymentStatus(paid));
+        return ResponseEntity.ok(billService.getByPaymentStatus(paid));
     }
 
     /**
@@ -65,7 +64,7 @@ public class BillingController {
      */
     @PutMapping("/{id}/pay")
     public ResponseEntity<Void> markAsPaid(@PathVariable Long id) {
-        billServiceImplementation.markAsPaid(id);
+        billService.markAsPaid(id);
         return ResponseEntity.noContent().build();
     }
 
@@ -77,7 +76,7 @@ public class BillingController {
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-        billServiceImplementation.delete(id);
+        billService.delete(id);
         return ResponseEntity.noContent().build();
     }
 }

@@ -2,6 +2,7 @@ package edu.unipr.eshendetsia.service.implementation;
 
 import edu.unipr.eshendetsia.model.entity.Bill;
 import edu.unipr.eshendetsia.repository.BillRepository;
+import edu.unipr.eshendetsia.service.interfaces.BillService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +13,7 @@ import java.util.List;
  * Menaxhon operacionet CRUD per faturat
  */
 @Service
-public class BillServiceImplementation {
+public class BillServiceImplementation implements BillService {
 
     private final BillRepository billRepository;
 
