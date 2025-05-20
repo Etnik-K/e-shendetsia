@@ -13,7 +13,7 @@ import java.util.List;
  * Menaxhon operacionet CRUD per kontaktet emergjente
  */
 @Service
-public class EmergencyContactServiceImplementation {
+public class EmergencyContactServiceImplementation implements EmergencyContactService{
 
     private final EmergencyContactRepository repository;
 
