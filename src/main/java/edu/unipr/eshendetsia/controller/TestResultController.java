@@ -1,8 +1,13 @@
 package edu.unipr.eshendetsia.controller;
 
+import com.auth0.jwt.exceptions.JWTVerificationException;
+import edu.unipr.eshendetsia.controller.base.BaseController;
+import edu.unipr.eshendetsia.exception.UnauthorizedException;
+import edu.unipr.eshendetsia.http.response.ApiResponse;
 import edu.unipr.eshendetsia.model.entity.TestResult;
 import edu.unipr.eshendetsia.service.interfaces.TestResultService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +20,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/test_results")
-public class TestResultController {
+public class TestResultController extends BaseController {
 
     private final TestResultService testResultService;
 
@@ -31,8 +36,8 @@ public class TestResultController {
      * @return rezultati i testit i ruajtur
      */
     @PostMapping
-    public ResponseEntity<TestResult> create(@RequestBody TestResult testResult) {
-        return ResponseEntity.ok(testResultService.save(testResult));
+    public ResponseEntity<ApiResponse<TestResult>> create(@RequestBody TestResult testResult) {
+        return this.ok(testResultService.save(testResult));
     }
 
     /**
@@ -42,8 +47,8 @@ public class TestResultController {
      * @return lista e rezultateve te testeve
      */
     @GetMapping("/user/{userId}")
-    public ResponseEntity<List<TestResult>> getByUser(@PathVariable Long userId) {
-        return ResponseEntity.ok(testResultService.getByUserId(userId));
+    public ResponseEntity<ApiResponse<List<TestResult>>> getByUser(@PathVariable Long userId) {
+        return this.ok(testResultService.getByUserId(userId));
     }
 
     /**
@@ -64,9 +69,13 @@ public class TestResultController {
      * @return pergjigje bosh
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        testResultService.delete(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<ApiResponse<String>> delete(@PathVariable Long id) {
+        try{
+            this.testResultService.delete(id);
+            return this.ok("Rezultati i testit u fshi me sukses");
+        } catch (JWTVerificationException | UnauthorizedException exception) {
+            return this.error("Nuk jeni i autorizuar", HttpStatus.UNAUTHORIZED);
+        }
     }
 
 }
