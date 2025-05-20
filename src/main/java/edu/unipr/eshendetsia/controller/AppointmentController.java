@@ -1,7 +1,6 @@
 package edu.unipr.eshendetsia.controller;
 
 import edu.unipr.eshendetsia.model.entity.Appointment;
-import edu.unipr.eshendetsia.service.implementation.AppointmentServiceImplementation;
 import edu.unipr.eshendetsia.service.interfaces.AppointmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
