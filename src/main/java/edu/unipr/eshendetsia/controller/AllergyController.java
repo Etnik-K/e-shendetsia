@@ -1,5 +1,7 @@
 package edu.unipr.eshendetsia.controller;
 
+import edu.unipr.eshendetsia.controller.base.BaseController;
+import edu.unipr.eshendetsia.http.response.ApiResponse;
 import edu.unipr.eshendetsia.model.entity.Allergy;
 import edu.unipr.eshendetsia.service.interfaces.AllergyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +16,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/allergies")
-public class AllergyController {
+public class AllergyController extends BaseController {
 
     private final AllergyService allergyService;
 
@@ -30,8 +32,8 @@ public class AllergyController {
      * @return Alergjia e krijuar me sukses
      */
     @PostMapping
-    public ResponseEntity<Allergy> create(@RequestBody Allergy allergy) {
-        return ResponseEntity.ok(allergyService.save(allergy));
+    public ResponseEntity<ApiResponse<Allergy>> create(@RequestBody Allergy allergy) {
+        return this.ok(allergyService.save(allergy));
     }
 
     /**
