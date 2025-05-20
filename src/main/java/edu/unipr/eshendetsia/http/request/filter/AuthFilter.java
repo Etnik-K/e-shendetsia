@@ -2,7 +2,7 @@ package edu.unipr.eshendetsia.http.request.filter;
 
 import edu.unipr.eshendetsia.model.entity.Role;
 import edu.unipr.eshendetsia.service.interfaces.UserService;
-import edu.unipr.eshendetsia.util.JWTUtil;
+import edu.unipr.eshendetsia.service.interfaces.JWTService;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import jakarta.servlet.FilterChain;
@@ -21,7 +21,7 @@ import java.util.Set;
 @Component
 public class AuthFilter extends OncePerRequestFilter {
     private final UserService userService;
-    private final JWTUtil jwtUtil;
+    private final JWTService jwtService;
 
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request,
@@ -41,7 +41,7 @@ public class AuthFilter extends OncePerRequestFilter {
 
         DecodedJWT decodedJWT;
         try{
-            decodedJWT = this.jwtUtil.verifyToken(jwtToken);
+            decodedJWT = this.jwtService.verifyToken(jwtToken);
         }catch (JWTVerificationException e){
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, STR."JWT Token i pavlefshem: \{e.getMessage()}");
             return;

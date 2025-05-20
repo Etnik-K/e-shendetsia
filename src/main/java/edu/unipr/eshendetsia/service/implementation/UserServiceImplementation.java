@@ -8,8 +8,7 @@ import edu.unipr.eshendetsia.model.entity.Role;
 import edu.unipr.eshendetsia.model.entity.User;
 import edu.unipr.eshendetsia.repository.UserRepository;
 import edu.unipr.eshendetsia.service.interfaces.UserService;
-import edu.unipr.eshendetsia.util.Hasher;
-import edu.unipr.eshendetsia.util.JWTUtil;
+import edu.unipr.eshendetsia.service.interfaces.JWTService;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,12 +26,12 @@ import java.util.Set;
 public class UserServiceImplementation implements UserService {
 
     private final UserRepository userRepository;
-    private final JWTUtil jwtUtil;
+    private final JWTService jwtService;
 
     @Autowired
-    public UserServiceImplementation(UserRepository userRepository, JWTUtil jwtUtil) {
+    public UserServiceImplementation(UserRepository userRepository, JWTService jwtService) {
         this.userRepository = userRepository;
-        this.jwtUtil = jwtUtil;
+        this.jwtService = jwtService;
     }
 
     /**
@@ -146,7 +145,7 @@ public class UserServiceImplementation implements UserService {
         claims.put("last_name", validUser.getLastName());
         claims.put("email", validUser.getEmail());
 
-        return this.jwtUtil.createToken(claims, validUser.getId());
+        return this.jwtService.createToken(claims, validUser.getId());
     }
 
     /**
@@ -162,7 +161,7 @@ public class UserServiceImplementation implements UserService {
         if (user.isEmpty()) throw new NotFoundException("Useri nuk u gjet");
 
         String salt = user.map(User::getPassword).orElse(null);
-        String passwordHash = Hasher.generateSaltedHash(password, salt);
+        String passwordHash = HasherServiceImplementation.generateSaltedHash(password, salt);
 
         if (!passwordHash.equals(user.get().getPassword())) throw new InvalidCredentialsException();
 

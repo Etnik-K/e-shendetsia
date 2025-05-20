@@ -1,6 +1,6 @@
 package edu.unipr.eshendetsia.controller;
 
-import edu.unipr.eshendetsia.http.request.LoginRequest;
+import edu.unipr.eshendetsia.http.request.body.LoginRequest;
 import edu.unipr.eshendetsia.exception.InvalidCredentialsException;
 import edu.unipr.eshendetsia.exception.NotFoundException;
 import edu.unipr.eshendetsia.exception.UnauthorizedException;

@@ -1,11 +1,13 @@
-package edu.unipr.eshendetsia.util;
+package edu.unipr.eshendetsia.service.implementation;
+
+import edu.unipr.eshendetsia.service.interfaces.HasherService;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Base64;
 
-public class Hasher {
+public class HasherServiceImplementation implements HasherService {
     private static final int SALT_LENGTH = 32; // length of salt in bytes
     private static final int HASH_LENGTH = 256; // length of hash in bytes
     private static final String HASH_ALGORITHM = "SHA-256";
@@ -15,7 +17,7 @@ public class Hasher {
      *
      * @return nje string te enkoduar ne Base64 qe permban vleren e salt
      */
-    public static String generateSalt() {
+    public String generateSalt() {
         SecureRandom random = new SecureRandom();
 
         byte[] salt = new byte[SALT_LENGTH];
@@ -30,7 +32,7 @@ public class Hasher {
      * @param salt     vlera e salt qe do te perdoret
      * @return nje string qe permban hashin e kombinuar me salt
      */
-    public static String generateSaltedHash(String password, String salt) {
+    public String generateSaltedHash(String password, String salt) {
         byte[] hash = hashWithSalt(password, salt);
 
         StringBuilder sb = new StringBuilder(SALT_LENGTH + HASH_LENGTH);
@@ -53,7 +55,7 @@ public class Hasher {
      * @param saltedHash vlera e hash e salted per krahasim
      * @return true nese tekstet perputhen, false nese jo
      */
-    public static boolean compareSaltedHash(String plaintext, String salt, String saltedHash) {
+    public boolean compareSaltedHash(String plaintext, String salt, String saltedHash) {
         String generatedPasswordHash = generateSaltedHash(plaintext, salt);
         return generatedPasswordHash.equals(saltedHash);
     }
@@ -66,7 +68,7 @@ public class Hasher {
      * @return nje array byte[] qe permban hashin perfundimtar
      * @throws RuntimeException nese algoritmi i hash nuk gjendet
      */
-    private static byte[] hashWithSalt(String plaintext, String salt) {
+    private byte[] hashWithSalt(String plaintext, String salt) {
         try {
             MessageDigest digest = MessageDigest.getInstance(HASH_ALGORITHM);
             digest.reset();

@@ -1,4 +1,4 @@
-package edu.unipr.eshendetsia.util;
+package edu.unipr.eshendetsia.http;
 
 /**
  * Percakton metodat e ndryshme HTTP qe perdoren ne aplikacion.
