@@ -1,26 +1,27 @@
 package edu.unipr.eshendetsia.controller;
 
 import edu.unipr.eshendetsia.model.entity.TestResult;
-import edu.unipr.eshendetsia.repository.TestResultRepository;
-import edu.unipr.eshendetsia.service.implementation.TestResultServiceImplementation;
+import edu.unipr.eshendetsia.service.interfaces.TestResultService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
-@RequestMapping("/test_results")
+
 /**
  * Kontrollues per rezultatet e testeve mjekesore
  * Menaxhon krijimin, marrjen dhe fshirjen e rezultateve te testeve
  */
+@RestController
+@RequestMapping("/test_results")
 public class TestResultController {
 
+    private final TestResultService testResultService;
+
     @Autowired
-    private final TestResultServiceImplementation testResultServiceImplementation;
-    public TestResultController(TestResultServiceImplementation testResultServiceImplementation) {
-        this.testResultServiceImplementation = testResultServiceImplementation;
+    public TestResultController(TestResultService testResultService) {
+        this.testResultService = testResultService;
     }
 
     /**
@@ -31,7 +32,7 @@ public class TestResultController {
      */
     @PostMapping
     public ResponseEntity<TestResult> create(@RequestBody TestResult testResult) {
-        return ResponseEntity.ok(testResultServiceImplementation.save(testResult));
+        return ResponseEntity.ok(testResultService.save(testResult));
     }
 
     /**
@@ -42,7 +43,7 @@ public class TestResultController {
      */
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<TestResult>> getByUser(@PathVariable Long userId) {
-        return ResponseEntity.ok(testResultServiceImplementation.getByUserId(userId));
+        return ResponseEntity.ok(testResultService.getByUserId(userId));
     }
 
     /**
@@ -53,7 +54,7 @@ public class TestResultController {
      */
     @GetMapping("/doctor/{doctorId}")
     public ResponseEntity<List<TestResult>> getByDoctor(@PathVariable Long doctorId) {
-        return ResponseEntity.ok(testResultServiceImplementation.getByDoctorId(doctorId));
+        return ResponseEntity.ok(testResultService.getByDoctorId(doctorId));
     }
 
     /**
@@ -64,7 +65,7 @@ public class TestResultController {
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-        testResultServiceImplementation.delete(id);
+        testResultService.delete(id);
         return ResponseEntity.noContent().build();
     }
 
