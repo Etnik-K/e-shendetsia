@@ -5,8 +5,7 @@
 package edu.unipr.eshendetsia.controller;
 
 import edu.unipr.eshendetsia.model.entity.Perscription;
-import edu.unipr.eshendetsia.repository.PerscriptionRepository;
-import edu.unipr.eshendetsia.service.implementation.PerscriptionServiceImplementation;
+import edu.unipr.eshendetsia.service.interfaces.PerscriptionService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,9 +20,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/perscriptions")
 public class PerscriptionController {
 
-    private final PerscriptionServiceImplementation perscriptionService;
+    private final PerscriptionService perscriptionService;
 
-    public PerscriptionController(PerscriptionServiceImplementation perscriptionService) {
+    public PerscriptionController(PerscriptionService perscriptionService) {
         this.perscriptionService = perscriptionService;
     }
 
