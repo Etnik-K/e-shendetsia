@@ -1,8 +1,8 @@
 package edu.unipr.eshendetsia.model.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+
 import java.time.LocalDateTime;
 
 /**
@@ -15,8 +15,9 @@ import java.time.LocalDateTime;
  * - Trajtimin
  * - Daten e vizites
  */
-@Getter
-@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 @Entity
 @Table(name = "history_table")
 public class History {
