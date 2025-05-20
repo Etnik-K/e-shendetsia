@@ -41,7 +41,10 @@ public class Perscription {
     private String dosage;
 
     @Column
-    private String instructions;
+    private String frequency;
+
+    @Column
+    private String durage;
 
     @Column
     private LocalDateTime issuedAt = LocalDateTime.now();
