@@ -1,8 +1,14 @@
 package edu.unipr.eshendetsia.controller;
 
+import com.auth0.jwt.exceptions.JWTVerificationException;
+import edu.unipr.eshendetsia.controller.base.BaseController;
+import edu.unipr.eshendetsia.exception.NotFoundException;
+import edu.unipr.eshendetsia.exception.UnauthorizedException;
+import edu.unipr.eshendetsia.http.response.ApiResponse;
 import edu.unipr.eshendetsia.model.entity.Bill;
 import edu.unipr.eshendetsia.service.interfaces.BillService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +20,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/bills")
-public class BillingController {
+public class BillingController extends BaseController {
 
         private final BillService billService;
 
@@ -30,8 +36,8 @@ public class BillingController {
      * @return Fatura e krijuar
      */
     @PostMapping
-    public ResponseEntity<Bill> create(@RequestBody Bill bill) {
-        return ResponseEntity.ok(billService.save(bill));
+    public ResponseEntity<ApiResponse<Bill>> create(@RequestBody Bill bill) {
+        return this.ok(billService.save(bill));
     }
 
     /**
@@ -41,8 +47,8 @@ public class BillingController {
      * @return Lista e faturave
      */
     @GetMapping("/user/{userId}")
-    public ResponseEntity<List<Bill>> getByUser(@PathVariable Long userId) {
-        return ResponseEntity.ok(billService.getByUser(userId));
+    public ResponseEntity<ApiResponse<List<Bill>>> getByUser(@PathVariable Long userId) {
+        return this.ok(billService.getByUser(userId));
     }
 
     /**
@@ -52,8 +58,8 @@ public class BillingController {
      * @return Lista e faturave
      */
     @GetMapping("/status")
-    public ResponseEntity<List<Bill>> getByStatus(@RequestParam boolean paid) {
-        return ResponseEntity.ok(billService.getByPaymentStatus(paid));
+    public ResponseEntity<ApiResponse<List<Bill>>> getByStatus(@RequestParam boolean paid) {
+        return this.ok(billService.getByPaymentStatus(paid));
     }
 
     /**
@@ -63,9 +69,15 @@ public class BillingController {
      * @return Pergjigje bosh
      */
     @PutMapping("/{id}/pay")
-    public ResponseEntity<Void> markAsPaid(@PathVariable Long id) {
-        billService.markAsPaid(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<ApiResponse<String>> markAsPaid(@PathVariable Long id) {
+        try{
+            this.billService.markAsPaid(id);
+            return this.ok("Eshte paguar");
+        } catch (JWTVerificationException | UnauthorizedException exception) {
+            return this.error("Nuk jeni i autorizuar", HttpStatus.UNAUTHORIZED);
+        }catch (NotFoundException exception){
+            return this.error("Nuk eshte gjetur",HttpStatus.NOT_FOUND);
+        }
     }
 
     /**
@@ -75,8 +87,14 @@ public class BillingController {
      * @return Pergjigje bosh
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        billService.delete(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<ApiResponse<String>> delete(@PathVariable Long id) {
+        try{
+            this.billService.delete(id);
+            return this.ok("Faktura u fshi me sukses");
+        } catch (JWTVerificationException | UnauthorizedException exception) {
+            return this.error("Nuk jeni i autorizuar", HttpStatus.UNAUTHORIZED);
+        }catch (NotFoundException exception){
+            return this.error("Nuk eshte gjetur",HttpStatus.NOT_FOUND);
+        }
     }
 }
