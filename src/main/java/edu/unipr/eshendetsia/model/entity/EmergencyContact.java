@@ -1,16 +1,18 @@
 package edu.unipr.eshendetsia.model.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 
 /**
  * Entiteti qe perfaqeson kontaktin emergjent te pacientit
  * Permban informacionet kryesore te personit qe duhet kontaktuar ne raste emergjente
  */
-@Getter
-@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 @Entity
 @Table
 public class EmergencyContact {
