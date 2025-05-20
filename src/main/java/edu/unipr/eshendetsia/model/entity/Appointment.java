@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
  */
 @AllArgsConstructor
 @NoArgsConstructor
-@Data // getter-setter-tostring-hashcode-equals
+@Data // getter-setter-tostring-hashcode-equals-requiredArgsConstructor
 @Entity
 @Table(name = "appointment_table")
 public class Appointment {
