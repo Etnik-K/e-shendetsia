@@ -1,4 +1,4 @@
-package edu.unipr.eshendetsia.util;
+package edu.unipr.eshendetsia.service.implementation;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTCreator;
@@ -6,6 +6,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.interfaces.JWTVerifier;
+import edu.unipr.eshendetsia.service.interfaces.JWTService;
 import org.springframework.stereotype.Component;
 
 import java.security.SecureRandom;
@@ -15,10 +16,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Component
-public class JWTUtilImplementation implements JWTUtil{
+public class JWTServiceImplementation implements JWTService {
 
     private static final int KEY_SIZE = 256;
-    private static final String SECRET_KEY = JWTUtilImplementation.generateSecretKey();
+    private static final String SECRET_KEY = JWTServiceImplementation.generateSecretKey();
     private static final String ISSUER = "e-shendetsia.rks-gov.net";
 
     /**

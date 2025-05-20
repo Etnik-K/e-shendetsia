@@ -1,4 +1,4 @@
-package edu.unipr.eshendetsia.util;
+package edu.unipr.eshendetsia.service.interfaces;
 
 import com.auth0.jwt.interfaces.DecodedJWT;
 
@@ -9,7 +9,7 @@ import java.util.Map;
  * Mundeson gjenerimin e tokenave te rinj duke perdorur te dhenat e perdoruesit,
  * si dhe verifikon nese nje token ekzistues eshte valid.
  */
-public interface JWTUtil {
+public interface JWTService {
     /**
      * Krijon nje token te ri JWT
      *

@@ -2,12 +2,9 @@ package edu.unipr.eshendetsia.controller;
 
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import edu.unipr.eshendetsia.controller.base.BaseController;
-import edu.unipr.eshendetsia.exception.InvalidCredentialsException;
-import edu.unipr.eshendetsia.exception.NotFoundException;
 import edu.unipr.eshendetsia.exception.UnauthorizedException;
-import edu.unipr.eshendetsia.http.request.CreateAppointmentRequest;
+import edu.unipr.eshendetsia.http.request.body.CreateAppointmentRequest;
 import edu.unipr.eshendetsia.http.response.ApiResponse;
-import edu.unipr.eshendetsia.model.entity.Appointment;
 import edu.unipr.eshendetsia.service.interfaces.AppointmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

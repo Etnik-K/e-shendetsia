@@ -4,7 +4,7 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import edu.unipr.eshendetsia.controller.base.BaseController;
 import edu.unipr.eshendetsia.exception.NotFoundException;
 import edu.unipr.eshendetsia.exception.UnauthorizedException;
-import edu.unipr.eshendetsia.http.request.CreateBillRequest;
+import edu.unipr.eshendetsia.http.request.body.CreateBillRequest;
 import edu.unipr.eshendetsia.http.response.ApiResponse;
 import edu.unipr.eshendetsia.model.entity.Bill;
 import edu.unipr.eshendetsia.service.interfaces.BillService;
