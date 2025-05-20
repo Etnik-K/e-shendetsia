@@ -1,7 +1,7 @@
 package edu.unipr.eshendetsia.controller;
 
 import edu.unipr.eshendetsia.model.entity.Allergy;
-import edu.unipr.eshendetsia.service.implementation.AllergyServiceImplementation;
+import edu.unipr.eshendetsia.service.interfaces.AllergyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,10 +16,10 @@ import java.util.List;
 @RequestMapping("/allergies")
 public class AllergyController {
 
-    private final AllergyServiceImplementation allergyService;
+    private final AllergyService allergyService;
 
     @Autowired
-    public AllergyController(AllergyServiceImplementation allergyService) {
+    public AllergyController(AllergyService allergyService) {
         this.allergyService = allergyService;
     }
 
