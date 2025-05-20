@@ -4,6 +4,8 @@
  */
 package edu.unipr.eshendetsia.controller;
 
+import edu.unipr.eshendetsia.controller.base.BaseController;
+import edu.unipr.eshendetsia.http.response.ApiResponse;
 import edu.unipr.eshendetsia.model.entity.Perscription;
 import edu.unipr.eshendetsia.service.interfaces.PerscriptionService;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/perscriptions")
-public class PerscriptionController {
+public class PerscriptionController extends BaseController {
 
     private final PerscriptionService perscriptionService;
 
@@ -33,8 +35,8 @@ public class PerscriptionController {
      * @return receta e krijuar dhe ruajtur ne databaze
      */
     @PostMapping
-    public ResponseEntity<Perscription> create(@RequestBody Perscription prescription) {
+    public ResponseEntity<ApiResponse<Perscription>> create(@RequestBody Perscription prescription) {
         Perscription saved = perscriptionService.save(prescription);
-        return ResponseEntity.ok(saved);
+        return this.ok(saved);
     }
 }
