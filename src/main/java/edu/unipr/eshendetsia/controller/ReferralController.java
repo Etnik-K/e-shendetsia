@@ -1,11 +1,16 @@
 package edu.unipr.eshendetsia.controller;
 
+import com.auth0.jwt.exceptions.JWTVerificationException;
+import edu.unipr.eshendetsia.controller.base.BaseController;
+import edu.unipr.eshendetsia.exception.UnauthorizedException;
+import edu.unipr.eshendetsia.http.response.ApiResponse;
 import edu.unipr.eshendetsia.model.entity.Referral;
 import edu.unipr.eshendetsia.service.interfaces.ReferralService;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +24,7 @@ import java.util.List;
 @Getter
 @RestController
 @RequestMapping("/referrals")
-public class ReferralController {
+public class ReferralController extends BaseController {
         private final ReferralService service;
 
         @Autowired
@@ -34,8 +39,8 @@ public class ReferralController {
      * @return Referimi i krijuar
      */
     @PostMapping
-    public ResponseEntity<Referral> create(@RequestBody Referral referral) {
-        return ResponseEntity.ok(service.save(referral));
+    public ResponseEntity<ApiResponse<Referral>> create(@RequestBody Referral referral) {
+        return this.ok(service.save(referral));
     }
 
     /**
@@ -45,8 +50,8 @@ public class ReferralController {
      * @return Lista e referimeve
      */
     @GetMapping("/patient/{patientId}")
-    public ResponseEntity<List<Referral>> getByPatient(@PathVariable Long patientId) {
-        return ResponseEntity.ok(service.getByPatient(patientId));
+    public ResponseEntity<ApiResponse<List<Referral>>> getByPatient(@PathVariable Long patientId) {
+        return this.ok(service.getByPatient(patientId));
     }
 
     /**
@@ -56,8 +61,8 @@ public class ReferralController {
      * @return Lista e referimeve
      */
     @GetMapping("/doctor/{doctorId}")
-    public ResponseEntity<List<Referral>> getByDoctor(@PathVariable Long doctorId) {
-        return ResponseEntity.ok(service.getByReceivingDoctor(doctorId));
+    public ResponseEntity<ApiResponse<List<Referral>>> getByDoctor(@PathVariable Long doctorId) {
+        return this.ok(service.getByReceivingDoctor(doctorId));
     }
 
     /**
@@ -67,8 +72,12 @@ public class ReferralController {
      * @return Pergjigje pa permbajtje
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        service.delete(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<ApiResponse<String>> delete(@PathVariable Long id) {
+        try{
+            this.service.delete(id);
+            return this.ok("Referimi u fshi me sukses");
+        } catch (JWTVerificationException | UnauthorizedException exception) {
+            return this.error("Nuk jeni i autorizuar", HttpStatus.UNAUTHORIZED);
+        }
     }
 }
