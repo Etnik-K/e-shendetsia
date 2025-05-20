@@ -1,10 +1,13 @@
 package edu.unipr.eshendetsia.controller;
 
-import edu.unipr.eshendetsia.model.entity.History;
+import com.auth0.jwt.exceptions.JWTVerificationException;
+import edu.unipr.eshendetsia.exception.UnauthorizedException;
+import edu.unipr.eshendetsia.http.request.SaveHistoryRequest;
 import edu.unipr.eshendetsia.service.interfaces.HistoryService;
 import edu.unipr.eshendetsia.http.response.ApiResponse;
 import edu.unipr.eshendetsia.controller.base.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,12 +29,16 @@ public class HistoryController extends BaseController {
     /**
      * Ruan historikun e ri te perdoruesit ne sistem
      *
-     * @param history te dhenat e historikut per tu ruajtur
+     * @param historyRequest te dhenat e historikut per tu ruajtur
      * @return pergjigjen me historikun e ruajtur
      */
     @PostMapping("/save")
-    public ResponseEntity<ApiResponse<History>> saveUserHistory(@RequestBody History history){
-        History saved = historyService.save(history);
-        return ResponseEntity.ok(new ApiResponse<>(true, saved, "Gabim"));
+    public ResponseEntity<ApiResponse<String>> saveUserHistory(@RequestBody SaveHistoryRequest historyRequest){
+        try{
+            historyService.save(historyRequest.toHistory());
+            return this.ok("Historiku u ruajt me sukses");
+        } catch (UnauthorizedException | JWTVerificationException e) {
+            return this.error("Nuk jeni i autorizuar", HttpStatus.UNAUTHORIZED );
+        }
     }
 }
