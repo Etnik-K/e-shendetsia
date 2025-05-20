@@ -5,6 +5,7 @@ import edu.unipr.eshendetsia.controller.base.BaseController;
 import edu.unipr.eshendetsia.exception.InvalidCredentialsException;
 import edu.unipr.eshendetsia.exception.NotFoundException;
 import edu.unipr.eshendetsia.exception.UnauthorizedException;
+import edu.unipr.eshendetsia.http.request.CreateAppointmentRequest;
 import edu.unipr.eshendetsia.http.response.ApiResponse;
 import edu.unipr.eshendetsia.model.entity.Appointment;
 import edu.unipr.eshendetsia.service.interfaces.AppointmentService;
@@ -34,15 +35,15 @@ public class AppointmentController extends BaseController {
     /**
      * Krijon nje termin te ri
      *
-     * @param appointment termini qe do te krijohet
+     * @param appointmentRequest termini qe do te krijohet
      * @return terminin e krijuar
      */
     @PostMapping("/appointments")
-    public ResponseEntity<ApiResponse<Appointment>> create(@RequestBody Appointment appointment) {
-
+    public ResponseEntity<ApiResponse<String>> create(@RequestBody CreateAppointmentRequest appointmentRequest) {
         try{
-            return this.ok(appointmentService.save(appointment));
-        } catch (NotFoundException | InvalidCredentialsException exception) {
+            appointmentService.save(appointmentRequest.toAppointment());
+            return this.ok("Termini u caktua me sukses");
+        } catch (UnauthorizedException | JWTVerificationException e) {
             return this.error("Nuk jeni i autorizuar", HttpStatus.UNAUTHORIZED);
         }
     }
@@ -53,15 +54,15 @@ public class AppointmentController extends BaseController {
      * @param id identifikuesi i terminit
      * @return pergjigje bosh me status 204
      */
-    @PutMapping("/{id}/cancel")
+    @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse<String>> cancel(@PathVariable Long id) {
-        try{
-
+        try {
             this.appointmentService.cancel(id);
-            return this.ok("Eshte anuluar");
+            return this.ok("Termini eshte anuluar me sukses");
         } catch (JWTVerificationException | UnauthorizedException exception) {
             return this.error("Nuk jeni i autorizuar", HttpStatus.UNAUTHORIZED);
-
+        } catch (Exception e) {
+            return this.error("Termini nuk eshte anuluar", HttpStatus.NOT_FOUND);
         }
     }
 }
