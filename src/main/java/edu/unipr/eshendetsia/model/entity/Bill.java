@@ -1,8 +1,7 @@
 package edu.unipr.eshendetsia.model.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -11,10 +10,11 @@ import java.time.LocalDateTime;
  * ne platformen per menaxhimin e klinikave shendetesore.
  * Kjo klase perdoret per te ruajtur dhe menaxhuar te dhenat e pagesave.
  */
-@Getter
-@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 @Entity
-@Table(name = "bills")
+@Table(name = "bill_table")
 public class Bill {
 
     @Id

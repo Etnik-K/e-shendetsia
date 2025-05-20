@@ -4,6 +4,7 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import edu.unipr.eshendetsia.controller.base.BaseController;
 import edu.unipr.eshendetsia.exception.NotFoundException;
 import edu.unipr.eshendetsia.exception.UnauthorizedException;
+import edu.unipr.eshendetsia.http.request.CreateBillRequest;
 import edu.unipr.eshendetsia.http.response.ApiResponse;
 import edu.unipr.eshendetsia.model.entity.Bill;
 import edu.unipr.eshendetsia.service.interfaces.BillService;
@@ -22,22 +23,27 @@ import java.util.List;
 @RequestMapping("/bills")
 public class BillingController extends BaseController {
 
-        private final BillService billService;
+    private final BillService billService;
 
-        @Autowired
-        public BillingController(BillService billService) {
+    @Autowired
+    public BillingController(BillService billService) {
             this.billService = billService;
         }
 
     /**
      * Krijon nje fature te re
      *
-     * @param bill Fatura per tu krijuar
-     * @return Fatura e krijuar
+     * @param billRequest Fatura per tu krijuar
+     * @return Mesazh konfirmues
      */
     @PostMapping
-    public ResponseEntity<ApiResponse<Bill>> create(@RequestBody Bill bill) {
-        return this.ok(billService.save(bill));
+    public ResponseEntity<ApiResponse<String>> create(@RequestBody CreateBillRequest billRequest) {
+        try{
+            billService.save(billRequest.toBill());
+            return this.ok("Faktura u krijua me sukses");
+        } catch (JWTVerificationException | UnauthorizedException exception) {
+            return this.error("Nuk jeni i autorizuar", HttpStatus.UNAUTHORIZED);
+        }
     }
 
     /**
@@ -48,7 +54,13 @@ public class BillingController extends BaseController {
      */
     @GetMapping("/user/{userId}")
     public ResponseEntity<ApiResponse<List<Bill>>> getByUser(@PathVariable Long userId) {
-        return this.ok(billService.getByUser(userId));
+        try{
+            return this.ok(billService.getByUser(userId));
+        } catch (JWTVerificationException  | UnauthorizedException exception) {
+            return this.error("Nuk jeni i autorizuar!", HttpStatus.UNAUTHORIZED);
+        }catch (NotFoundException exception){
+            return this.error("Nuk eshte gjetur",HttpStatus.NOT_FOUND);
+        }
     }
 
     /**
@@ -57,9 +69,15 @@ public class BillingController extends BaseController {
      * @param paid Statusi i pageses
      * @return Lista e faturave
      */
-    @GetMapping("/status")
-    public ResponseEntity<ApiResponse<List<Bill>>> getByStatus(@RequestParam boolean paid) {
-        return this.ok(billService.getByPaymentStatus(paid));
+    @GetMapping("/status/{paid}")
+    public ResponseEntity<ApiResponse<List<Bill>>> getByStatus(@PathVariable boolean paid) {
+        try{
+            return this.ok(billService.getByPaymentStatus(paid));
+        } catch (JWTVerificationException  | UnauthorizedException exception) {
+            return this.error("Nuk jeni i autorizuar!", HttpStatus.UNAUTHORIZED);
+        } catch (NotFoundException exception){
+            return this.error("Nuk eshte gjetur",HttpStatus.NOT_FOUND);
+        }
     }
 
     /**
