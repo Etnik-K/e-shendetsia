@@ -1,9 +1,17 @@
 package edu.unipr.eshendetsia.controller;
 
+import com.auth0.jwt.exceptions.JWTVerificationException;
+import edu.unipr.eshendetsia.controller.base.BaseController;
+import edu.unipr.eshendetsia.exception.InvalidCredentialsException;
+import edu.unipr.eshendetsia.exception.NotFoundException;
+import edu.unipr.eshendetsia.exception.UnauthorizedException;
+import edu.unipr.eshendetsia.http.response.ApiResponse;
 import edu.unipr.eshendetsia.model.entity.EmergencyContact;
+import edu.unipr.eshendetsia.model.entity.User;
 import edu.unipr.eshendetsia.service.interfaces.EmergencyContactService;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +26,7 @@ import java.util.List;
 @Setter
 @RestController
 @RequestMapping("/emergency_contacts")
-public class EmergencyContactController {
+public class EmergencyContactController extends BaseController {
 
     private final EmergencyContactService emergencyContactService;
 
@@ -33,8 +41,13 @@ public class EmergencyContactController {
      * @return kontaktin e krijuar emergjent
      */
     @PostMapping
-    public ResponseEntity<EmergencyContact> create(@RequestBody EmergencyContact contact) {
-        return ResponseEntity.ok(emergencyContactService.save(contact));
+    public ResponseEntity<ApiResponse<EmergencyContact>> create(@RequestBody EmergencyContact contact) {
+
+        try{
+            return this.ok(emergencyContactService.save(contact));
+        } catch (NotFoundException | InvalidCredentialsException exception) {
+            return this.error("Perdoruese/Fjalekalimi i gabuar", HttpStatus.UNAUTHORIZED);
+        }
     }
 
     /**
@@ -44,8 +57,13 @@ public class EmergencyContactController {
      * @return listen e kontakteve emergjente
      */
     @GetMapping("/user/{userId}")
-    public ResponseEntity<List<EmergencyContact>> getByUser(@PathVariable Long userId) {
-        return ResponseEntity.ok(emergencyContactService.getByUserId(userId));
+    public ResponseEntity<ApiResponse<List<EmergencyContact>>> getByUser(@PathVariable Long userId) {
+
+        try{
+            return this.ok(emergencyContactService.getByUserId(userId));
+        } catch (JWTVerificationException  | UnauthorizedException exception) {
+            return this.error("Nuk jeni i autorizuar!", HttpStatus.UNAUTHORIZED);
+        }
     }
 
     /**
@@ -55,8 +73,14 @@ public class EmergencyContactController {
      * @return pergjigje bosh me status 204
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        emergencyContactService.delete(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<ApiResponse<String>> delete(@PathVariable Long id) {
+        try{
+            this.emergencyContactService.delete(id);
+            return this.ok("Kontakti u fshi me sukses");
+        } catch (JWTVerificationException | UnauthorizedException exception) {
+            return this.error("Nuk jeni i autorizuar", HttpStatus.UNAUTHORIZED);
+        }catch (NotFoundException exception){
+            return this.error("Nuk eshte gjetur",HttpStatus.NOT_FOUND);
+        }
     }
 }
