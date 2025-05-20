@@ -2,13 +2,11 @@ package edu.unipr.eshendetsia.controller;
 
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import edu.unipr.eshendetsia.controller.base.BaseController;
-import edu.unipr.eshendetsia.exception.InvalidCredentialsException;
 import edu.unipr.eshendetsia.exception.NotFoundException;
 import edu.unipr.eshendetsia.exception.UnauthorizedException;
 import edu.unipr.eshendetsia.http.request.body.CreateEmergencyContactRequest;
 import edu.unipr.eshendetsia.http.response.ApiResponse;
 import edu.unipr.eshendetsia.model.entity.EmergencyContact;
-import edu.unipr.eshendetsia.model.entity.User;
 import edu.unipr.eshendetsia.service.interfaces.EmergencyContactService;
 import lombok.Getter;
 import lombok.Setter;
@@ -44,7 +42,7 @@ public class EmergencyContactController extends BaseController {
     @PostMapping
     public ResponseEntity<ApiResponse<String>> create(@RequestBody CreateEmergencyContactRequest emergyContactRequest) {
         try{
-            emergencyContactService.save(emergyContactRequest.toEmergencyContact())
+            emergencyContactService.save(emergyContactRequest.toEmergencyContact());
             return this.ok("Kontakti u krijua me sukses");
         } catch (JWTVerificationException | UnauthorizedException exception) {
             return this.error("Nuk jeni i autorizuar", HttpStatus.UNAUTHORIZED);
