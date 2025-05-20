@@ -1,12 +1,17 @@
 package edu.unipr.eshendetsia.controller;
 
 
+import com.auth0.jwt.exceptions.JWTVerificationException;
+import edu.unipr.eshendetsia.controller.base.BaseController;
+import edu.unipr.eshendetsia.exception.UnauthorizedException;
+import edu.unipr.eshendetsia.http.response.ApiResponse;
 import edu.unipr.eshendetsia.model.entity.Insurance;
 import edu.unipr.eshendetsia.service.interfaces.InsuranceService;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +25,7 @@ import java.util.List;
 @Setter
 @RestController
 @RequestMapping("/insurance")
-public class InsuranceController {
+public class InsuranceController extends BaseController {
     private final InsuranceService insuranceService;
 
     @Autowired
@@ -34,8 +39,8 @@ public class InsuranceController {
      * @return sigurimi i krijuar
      */
     @PostMapping
-    public ResponseEntity<Insurance> create(@RequestBody Insurance insurance) {
-        return ResponseEntity.ok(insuranceService.save(insurance));
+    public ResponseEntity<ApiResponse<Insurance>> create(@RequestBody Insurance insurance) {
+        return this.ok(insuranceService.save(insurance));
     }
 
     /**
@@ -44,8 +49,8 @@ public class InsuranceController {
      * @return lista e sigurimeve te perdoruesit
      */
     @GetMapping("/user/{userId}")
-    public ResponseEntity<List<Insurance>> getByUser(@PathVariable Long userId) {
-        return ResponseEntity.ok(insuranceService.getByUserId(userId));
+    public ResponseEntity<ApiResponse<List<Insurance>>> getByUser(@PathVariable Long userId) {
+        return this.ok(insuranceService.getByUserId(userId));
     }
 
     /**
@@ -55,9 +60,9 @@ public class InsuranceController {
      * @return sigurimi i perditesuar
      */
     @PutMapping("/{id}/status")
-    public ResponseEntity<Insurance> updateStatus(@PathVariable Long id, @RequestParam boolean active) {
+    public ResponseEntity<ApiResponse<Insurance>> updateStatus(@PathVariable Long id, @RequestParam boolean active) {
         Insurance updated = insuranceService.updateStatus(id, active);
-        return updated != null ? ResponseEntity.ok(updated) : ResponseEntity.notFound().build();
+        return updated != null ? this.ok(updated) : ResponseEntity.notFound().build();
     }
 
     /**
@@ -66,8 +71,12 @@ public class InsuranceController {
      * @return pergjigjja bosh ne rast suksesi
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        insuranceService.delete(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<ApiResponse<String>> delete(@PathVariable Long id) {
+        try{
+            insuranceService.delete(id);
+            return this.ok("Perdoruesi u fshi me sukses");
+        } catch (JWTVerificationException | UnauthorizedException exception) {
+            return this.error("Nuk jeni i autorizuar", HttpStatus.UNAUTHORIZED);
+        }
     }
 }
