@@ -1,7 +1,7 @@
 package edu.unipr.eshendetsia.controller;
 
 import edu.unipr.eshendetsia.model.entity.Referral;
-import edu.unipr.eshendetsia.service.implementation.ReferralServiceImplementation;
+import edu.unipr.eshendetsia.service.interfaces.ReferralService;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,10 +20,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/referrals")
 public class ReferralController {
-        private final ReferralServiceImplementation service;
+        private final ReferralService service;
 
         @Autowired
-        public ReferralController(ReferralServiceImplementation service) {
+        public ReferralController(ReferralService service) {
             this.service = service;
         }
 
