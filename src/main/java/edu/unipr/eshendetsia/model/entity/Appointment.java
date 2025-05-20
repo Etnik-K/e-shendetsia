@@ -1,8 +1,7 @@
 package edu.unipr.eshendetsia.model.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -12,10 +11,11 @@ import java.time.LocalDateTime;
  * duke perfshire ID e pacientit, doktorit, kohen e takimit,
  * arsyen dhe statusin e takimit.
  */
-@Setter
-@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+@Data // getter-setter-tostring-hashcode-equals
 @Entity
-@Table(name = "appointments")
+@Table(name = "appointment_table")
 public class Appointment {
 
     @Id
@@ -35,5 +35,5 @@ public class Appointment {
     private String reason;
 
     @Column
-    private String Status = "SCHEDULED";
+    private String Status;
 }
