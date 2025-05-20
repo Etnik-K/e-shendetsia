@@ -1,6 +1,10 @@
 package edu.unipr.eshendetsia.controller;
 
+import com.auth0.jwt.exceptions.JWTVerificationException;
 import edu.unipr.eshendetsia.controller.base.BaseController;
+import edu.unipr.eshendetsia.exception.NotFoundException;
+import edu.unipr.eshendetsia.exception.UnauthorizedException;
+import edu.unipr.eshendetsia.http.request.CreateAllergyRequest;
 import edu.unipr.eshendetsia.http.response.ApiResponse;
 import edu.unipr.eshendetsia.model.entity.Allergy;
 import edu.unipr.eshendetsia.service.interfaces.AllergyService;
@@ -29,12 +33,17 @@ public class AllergyController extends BaseController {
     /**
      * Krijon nje alergji te re per pacientin
      *
-     * @param allergy Alergjia qe do te ruhet
+     * @param allergyRequest Alergjia qe do te ruhet
      * @return Alergjia e krijuar me sukses
      */
     @PostMapping
-    public ResponseEntity<ApiResponse<Allergy>> create(@RequestBody Allergy allergy) {
-        return this.ok(allergyService.save(allergy));
+    public ResponseEntity<ApiResponse<String>> create(@RequestBody CreateAllergyRequest allergyRequest) {
+        try{
+            allergyService.save(allergyRequest.toAllergy());
+            return this.ok("Alergjia u krijua me sukses");
+        } catch (UnauthorizedException | JWTVerificationException e) {
+            return this.error("Nuk jeni i autorizuar", HttpStatus.UNAUTHORIZED);
+        }
     }
 
     /**
@@ -45,7 +54,13 @@ public class AllergyController extends BaseController {
      */
     @GetMapping("/user/{userId}")
     public ResponseEntity<ApiResponse<List<Allergy>>> getByUser(@PathVariable Long userId) {
-        return this.ok(allergyService.getByUserId(userId));
+        try{
+            return this.ok(allergyService.getByUserId(userId));
+        } catch (UnauthorizedException | JWTVerificationException e) {
+            return this.error("Nuk jeni i autorizuar", HttpStatus.UNAUTHORIZED);
+        } catch (NotFoundException e) {
+            return this.error("Useri nuk eshte gjetur", HttpStatus.NOT_FOUND);
+        }
     }
 
     /**
@@ -58,9 +73,11 @@ public class AllergyController extends BaseController {
     public ResponseEntity<ApiResponse<String>> delete(@PathVariable Long id) {
         try{
             allergyService.delete(id);
-            return this.ok("Useri u fshi me sukses");
-        } catch (Exception e) {
-            return this.error("Useri nuk u fshi", HttpStatus.UNAUTHORIZED);
+            return this.ok("Alergjia u fshi me sukses");
+        } catch (UnauthorizedException | JWTVerificationException e) {
+            return this.error("Nuk jeni i autorizuar", HttpStatus.UNAUTHORIZED);
+        } catch (NotFoundException e) {
+            return this.error("Alergjia nuk eshte gjetur", HttpStatus.NOT_FOUND);
         }
     }
 }

@@ -2,13 +2,17 @@ package edu.unipr.eshendetsia.model.entity;
 
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
  * Klasa qe perfaqeson informacionin e alergjeneve te pacientit
  * Permban informacionin per tipin e alergjise dhe reaksionet perkatese
  */
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 @Entity
@@ -39,4 +43,5 @@ public class Allergy {
      */
     @Column
     private String notes;
+
 }
