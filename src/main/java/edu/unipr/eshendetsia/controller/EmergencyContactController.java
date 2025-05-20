@@ -5,6 +5,7 @@ import edu.unipr.eshendetsia.controller.base.BaseController;
 import edu.unipr.eshendetsia.exception.InvalidCredentialsException;
 import edu.unipr.eshendetsia.exception.NotFoundException;
 import edu.unipr.eshendetsia.exception.UnauthorizedException;
+import edu.unipr.eshendetsia.http.request.body.CreateEmergencyContactRequest;
 import edu.unipr.eshendetsia.http.response.ApiResponse;
 import edu.unipr.eshendetsia.model.entity.EmergencyContact;
 import edu.unipr.eshendetsia.model.entity.User;
@@ -37,16 +38,18 @@ public class EmergencyContactController extends BaseController {
     /**
      * Krijon nje kontakt te ri emergjent
      *
-     * @param contact kontakti emergjent qe do te krijohet
+     * @param emergyContactRequest kontakti emergjent qe do te krijohet
      * @return kontaktin e krijuar emergjent
      */
     @PostMapping
-    public ResponseEntity<ApiResponse<EmergencyContact>> create(@RequestBody EmergencyContact contact) {
-
+    public ResponseEntity<ApiResponse<String>> create(@RequestBody CreateEmergencyContactRequest emergyContactRequest) {
         try{
-            return this.ok(emergencyContactService.save(contact));
-        } catch (NotFoundException | InvalidCredentialsException exception) {
-            return this.error("Perdoruese/Fjalekalimi i gabuar", HttpStatus.UNAUTHORIZED);
+            emergencyContactService.save(emergyContactRequest.toEmergencyContact())
+            return this.ok("Kontakti u krijua me sukses");
+        } catch (JWTVerificationException | UnauthorizedException exception) {
+            return this.error("Nuk jeni i autorizuar", HttpStatus.UNAUTHORIZED);
+        } catch (NotFoundException e) {
+            return this.error("Nuk u gjet", HttpStatus.UNAUTHORIZED);
         }
     }
 
@@ -58,7 +61,6 @@ public class EmergencyContactController extends BaseController {
      */
     @GetMapping("/user/{userId}")
     public ResponseEntity<ApiResponse<List<EmergencyContact>>> getByUser(@PathVariable Long userId) {
-
         try{
             return this.ok(emergencyContactService.getByUserId(userId));
         } catch (JWTVerificationException  | UnauthorizedException exception) {
