@@ -70,7 +70,7 @@ public class BillingController extends BaseController {
      * @return Lista e faturave
      */
     @GetMapping("/status/{paid}")
-    public ResponseEntity<ApiResponse<List<Bill>>> getByStatus(@PathVariable boolean paid) {
+    public ResponseEntity<ApiResponse<List<Bill>>> getByStatus(@PathVariable Boolean paid) {
         try{
             return this.ok(billService.getByPaymentStatus(paid));
         } catch (JWTVerificationException  | UnauthorizedException exception) {
