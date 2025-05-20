@@ -1,8 +1,7 @@
 package edu.unipr.eshendetsia.controller;
 
 import edu.unipr.eshendetsia.model.entity.Feedback;
-import edu.unipr.eshendetsia.repository.FeedbackRepository;
-import edu.unipr.eshendetsia.service.implementation.FeedbackServiceImplementation;
+import edu.unipr.eshendetsia.service.interfaces.FeedbackService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,11 +16,11 @@ import java.util.List;
 @RequestMapping("/feedback")
 public class FeedbackController {
 
-    private final FeedbackServiceImplementation feedbackServiceImplementation;
+    private final FeedbackService feedbackService;
 
     @Autowired
-    public FeedbackController(FeedbackServiceImplementation feedbackServiceImplementation) {
-        this.feedbackServiceImplementation = feedbackServiceImplementation;
+    public FeedbackController(FeedbackService feedbackService) {
+        this.feedbackService = feedbackService;
     }
 
     /**
@@ -32,7 +31,7 @@ public class FeedbackController {
      */
     @PostMapping
     public ResponseEntity<Feedback> submit(@RequestBody Feedback feedback) {
-        return ResponseEntity.ok(feedbackServiceImplementation.save(feedback));
+        return ResponseEntity.ok(feedbackService.save(feedback));
     }
 
     /**
@@ -43,7 +42,7 @@ public class FeedbackController {
      */
     @GetMapping("/doctor/{doctorId}")
     public ResponseEntity<List<Feedback>> getByDoctor(@PathVariable Long doctorId) {
-        return ResponseEntity.ok(feedbackServiceImplementation.getByDoctorId(doctorId));
+        return ResponseEntity.ok(feedbackService.getByDoctorId(doctorId));
     }
 
     /**
@@ -54,7 +53,7 @@ public class FeedbackController {
      */
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<Feedback>> getByUser(@PathVariable Long userId) {
-        return ResponseEntity.ok(feedbackServiceImplementation.getByUserId(userId));
+        return ResponseEntity.ok(feedbackService.getByUserId(userId));
     }
 
     /**
@@ -65,7 +64,7 @@ public class FeedbackController {
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-        feedbackServiceImplementation.delete(id);
+        feedbackService.delete(id);
         return ResponseEntity.noContent().build();
     }
 
