@@ -1,8 +1,15 @@
 package edu.unipr.eshendetsia.controller;
 
+import com.auth0.jwt.exceptions.JWTVerificationException;
+import edu.unipr.eshendetsia.controller.base.BaseController;
+import edu.unipr.eshendetsia.exception.InvalidCredentialsException;
+import edu.unipr.eshendetsia.exception.NotFoundException;
+import edu.unipr.eshendetsia.exception.UnauthorizedException;
+import edu.unipr.eshendetsia.http.response.ApiResponse;
 import edu.unipr.eshendetsia.model.entity.Feedback;
 import edu.unipr.eshendetsia.service.interfaces.FeedbackService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +21,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/feedback")
-public class FeedbackController {
+public class FeedbackController extends BaseController {
 
     private final FeedbackService feedbackService;
 
@@ -30,8 +37,8 @@ public class FeedbackController {
      * @return mendimi i ruajtur
      */
     @PostMapping
-    public ResponseEntity<Feedback> submit(@RequestBody Feedback feedback) {
-        return ResponseEntity.ok(feedbackService.save(feedback));
+    public ResponseEntity<ApiResponse<Feedback>> submit(@RequestBody Feedback feedback) {
+                    return this.ok(feedbackService.save(feedback));
     }
 
     /**
@@ -41,8 +48,8 @@ public class FeedbackController {
      * @return lista e mendimeve per doktorin
      */
     @GetMapping("/doctor/{doctorId}")
-    public ResponseEntity<List<Feedback>> getByDoctor(@PathVariable Long doctorId) {
-        return ResponseEntity.ok(feedbackService.getByDoctorId(doctorId));
+    public ResponseEntity<ApiResponse<List<Feedback>>> getByDoctor(@PathVariable Long doctorId) {
+        return this.ok(feedbackService.getByDoctorId(doctorId));
     }
 
     /**
@@ -52,8 +59,8 @@ public class FeedbackController {
      * @return lista e mendimeve nga perdoruesi
      */
     @GetMapping("/user/{userId}")
-    public ResponseEntity<List<Feedback>> getByUser(@PathVariable Long userId) {
-        return ResponseEntity.ok(feedbackService.getByUserId(userId));
+    public ResponseEntity<ApiResponse<List<Feedback>>> getByUser(@PathVariable Long userId) {
+        return this.ok(feedbackService.getByUserId(userId));
     }
 
     /**
@@ -63,9 +70,13 @@ public class FeedbackController {
      * @return pergjigje pa permbajtje
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        feedbackService.delete(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<ApiResponse<String>> delete(@PathVariable Long id) {
+        try{
+            this.feedbackService.delete(id);
+            return this.ok("Mendimi u fshi me sukses");
+        } catch (JWTVerificationException | UnauthorizedException exception) {
+            return this.error("Nuk jeni i autorizuar", HttpStatus.UNAUTHORIZED);
+        }
     }
 
 }
