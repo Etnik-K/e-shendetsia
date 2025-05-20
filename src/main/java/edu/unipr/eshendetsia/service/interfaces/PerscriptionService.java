@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service
-public interface PersctriptionService {
+public interface PerscriptionService {
 
     List<Perscription> findByUserId(Long userId);
     List<Perscription> findByDoctorId(Long doctorId);

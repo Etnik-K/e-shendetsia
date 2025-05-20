@@ -2,7 +2,7 @@ package edu.unipr.eshendetsia.service.implementation;
 
 import edu.unipr.eshendetsia.model.entity.Perscription;
 import edu.unipr.eshendetsia.repository.PerscriptionRepository;
-import edu.unipr.eshendetsia.service.interfaces.PersctriptionService;
+import edu.unipr.eshendetsia.service.interfaces.PerscriptionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +12,7 @@ import java.util.List;
  * Implementimi i sherbimit per menaxhimin e recetave
  */
 @Service
-public class PerscriptionServiceImplementation implements PersctriptionService {
+public class PerscriptionServiceImplementation implements PerscriptionService {
     
     private PerscriptionRepository persciptionRepository;
 
