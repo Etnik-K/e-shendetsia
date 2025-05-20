@@ -2,8 +2,7 @@ package edu.unipr.eshendetsia.model.entity;
 
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -14,8 +13,9 @@ import java.time.LocalDateTime;
  * lidhur me perdoruesin, doktorin, mesazhin, vleresimin dhe
  * kohen e dergimit.
  */
-@Getter
-@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 @Entity
 @Table(name = "feedback")
 public class Feedback {
@@ -49,7 +49,7 @@ public class Feedback {
      * Vleresimi numerik nga 1-5 per doktorin
      */
     @Column
-    private int rating;
+    private Integer rating;
 
     /**
      * Data dhe ora kur eshte derguar reagimi

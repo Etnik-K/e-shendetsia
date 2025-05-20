@@ -5,6 +5,7 @@ import edu.unipr.eshendetsia.controller.base.BaseController;
 import edu.unipr.eshendetsia.exception.InvalidCredentialsException;
 import edu.unipr.eshendetsia.exception.NotFoundException;
 import edu.unipr.eshendetsia.exception.UnauthorizedException;
+import edu.unipr.eshendetsia.http.request.body.SubmitFeedbackRequest;
 import edu.unipr.eshendetsia.http.response.ApiResponse;
 import edu.unipr.eshendetsia.model.entity.Feedback;
 import edu.unipr.eshendetsia.service.interfaces.FeedbackService;
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * Kontrolleri per menaxhimin e mendimeve te pacienteve.
+ * Kontrolleri per menaxhimin e feedack-ut te pacienteve.
  * Mundeson ruajtjen, marrjen dhe fshirjen e feedback-ut.
  */
 @RestController
@@ -31,49 +32,66 @@ public class FeedbackController extends BaseController {
     }
 
     /**
-     * Ruan nje mendim te ri nga pacienti
+     * Ruan nje feedback te ri nga pacienti
      *
-     * @param feedback mendimi qe do ruhet
-     * @return mendimi i ruajtur
+     * @param feedbackRequest Fedback-u qe do ruhet
+     * @return feedback-u i ruajtur
      */
     @PostMapping
-    public ResponseEntity<ApiResponse<Feedback>> submit(@RequestBody Feedback feedback) {
-                    return this.ok(feedbackService.save(feedback));
+    public ResponseEntity<ApiResponse<String>> submit(@RequestBody SubmitFeedbackRequest feedbackRequest) {
+        try{
+            feedbackService.save(feedbackRequest.toFeedback());
+            return this.ok("Feedback-u u ruajt me sukses");
+        } catch (UnauthorizedException | JWTVerificationException e) {
+            return this.error("Nuk jeni i autorizuar", HttpStatus.BAD_REQUEST);
+        }
     }
 
     /**
-     * Merr te gjitha mendimet per nje doktor specifik
+     * Merr te gjitha feedback-et per nje doktor specifik
      *
      * @param doctorId ID e doktorit
-     * @return lista e mendimeve per doktorin
+     * @return lista e feedback-eve per doktorin
      */
     @GetMapping("/doctor/{doctorId}")
     public ResponseEntity<ApiResponse<List<Feedback>>> getByDoctor(@PathVariable Long doctorId) {
-        return this.ok(feedbackService.getByDoctorId(doctorId));
+        try{
+            return this.ok(feedbackService.getByDoctorId(doctorId));
+        } catch (UnauthorizedException | JWTVerificationException e) {
+            return this.error("Nuk jeni i autorizuar", HttpStatus.UNAUTHORIZED);
+        } catch (NotFoundException e) {
+            return this.error("Doktori nuk eshte gjetur", HttpStatus.NOT_FOUND);
+        }
     }
 
     /**
-     * Merr te gjitha mendimet nga nje perdorues specifik
+     * Merr te gjitha feedback-et nga nje perdorues specifik
      *
      * @param userId ID e perdoruesit
-     * @return lista e mendimeve nga perdoruesi
+     * @return lista e feedback-eve nga perdoruesi
      */
     @GetMapping("/user/{userId}")
     public ResponseEntity<ApiResponse<List<Feedback>>> getByUser(@PathVariable Long userId) {
-        return this.ok(feedbackService.getByUserId(userId));
+        try{
+            return this.ok(feedbackService.getByUserId(userId));
+        } catch (UnauthorizedException | JWTVerificationException e) {
+            return this.error("Nuk jeni i autorizuar", HttpStatus.UNAUTHORIZED);
+        } catch (NotFoundException e) {
+            return this.error("Useri nuk eshte gjetur", HttpStatus.NOT_FOUND);
+        }
     }
 
     /**
-     * Fshin nje mendim specifik
+     * Fshin nje feedback specifik
      *
-     * @param id ID e mendimit per tu fshire
+     * @param id ID e feedback-ut per tu fshire
      * @return pergjigje pa permbajtje
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse<String>> delete(@PathVariable Long id) {
         try{
             this.feedbackService.delete(id);
-            return this.ok("Mendimi u fshi me sukses");
+            return this.ok("Feedback-u u fshi me sukses");
         } catch (JWTVerificationException | UnauthorizedException exception) {
             return this.error("Nuk jeni i autorizuar", HttpStatus.UNAUTHORIZED);
         }
