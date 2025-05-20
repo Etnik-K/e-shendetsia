@@ -2,6 +2,7 @@ package edu.unipr.eshendetsia.service.implementation;
 
 import edu.unipr.eshendetsia.model.entity.Insurance;
 import edu.unipr.eshendetsia.repository.InsuranceRepository;
+import edu.unipr.eshendetsia.service.interfaces.InsuranceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +13,7 @@ import java.util.List;
  * Menaxhon operacionet CRUD per sigurimet
  */
 @Service
-public class InsuranceServiceImplementation {
+public class InsuranceServiceImplementation implements InsuranceService {
     private final InsuranceRepository insuranceRepository;
 
     /**
