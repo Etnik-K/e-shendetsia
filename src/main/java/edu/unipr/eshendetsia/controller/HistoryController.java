@@ -3,7 +3,7 @@ package edu.unipr.eshendetsia.controller;
 import edu.unipr.eshendetsia.model.entity.History;
 import edu.unipr.eshendetsia.service.interfaces.HistoryService;
 import edu.unipr.eshendetsia.http.response.ApiResponse;
-import edu.unipr.eshendetsia.util.BaseController;
+import edu.unipr.eshendetsia.controller.base.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

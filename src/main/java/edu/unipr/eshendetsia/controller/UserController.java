@@ -7,7 +7,7 @@ import edu.unipr.eshendetsia.exception.UnauthorizedException;
 import edu.unipr.eshendetsia.model.entity.User;
 import edu.unipr.eshendetsia.service.interfaces.UserService;
 import edu.unipr.eshendetsia.http.response.ApiResponse;
-import edu.unipr.eshendetsia.util.BaseController;
+import edu.unipr.eshendetsia.controller.base.BaseController;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
