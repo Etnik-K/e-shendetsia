@@ -5,6 +5,7 @@ import edu.unipr.eshendetsia.http.response.ApiResponse;
 import edu.unipr.eshendetsia.model.entity.Allergy;
 import edu.unipr.eshendetsia.service.interfaces.AllergyService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -43,8 +44,8 @@ public class AllergyController extends BaseController {
      * @return Lista e alergjive te pacientit
      */
     @GetMapping("/user/{userId}")
-    public ResponseEntity<List<Allergy>> getByUser(@PathVariable Long userId) {
-        return ResponseEntity.ok(allergyService.getByUserId(userId));
+    public ResponseEntity<ApiResponse<List<Allergy>>> getByUser(@PathVariable Long userId) {
+        return this.ok(allergyService.getByUserId(userId));
     }
 
     /**
@@ -54,8 +55,12 @@ public class AllergyController extends BaseController {
      * @return Pergjigje pa permbajtje
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        allergyService.delete(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<ApiResponse<String>> delete(@PathVariable Long id) {
+        try{
+            allergyService.delete(id);
+            return this.ok("Useri u fshi me sukses");
+        } catch (Exception e) {
+            return this.error("Useri nuk u fshi", HttpStatus.UNAUTHORIZED);
+        }
     }
 }
