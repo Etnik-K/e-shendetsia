@@ -1,7 +1,7 @@
 package edu.unipr.eshendetsia.controller;
 
 import edu.unipr.eshendetsia.model.entity.EmergencyContact;
-import edu.unipr.eshendetsia.service.implementation.EmergencyContactServiceImplementation;
+import edu.unipr.eshendetsia.service.interfaces.EmergencyContactService;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.http.ResponseEntity;
@@ -20,10 +20,10 @@ import java.util.List;
 @RequestMapping("/emergency_contacts")
 public class EmergencyContactController {
 
-    private final EmergencyContactServiceImplementation service;
+    private final EmergencyContactService emergencyContactService;
 
-    public EmergencyContactController(EmergencyContactServiceImplementation service) {
-        this.service = service;
+    public EmergencyContactController(EmergencyContactService emergencyContactService) {
+        this.emergencyContactService = emergencyContactService;
     }
 
     /**
@@ -34,7 +34,7 @@ public class EmergencyContactController {
      */
     @PostMapping
     public ResponseEntity<EmergencyContact> create(@RequestBody EmergencyContact contact) {
-        return ResponseEntity.ok(service.save(contact));
+        return ResponseEntity.ok(emergencyContactService.save(contact));
     }
 
     /**
@@ -45,7 +45,7 @@ public class EmergencyContactController {
      */
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<EmergencyContact>> getByUser(@PathVariable Long userId) {
-        return ResponseEntity.ok(service.getByUserId(userId));
+        return ResponseEntity.ok(emergencyContactService.getByUserId(userId));
     }
 
     /**
@@ -56,7 +56,7 @@ public class EmergencyContactController {
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-        service.delete(id);
+        emergencyContactService.delete(id);
         return ResponseEntity.noContent().build();
     }
 }
