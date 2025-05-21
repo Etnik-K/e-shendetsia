@@ -5,8 +5,15 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 import edu.unipr.eshendetsia.model.HttpMethod;
 
+/**
+ * Klasa per testimin e metodave HTTP.
+ * Teston vlerat, numrin, renditjen dhe vlefshmerin e metodave HTTP.
+ */
 class HttpMethodTest {
 
+    /**
+     * Teston nese vlerat e metodave HTTP jane te sakta
+     */
     @Test
     void testHttpMethodValues() {
         assertEquals(HttpMethod.GET, HttpMethod.valueOf("GET"));
@@ -16,11 +23,17 @@ class HttpMethodTest {
         assertEquals(HttpMethod.DELETE, HttpMethod.valueOf("DELETE"));
     }
 
+    /**
+     * Teston numrin total te metodave HTTP
+     */
     @Test
     void testHttpMethodCount() {
         assertEquals(5, HttpMethod.values().length);
     }
 
+    /**
+     * Teston renditjen e metodave HTTP
+     */
     @Test
     void testHttpMethodOrdinal() {
         assertEquals(0, HttpMethod.GET.ordinal());
@@ -30,6 +43,9 @@ class HttpMethodTest {
         assertEquals(4, HttpMethod.DELETE.ordinal());
     }
 
+    /**
+     * Teston sjelljen e metodave HTTP per vlera jo te vlefshme
+     */
     @Test
     void testHttpMethodValueOf() {
         assertThrows(IllegalArgumentException.class, () -> HttpMethod.valueOf("INVALID"));
