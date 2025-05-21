@@ -1,8 +1,7 @@
 package edu.unipr.eshendetsia.model.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -10,8 +9,9 @@ import java.time.LocalDateTime;
  * Klasa qe perfaqeson rezultatet e testeve mjekesore ne sistem.
  * Permban te dhenat e testeve te kryera nga mjeku per pacientin.
  */
-@Setter
-@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 @Entity
 @Table(name = "test_results")
 public class TestResult {

@@ -2,7 +2,9 @@ package edu.unipr.eshendetsia.controller;
 
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import edu.unipr.eshendetsia.controller.base.BaseController;
+import edu.unipr.eshendetsia.exception.NotFoundException;
 import edu.unipr.eshendetsia.exception.UnauthorizedException;
+import edu.unipr.eshendetsia.http.request.body.CreateTestResultRequest;
 import edu.unipr.eshendetsia.http.response.ApiResponse;
 import edu.unipr.eshendetsia.model.entity.TestResult;
 import edu.unipr.eshendetsia.service.interfaces.TestResultService;
@@ -32,12 +34,17 @@ public class TestResultController extends BaseController {
     /**
      * Krijon nje rezultat te ri testi
      *
-     * @param testResult rezultati i testit per tu ruajtur
+     * @param testResultRequest rezultati i testit per tu ruajtur
      * @return rezultati i testit i ruajtur
      */
     @PostMapping
-    public ResponseEntity<ApiResponse<TestResult>> create(@RequestBody TestResult testResult) {
-        return this.ok(testResultService.save(testResult));
+    public ResponseEntity<ApiResponse<String>> create(@RequestBody CreateTestResultRequest testResultRequest) {
+        try{
+            this.testResultService.save(testResultRequest.toTestResult());
+            return this.ok("Rezultati i testit u ruajt me sukses");
+        } catch (UnauthorizedException | JWTVerificationException e) {
+            return this.error("Nuk jeni i autorizuar", HttpStatus.UNAUTHORIZED);
+        }
     }
 
     /**
