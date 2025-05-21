@@ -1,6 +1,5 @@
 package edu.unipr.eshendetsia.model;
 
-import edu.unipr.eshendetsia.http.HttpMethod;
 import jakarta.persistence.*;
 
 import java.util.Set;
