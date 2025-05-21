@@ -9,6 +9,19 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 
+/**
+ * Klasa e testimit per kerkesen e ruajtjes se historikut
+ * Perdoret per te testuar konvertimin e te dhenave nga SaveHistoryRequest ne History
+ * <p>
+ * Teston te gjithe parametrat e konvertimit:
+ * - ID
+ * - ID e perdoruesit
+ * - ID e mjekut
+ * - Pershkrimi
+ * - Diagnoza
+ * - Trajtimi
+ * - Data
+ */
 class SaveHistoryRequestTest {
     private SaveHistoryRequest request;
     private LocalDateTime testDate;
