@@ -1,6 +1,6 @@
 package UnitTest;
 
-import edu.unipr.eshendetsia.model.entity.Doctor;
+import edu.unipr.eshendetsia.model.Doctor;
 import edu.unipr.eshendetsia.repository.DoctorRepository;
 import edu.unipr.eshendetsia.service.implementation.DoctorServiceImplementation;
 import org.junit.jupiter.api.BeforeEach;

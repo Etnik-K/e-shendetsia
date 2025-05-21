@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import edu.unipr.eshendetsia.exception.UnauthorizedException;
-import edu.unipr.eshendetsia.model.entity.History;
+import edu.unipr.eshendetsia.model.History;
 import edu.unipr.eshendetsia.repository.HistoryRepository;
 import edu.unipr.eshendetsia.service.implementation.HistoryServiceImplementation;
 import com.auth0.jwt.exceptions.JWTVerificationException;

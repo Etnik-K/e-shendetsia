@@ -1,6 +1,6 @@
 package UnitTest;
 
-import edu.unipr.eshendetsia.model.entity.Allergy;
+import edu.unipr.eshendetsia.model.Allergy;
 import edu.unipr.eshendetsia.repository.AllergyRepository;
 import edu.unipr.eshendetsia.service.implementation.AllergyServiceImplementation;
 import org.junit.jupiter.api.BeforeEach;

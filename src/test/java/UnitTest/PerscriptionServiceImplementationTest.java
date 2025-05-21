@@ -1,6 +1,6 @@
 package UnitTest;
 
-import edu.unipr.eshendetsia.model.entity.Perscription;
+import edu.unipr.eshendetsia.model.Perscription;
 import edu.unipr.eshendetsia.repository.PerscriptionRepository;
 import edu.unipr.eshendetsia.service.implementation.PerscriptionServiceImplementation;
 import org.junit.jupiter.api.BeforeEach;
