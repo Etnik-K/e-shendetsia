@@ -14,6 +14,9 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import edu.unipr.eshendetsia.service.interfaces.HasherService;
+import edu.unipr.eshendetsia.service.implementation.HasherServiceImplementation;
+
 
 import com.auth0.jwt.JWT;
 
@@ -154,19 +157,24 @@ public class UserServiceImplementation implements UserService {
      * @param password fjalekalimi i userit
      * @return Userin me id perkatese nese ka sukses, pperndryshe null
      */
+    private final HasherService hasherService = new HasherServiceImplementation();
+
     private User authenticate(Long id, String password) throws NotFoundException, InvalidCredentialsException {
+        User user = this.userRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Useri nuk u gjet"));
 
-        Optional<User> user = this.userRepository.findById(id);
+        String salt = user.getSalt(); // This assumes User has a getSalt() method
+        String passwordHash = hasherService.generateSaltedHash(password, salt);
 
-        if (user.isEmpty()) throw new NotFoundException("Useri nuk u gjet");
+        if (!passwordHash.equals(user.getPassword())) {
+            throw new InvalidCredentialsException();
+        }
 
-        String salt = user.map(User::getPassword).orElse(null);
-        String passwordHash = HasherServiceImplementation.generateSaltedHash(password, salt);
-
-        if (!passwordHash.equals(user.get().getPassword())) throw new InvalidCredentialsException();
-
-        return user.get();
+        return user;
     }
+
+
+
 
     /**
      * Kjo metode shfrytzohet eksluzivisht per perdorim zhvillues.
