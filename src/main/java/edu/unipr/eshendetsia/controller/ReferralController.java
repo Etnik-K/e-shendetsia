@@ -2,7 +2,9 @@ package edu.unipr.eshendetsia.controller;
 
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import edu.unipr.eshendetsia.controller.base.BaseController;
+import edu.unipr.eshendetsia.exception.NotFoundException;
 import edu.unipr.eshendetsia.exception.UnauthorizedException;
+import edu.unipr.eshendetsia.http.request.body.CreateReferralRequest;
 import edu.unipr.eshendetsia.http.response.ApiResponse;
 import edu.unipr.eshendetsia.model.entity.Referral;
 import edu.unipr.eshendetsia.service.interfaces.ReferralService;
@@ -25,22 +27,27 @@ import java.util.List;
 @RestController
 @RequestMapping("/referrals")
 public class ReferralController extends BaseController {
-        private final ReferralService service;
+    private final ReferralService referralService;
 
-        @Autowired
-        public ReferralController(ReferralService service) {
-            this.service = service;
+    @Autowired
+    public ReferralController(ReferralService referralService) {
+            this.referralService = referralService;
         }
 
     /**
      * Krijon nje referim te ri mjekesor.
      *
-     * @param referral Referimi qe do te krijohet
+     * @param referralRequest Referimi qe do te krijohet
      * @return Referimi i krijuar
      */
     @PostMapping
-    public ResponseEntity<ApiResponse<Referral>> create(@RequestBody Referral referral) {
-        return this.ok(service.save(referral));
+    public ResponseEntity<ApiResponse<String>> create(@RequestBody CreateReferralRequest referralRequest) {
+        try{
+            referralService.save(referralRequest.toReferral());
+            return this.ok("Referimi u krijua me sukses");
+        } catch (JWTVerificationException | UnauthorizedException exception) {
+            return this.error("Nuk jeni i autorizuar", HttpStatus.UNAUTHORIZED);
+        }
     }
 
     /**
@@ -51,7 +58,13 @@ public class ReferralController extends BaseController {
      */
     @GetMapping("/patient/{patientId}")
     public ResponseEntity<ApiResponse<List<Referral>>> getByPatient(@PathVariable Long patientId) {
-        return this.ok(service.getByPatient(patientId));
+        try {
+            return this.ok(referralService.getByPatient(patientId));
+        } catch (JWTVerificationException | UnauthorizedException e) {
+            return this.error("Nuk jeni i autorizuar!", HttpStatus.UNAUTHORIZED);
+        } catch (NotFoundException e) {
+            return this.error("Nuk u gjet pacienti", HttpStatus.UNAUTHORIZED);
+        }
     }
 
     /**
@@ -62,7 +75,13 @@ public class ReferralController extends BaseController {
      */
     @GetMapping("/doctor/{doctorId}")
     public ResponseEntity<ApiResponse<List<Referral>>> getByDoctor(@PathVariable Long doctorId) {
-        return this.ok(service.getByReceivingDoctor(doctorId));
+        try{
+            return this.ok(referralService.getByReceivingDoctor(doctorId));
+        } catch (JWTVerificationException | UnauthorizedException e) {
+            return this.error("Nuk jeni i autorizuar!", HttpStatus.UNAUTHORIZED);
+        } catch (NotFoundException e) {
+            return this.error("Nuk u gjet doktorri", HttpStatus.UNAUTHORIZED);
+        }
     }
 
     /**
@@ -74,7 +93,7 @@ public class ReferralController extends BaseController {
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse<String>> delete(@PathVariable Long id) {
         try{
-            this.service.delete(id);
+            this.referralService.delete(id);
             return this.ok("Referimi u fshi me sukses");
         } catch (JWTVerificationException | UnauthorizedException exception) {
             return this.error("Nuk jeni i autorizuar", HttpStatus.UNAUTHORIZED);
