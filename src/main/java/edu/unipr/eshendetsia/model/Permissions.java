@@ -1,4 +1,4 @@
-package edu.unipr.eshendetsia.model.entity;
+package edu.unipr.eshendetsia.model;
 
 import edu.unipr.eshendetsia.http.HttpMethod;
 import jakarta.persistence.*;

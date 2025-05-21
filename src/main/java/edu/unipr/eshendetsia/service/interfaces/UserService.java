@@ -1,9 +1,8 @@
 package edu.unipr.eshendetsia.service.interfaces;
 
-import edu.unipr.eshendetsia.model.entity.Role;
-import edu.unipr.eshendetsia.model.entity.User;
+import edu.unipr.eshendetsia.model.Role;
+import edu.unipr.eshendetsia.model.User;
 
-import javax.management.relation.Relation;
 import java.util.List;
 import java.util.Set;
 

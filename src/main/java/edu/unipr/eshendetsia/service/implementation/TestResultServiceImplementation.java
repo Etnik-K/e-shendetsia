@@ -1,6 +1,6 @@
 package edu.unipr.eshendetsia.service.implementation;
 
-import edu.unipr.eshendetsia.model.entity.TestResult;
+import edu.unipr.eshendetsia.model.TestResult;
 import edu.unipr.eshendetsia.repository.TestResultRepository;
 import edu.unipr.eshendetsia.service.interfaces.TestResultService;
 import org.springframework.beans.factory.annotation.Autowired;

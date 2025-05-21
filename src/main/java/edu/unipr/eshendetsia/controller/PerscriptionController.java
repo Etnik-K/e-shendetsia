@@ -9,7 +9,6 @@ import edu.unipr.eshendetsia.controller.base.BaseController;
 import edu.unipr.eshendetsia.exception.UnauthorizedException;
 import edu.unipr.eshendetsia.http.request.body.CreatePerscriptionRequest;
 import edu.unipr.eshendetsia.http.response.ApiResponse;
-import edu.unipr.eshendetsia.model.entity.Perscription;
 import edu.unipr.eshendetsia.service.interfaces.PerscriptionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

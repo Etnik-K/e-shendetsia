@@ -2,7 +2,7 @@ package edu.unipr.eshendetsia.service.implementation;
 
 import edu.unipr.eshendetsia.exception.NotFoundException;
 import edu.unipr.eshendetsia.exception.UnauthorizedException;
-import edu.unipr.eshendetsia.model.entity.Clinic;
+import edu.unipr.eshendetsia.model.Clinic;
 import edu.unipr.eshendetsia.repository.ClinicRepository;
 import edu.unipr.eshendetsia.repository.UserRepository;
 import edu.unipr.eshendetsia.service.interfaces.ClinicService;

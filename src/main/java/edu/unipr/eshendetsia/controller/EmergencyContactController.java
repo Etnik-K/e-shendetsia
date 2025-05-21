@@ -6,7 +6,7 @@ import edu.unipr.eshendetsia.exception.NotFoundException;
 import edu.unipr.eshendetsia.exception.UnauthorizedException;
 import edu.unipr.eshendetsia.http.request.body.CreateEmergencyContactRequest;
 import edu.unipr.eshendetsia.http.response.ApiResponse;
-import edu.unipr.eshendetsia.model.entity.EmergencyContact;
+import edu.unipr.eshendetsia.model.EmergencyContact;
 import edu.unipr.eshendetsia.service.interfaces.EmergencyContactService;
 import lombok.Getter;
 import lombok.Setter;

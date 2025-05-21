@@ -1,6 +1,6 @@
 package edu.unipr.eshendetsia.http.request.body;
 
-import edu.unipr.eshendetsia.model.entity.Allergy;
+import edu.unipr.eshendetsia.model.Allergy;
 
 public record CreateAllergyRequest(
         Long id,

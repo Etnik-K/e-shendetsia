@@ -1,7 +1,7 @@
 package edu.unipr.eshendetsia.service.implementation;
 
 import edu.unipr.eshendetsia.exception.UnauthorizedException;
-import edu.unipr.eshendetsia.model.entity.History;
+import edu.unipr.eshendetsia.model.History;
 import edu.unipr.eshendetsia.repository.HistoryRepository;
 import edu.unipr.eshendetsia.service.interfaces.HistoryService;
 import com.auth0.jwt.exceptions.JWTVerificationException;

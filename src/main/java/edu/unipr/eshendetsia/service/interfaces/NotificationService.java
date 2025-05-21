@@ -1,6 +1,6 @@
 package edu.unipr.eshendetsia.service.interfaces;
 
-import edu.unipr.eshendetsia.model.entity.Notification;
+import edu.unipr.eshendetsia.model.Notification;
 
 import java.util.List;
 

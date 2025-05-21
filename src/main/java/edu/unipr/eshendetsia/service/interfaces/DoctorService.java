@@ -1,6 +1,6 @@
 package edu.unipr.eshendetsia.service.interfaces;
 
-import edu.unipr.eshendetsia.model.entity.Doctor;
+import edu.unipr.eshendetsia.model.Doctor;
 
 import java.util.List;
 import java.util.Optional;
