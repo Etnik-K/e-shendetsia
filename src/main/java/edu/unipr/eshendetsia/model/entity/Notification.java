@@ -1,6 +1,7 @@
 package edu.unipr.eshendetsia.model.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.time.LocalDateTime;
 
@@ -8,6 +9,7 @@ import java.time.LocalDateTime;
  * Entiteti i njoftimeve ne sistem
  * Perfshin informacionin per njoftimet e perdoruesve
  */
+@Data
 @Entity
 @Table(name = "noticiations")
 public class Notification {
@@ -40,7 +42,4 @@ public class Notification {
     @Column
     private LocalDateTime timestamp = LocalDateTime.now();
 
-    public void setRead(boolean isRead) {
-        this.isRead = isRead;
-    }
 }
