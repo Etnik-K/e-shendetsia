@@ -1,8 +1,7 @@
 package edu.unipr.eshendetsia.model.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -18,8 +17,9 @@ import java.time.LocalDateTime;
  * - instructions: Udhezime shtese
  * - issuedAt: Data dhe ora e leshimit
  */
-@Getter
-@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 @Entity
 @Table(name="perscriptions")
 public class Perscription {
