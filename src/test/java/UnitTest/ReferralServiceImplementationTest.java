@@ -14,6 +14,10 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+/**
+ * Test klasa per ReferralService Implementation
+ * Teston te gjitha metodat e implementuara ne ReferralServiceImplementation
+ */
 class ReferralServiceImplementationTest {
 
     @Mock
@@ -27,6 +31,9 @@ class ReferralServiceImplementationTest {
         referralService = new ReferralServiceImplementation(referralRepository);
     }
 
+    /**
+     * Teston metoden save duke verifikuar ruajtjen e referimit
+     */
     @Test
     void testSave() {
         Referral referral = new Referral();
@@ -38,6 +45,9 @@ class ReferralServiceImplementationTest {
         verify(referralRepository).save(referral);
     }
 
+    /**
+     * Teston metoden getByPatient duke verifikuar marrjen e referimeve sipas pacientit
+     */
     @Test
     void testGetByPatient() {
         Long patientId = 1L;
@@ -50,6 +60,9 @@ class ReferralServiceImplementationTest {
         verify(referralRepository).findByPatientId(patientId);
     }
 
+    /**
+     * Teston metoden getByReceivingDoctor duke verifikuar marrjen e referimeve sipas mjekut pranues
+     */
     @Test
     void testGetByReceivingDoctor() {
         Long doctorId = 1L;
@@ -62,6 +75,9 @@ class ReferralServiceImplementationTest {
         verify(referralRepository).findByToDoctorId(doctorId);
     }
 
+    /**
+     * Teston metoden delete duke verifikuar fshirjen e referimit
+     */
     @Test
     void testDelete() {
         Long id = 1L;

@@ -15,6 +15,11 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+
+/**
+ * Klasa e testimit per implementimin e sherbimit te feedback-ut.
+ * Teston te gjitha metodat e FeedbackServiceImplementation duke perdorur Mockito.
+ */
 @ExtendWith(MockitoExtension.class)
 class FeedbackServiceImplementationTest {
 
@@ -28,6 +33,10 @@ class FeedbackServiceImplementationTest {
         feedbackService = new FeedbackServiceImplementation(feedbackRepository);
     }
 
+    /**
+     * Teston metoden save duke verifikuar nese feedback-u ruhet me sukses
+     * dhe kthehet sic pritet.
+     */
     @Test
     void save_ShouldReturnSavedFeedback() {
         Feedback feedback = new Feedback();
@@ -39,6 +48,10 @@ class FeedbackServiceImplementationTest {
         verify(feedbackRepository).save(feedback);
     }
 
+    /**
+     * Teston marrjen e feedback-eve sipas ID se doktorit
+     * dhe kontrollon nese lista e kthyer perputhet me pritshmerite.
+     */
     @Test
     void getByDoctorId_ShouldReturnFeedbackList() {
         Long doctorId = 1L;
@@ -51,6 +64,10 @@ class FeedbackServiceImplementationTest {
         verify(feedbackRepository).findByDoctorId(doctorId);
     }
 
+    /**
+     * Teston marrjen e feedback-eve sipas ID se perdoruesit
+     * dhe kontrollon nese lista e kthyer perputhet me pritshmerite.
+     */
     @Test
     void getByUserId_ShouldReturnFeedbackList() {
         Long userId = 1L;
@@ -63,6 +80,10 @@ class FeedbackServiceImplementationTest {
         verify(feedbackRepository).findByUserId(userId);
     }
 
+    /**
+     * Teston fshirjen e feedback-ut duke verifikuar
+     * nese metoda deleteById thirret me parametrat e duhur.
+     */
     @Test
     void delete_ShouldCallRepositoryDeleteById() {
         Long id = 1L;
