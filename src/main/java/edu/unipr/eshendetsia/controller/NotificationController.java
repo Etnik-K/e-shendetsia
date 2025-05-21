@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+// qita spe preki, spe di qysh e ka njet me funksionu - zhushi
+
 /**
  * Kontrolluesi i njoftimeve menaxhon te gjitha kerkesat e lidhura me njoftimet.
  * Mundeson dergimin, marrjen, shenimin si te lexuar dhe fshirjen e njoftimeve.
