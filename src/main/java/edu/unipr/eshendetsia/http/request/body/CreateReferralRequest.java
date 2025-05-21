@@ -1,6 +1,6 @@
 package edu.unipr.eshendetsia.http.request.body;
 
-import edu.unipr.eshendetsia.model.entity.Referral;
+import edu.unipr.eshendetsia.model.Referral;
 
 import java.time.LocalDateTime;
 

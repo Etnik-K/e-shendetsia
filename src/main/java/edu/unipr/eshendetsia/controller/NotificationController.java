@@ -5,7 +5,7 @@ import edu.unipr.eshendetsia.controller.base.BaseController;
 import edu.unipr.eshendetsia.exception.NotFoundException;
 import edu.unipr.eshendetsia.exception.UnauthorizedException;
 import edu.unipr.eshendetsia.http.response.ApiResponse;
-import edu.unipr.eshendetsia.model.entity.Notification;
+import edu.unipr.eshendetsia.model.Notification;
 import edu.unipr.eshendetsia.service.interfaces.NotificationService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

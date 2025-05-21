@@ -1,6 +1,6 @@
 package edu.unipr.eshendetsia.service.implementation;
 
-import edu.unipr.eshendetsia.model.entity.Bill;
+import edu.unipr.eshendetsia.model.Bill;
 import edu.unipr.eshendetsia.repository.BillRepository;
 import edu.unipr.eshendetsia.service.interfaces.BillService;
 import org.springframework.beans.factory.annotation.Autowired;

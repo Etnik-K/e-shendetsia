@@ -1,6 +1,6 @@
 package edu.unipr.eshendetsia.service.interfaces;
 
-import edu.unipr.eshendetsia.model.entity.Insurance;
+import edu.unipr.eshendetsia.model.Insurance;
 
 import java.util.List;
 

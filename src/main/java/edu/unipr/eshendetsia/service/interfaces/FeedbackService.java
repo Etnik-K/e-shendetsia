@@ -1,6 +1,6 @@
 package edu.unipr.eshendetsia.service.interfaces;
 
-import edu.unipr.eshendetsia.model.entity.Feedback;
+import edu.unipr.eshendetsia.model.Feedback;
 
 import java.util.List;
 

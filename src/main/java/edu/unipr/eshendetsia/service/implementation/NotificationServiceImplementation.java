@@ -1,6 +1,6 @@
 package edu.unipr.eshendetsia.service.implementation;
 
-import edu.unipr.eshendetsia.model.entity.Notification;
+import edu.unipr.eshendetsia.model.Notification;
 import edu.unipr.eshendetsia.repository.NotificationRepository;
 import edu.unipr.eshendetsia.service.interfaces.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;

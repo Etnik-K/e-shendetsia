@@ -1,6 +1,6 @@
 package edu.unipr.eshendetsia.service.interfaces;
 
-import edu.unipr.eshendetsia.model.entity.Clinic;
+import edu.unipr.eshendetsia.model.Clinic;
 
 import java.util.List;
 

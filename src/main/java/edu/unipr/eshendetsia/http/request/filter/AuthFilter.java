@@ -1,6 +1,6 @@
 package edu.unipr.eshendetsia.http.request.filter;
 
-import edu.unipr.eshendetsia.model.entity.Role;
+import edu.unipr.eshendetsia.model.Role;
 import edu.unipr.eshendetsia.service.interfaces.UserService;
 import edu.unipr.eshendetsia.service.interfaces.JWTService;
 import com.auth0.jwt.exceptions.JWTVerificationException;

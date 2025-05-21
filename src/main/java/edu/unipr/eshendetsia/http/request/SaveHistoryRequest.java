@@ -1,9 +1,6 @@
 package edu.unipr.eshendetsia.http.request;
 
-import edu.unipr.eshendetsia.model.entity.History;
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import edu.unipr.eshendetsia.model.History;
 
 import java.time.LocalDateTime;
 

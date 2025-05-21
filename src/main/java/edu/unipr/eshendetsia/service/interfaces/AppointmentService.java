@@ -1,7 +1,6 @@
 package edu.unipr.eshendetsia.service.interfaces;
 
-import edu.unipr.eshendetsia.model.entity.Appointment;
-import org.springframework.stereotype.Service;
+import edu.unipr.eshendetsia.model.Appointment;
 
 public interface AppointmentService {
     Appointment save(Appointment appointment);

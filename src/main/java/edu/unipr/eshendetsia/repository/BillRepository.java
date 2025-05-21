@@ -1,6 +1,6 @@
 package edu.unipr.eshendetsia.repository;
 
-import edu.unipr.eshendetsia.model.entity.Bill;
+import edu.unipr.eshendetsia.model.Bill;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

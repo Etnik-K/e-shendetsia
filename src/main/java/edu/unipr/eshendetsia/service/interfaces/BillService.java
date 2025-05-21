@@ -1,7 +1,6 @@
 package edu.unipr.eshendetsia.service.interfaces;
 
-import edu.unipr.eshendetsia.model.entity.Bill;
-import org.springframework.data.jpa.repository.JpaRepository;
+import edu.unipr.eshendetsia.model.Bill;
 
 import java.util.List;
 

@@ -1,7 +1,7 @@
 package edu.unipr.eshendetsia.repository;
 
-import edu.unipr.eshendetsia.model.entity.Role;
-import edu.unipr.eshendetsia.model.entity.User;
+import edu.unipr.eshendetsia.model.Role;
+import edu.unipr.eshendetsia.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

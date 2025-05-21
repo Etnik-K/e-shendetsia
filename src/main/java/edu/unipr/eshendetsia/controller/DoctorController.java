@@ -1,7 +1,7 @@
 package edu.unipr.eshendetsia.controller;
 
 
-import edu.unipr.eshendetsia.model.entity.Doctor;
+import edu.unipr.eshendetsia.model.Doctor;
 import edu.unipr.eshendetsia.service.interfaces.DoctorService;
 import edu.unipr.eshendetsia.http.response.ApiResponse;
 import edu.unipr.eshendetsia.controller.base.BaseController;

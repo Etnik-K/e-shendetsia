@@ -1,4 +1,4 @@
-package edu.unipr.eshendetsia.model.entity;
+package edu.unipr.eshendetsia.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;
