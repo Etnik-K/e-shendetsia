@@ -15,6 +15,11 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+/**
+ * Klasa per testimin e EmergencyContactServiceImplementation.
+ * Teston metodat e ruajtjes, marrjes dhe fshirjes se kontakteve emergjente.
+ * Perdor Mockito per te simuluar sjelljen e repository.
+ */
 @ExtendWith(MockitoExtension.class)
 class EmergencyContactServiceImplementationTest {
 
@@ -23,11 +28,19 @@ class EmergencyContactServiceImplementationTest {
 
     private EmergencyContactServiceImplementation service;
 
+    /**
+     * Inicializon mjedisin e testimit para cdo testi.
+     * Krijon instance te re te service me repository te mockuar.
+     */
     @BeforeEach
     void setUp() {
         service = new EmergencyContactServiceImplementation(repository);
     }
 
+    /**
+     * Teston metodat e ruajtjes se kontaktit emergjent.
+     * Verteton qe kontakti ruhet me sukses dhe repository thirret sakte.
+     */
     @Test
     void testSave() {
         EmergencyContact contact = new EmergencyContact();
@@ -39,6 +52,10 @@ class EmergencyContactServiceImplementationTest {
         verify(repository).save(contact);
     }
 
+    /**
+     * Teston marrjen e kontakteve emergjente sipas ID te perdoruesit.
+     * Kontrollon nese lista e kthyer perputhet me te dhenat e pritura.
+     */
     @Test
     void testGetByUserId() {
         Long userId = 1L;
@@ -52,6 +69,10 @@ class EmergencyContactServiceImplementationTest {
         verify(repository).findByUserId(userId);
     }
 
+    /**
+     * Teston fshirjen e kontaktit emergjent.
+     * Verteton qe metoda e fshirjes ne repository thirret me ID e sakte.
+     */
     @Test
     void testDelete() {
         Long id = 1L;

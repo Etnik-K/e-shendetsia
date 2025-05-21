@@ -15,6 +15,10 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+/**
+ * Klasa e testimit per implementimin e sherbimit te perscriptioneve.
+ * Perdor Mockito per te testuar funksionalitetin e PerscriptionServiceImplementation.
+ */
 @ExtendWith(MockitoExtension.class)
 class PerscriptionServiceImplementationTest {
 
@@ -28,6 +32,10 @@ class PerscriptionServiceImplementationTest {
         perscriptionService = new PerscriptionServiceImplementation(perscriptionRepository);
     }
 
+    /**
+     * Teston metoden findByUserId.
+     * Kontrollon nese metoda kthen listen e perscriptioneve per nje ID te caktuar te perdoruesit.
+     */
     @Test
     void findByUserId_ShouldReturnPerscriptionList() {
         // Arrange
@@ -43,6 +51,10 @@ class PerscriptionServiceImplementationTest {
         verify(perscriptionRepository).findByUserId(userId);
     }
 
+    /**
+     * Teston metoden findByDoctorId.
+     * Kontrollon nese metoda kthen listen e perscriptioneve per nje ID te caktuar te doktorit.
+     */
     @Test
     void findByDoctorId_ShouldReturnPerscriptionList() {
         // Arrange
@@ -58,6 +70,10 @@ class PerscriptionServiceImplementationTest {
         verify(perscriptionRepository).findByDoctorId(doctorId);
     }
 
+    /**
+     * Teston metoden save.
+     * Verifikon nese metoda ruan dhe kthen perscriptionin e ruajtur me sukses.
+     */
     @Test
     void save_ShouldReturnSavedPerscription() {
         // Arrange
