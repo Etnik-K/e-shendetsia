@@ -1,8 +1,7 @@
 package edu.unipr.eshendetsia.model.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -18,8 +17,9 @@ import java.time.LocalDateTime;
  * - reason: Arsyeja e referimit
  * - referralDate: Data dhe ora kur eshte bere referimi
  */
-@Setter
-@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 @Entity
 @Table(name = "referrals")
 public class Referral {
