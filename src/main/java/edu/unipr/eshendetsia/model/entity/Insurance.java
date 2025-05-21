@@ -2,8 +2,7 @@ package edu.unipr.eshendetsia.model.entity;
 
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 /**
  * Klasa Insurance perfaqeson informacionin e sigurimit te pacientit ne sistem.
@@ -15,8 +14,9 @@ import lombok.Setter;
  * - Detajet e mbulimit
  * - Statusin aktiv/joaktiv
  */
-@Getter
-@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 @Entity
 @Table
 public class Insurance {
