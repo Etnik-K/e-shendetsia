@@ -1,6 +1,6 @@
 package UnitTest;
 
-import edu.unipr.eshendetsia.model.entity.EmergencyContact;
+import edu.unipr.eshendetsia.model.EmergencyContact;
 import edu.unipr.eshendetsia.repository.EmergencyContactRepository;
 import edu.unipr.eshendetsia.service.implementation.EmergencyContactServiceImplementation;
 import org.junit.jupiter.api.BeforeEach;
