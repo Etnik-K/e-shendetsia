@@ -15,6 +15,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Testi per implementimin e sherbimit te njoftimeve
+ * Kontrollon funksionalitetin e ruajtjes, marrjes dhe fshirjes se njoftimeve
+ */
 class NotificationServiceImplementationTest {
 
     @Mock
@@ -28,6 +32,10 @@ class NotificationServiceImplementationTest {
         notificationService = new NotificationServiceImplementation(notificationRepository);
     }
 
+    /**
+     * Teston metoden e ruajtjes se njoftimit
+     * Kontrollon nese njoftimi ruhet me sukses ne repository
+     */
     @Test
     void testSave() {
         Notification notification = new Notification();
@@ -39,6 +47,10 @@ class NotificationServiceImplementationTest {
         verify(notificationRepository).save(notification);
     }
 
+    /**
+     * Teston metoden e marrjes se njoftimeve nga perdoruesi
+     * Kontrollon nese merren te gjitha njoftimet e nje perdoruesi
+     */
     @Test
     void testGetByUser() {
         Long userId = 1L;
@@ -51,6 +63,10 @@ class NotificationServiceImplementationTest {
         verify(notificationRepository).findByUserId(userId);
     }
 
+    /**
+     * Teston metoden e fshirjes se njoftimit
+     * Kontrollon nese njoftimi fshihet me sukses nga repository
+     */
     @Test
     void testDelete() {
         Long notificationId = 1L;

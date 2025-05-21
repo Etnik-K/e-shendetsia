@@ -15,6 +15,12 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
+/**
+ * Ky test kontrollon funksionalitetin e klases se implementimit te sherbimit te doktorit.
+ * Perfshin testimet per metoda te tilla si marrja e te gjithe doktoreve dhe marrja e
+ * doktorit me ane te ID-se. Perdor Mockito per te simuluar repository-n dhe JUnit
+ * per te ekzekutuar testimet.
+ */
 class DoctorServiceImplementationTest {
 
     @Mock
@@ -28,6 +34,10 @@ class DoctorServiceImplementationTest {
         doctorService = new DoctorServiceImplementation(doctorRepository);
     }
 
+    /**
+     * Teston metoden getAllDoctors qe kthen nje liste me doktore.
+     * Kontrollon nese lista e kthyer nga sherbimi perputhet me listen e pritur.
+     */
     @Test
     void getAllDoctors_ShouldReturnListOfDoctors() {
         // Arrange
@@ -43,6 +53,10 @@ class DoctorServiceImplementationTest {
         assertEquals(expectedDoctors, actualDoctors);
     }
 
+    /**
+     * Teston metoden getDoctorById kur doktori ekziston.
+     * Kontrollon nese doktori i kthyer nga sherbimi perputhet me doktorin e pritur.
+     */
     @Test
     void getDoctorById_WhenDoctorExists_ShouldReturnDoctor() {
         // Arrange
@@ -57,6 +71,10 @@ class DoctorServiceImplementationTest {
         assertEquals(expectedDoctor, actualDoctor.get());
     }
 
+    /**
+     * Teston metoden getDoctorById kur doktori nuk ekziston.
+     * Kontrollon nese metoda kthen nje Optional bosh.
+     */
     @Test
     void getDoctorById_WhenDoctorDoesNotExist_ShouldReturnEmpty() {
         // Arrange

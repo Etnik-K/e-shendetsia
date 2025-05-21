@@ -18,6 +18,10 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 
+/**
+ * Klasa e testimit per sherbimet e termineve
+ * Teston implementimin e sherbimeve te termineve duke perdorur Mockito
+ */
 @ExtendWith(MockitoExtension.class)
 class AppointmentServiceImplementationTest {
 
@@ -42,6 +46,10 @@ class AppointmentServiceImplementationTest {
     }
 
 
+    /**
+     * Teston ruajtjen e terminit
+     * Kontrollon nese termini ruhet me sukses dhe ka te gjitha te dhenat e sakta
+     */
     @Test
     void testSaveAppointment() {
         // Arrange
@@ -58,6 +66,10 @@ class AppointmentServiceImplementationTest {
     }
 
 
+    /**
+     * Teston anulimin e suksesshem te terminit
+     * Kontrollon nese termini anulohet me sukses dhe statusi ndryshohet ne CANCELED
+     */
     @Test
     void testCancelAppointment_Success() {
         // Arrange
@@ -74,6 +86,10 @@ class AppointmentServiceImplementationTest {
     }
 
 
+    /**
+     * Teston rastin kur termini nuk gjendet gjate anulimit
+     * Kontrollon sjelljen kur perpiqemi te anulojme nje termin qe nuk ekziston
+     */
     @Test
     void testCancelAppointment_NotFound() {
         // Arrange

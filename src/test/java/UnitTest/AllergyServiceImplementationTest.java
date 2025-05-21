@@ -1,3 +1,7 @@
+/**
+ * Test klase per AllergyServiceImplementation.
+ * Teston sherbimet e alergjive duke perdorur Mockito per te simuluar repository.
+ */
 package UnitTest;
 
 import edu.unipr.eshendetsia.model.Allergy;
@@ -21,12 +25,20 @@ class AllergyServiceImplementationTest {
 
     private AllergyServiceImplementation allergyService;
 
+    /**
+     * Inicializon mjedisin e testimit para cdo testi.
+     * Krijon mock objects dhe instance te sherbimit.
+     */
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
         allergyService = new AllergyServiceImplementation(allergyRepository);
     }
 
+    /**
+     * Teston metoden e ruajtjes se alergjise.
+     * Kontrollon nese ruajtja kryhet me sukses dhe repository thirret sakte.
+     */
     @Test
     void testSave() {
         Allergy allergy = new Allergy();
@@ -38,6 +50,10 @@ class AllergyServiceImplementationTest {
         verify(allergyRepository).save(allergy);
     }
 
+    /**
+     * Teston marrjen e alergjive sipas ID te perdoruesit.
+     * Verifikon nese lista e alergjive merret sakte nga repository.
+     */
     @Test
     void testGetByUserId() {
         Long userId = 1L;
@@ -50,6 +66,10 @@ class AllergyServiceImplementationTest {
         verify(allergyRepository).findByUserId(userId);
     }
 
+    /**
+     * Teston fshirjen e nje alergji.
+     * Kontrollon nese thirrja e fshirjes ne repository kryhet sakte.
+     */
     @Test
     void testDelete() {
         Long allergyId = 1L;
