@@ -2,7 +2,7 @@ package edu.unipr.eshendetsia.controller;
 
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import edu.unipr.eshendetsia.exception.UnauthorizedException;
-import edu.unipr.eshendetsia.http.request.SaveHistoryRequest;
+import edu.unipr.eshendetsia.http.request.body.SaveHistoryRequest;
 import edu.unipr.eshendetsia.service.interfaces.HistoryService;
 import edu.unipr.eshendetsia.http.response.ApiResponse;
 import edu.unipr.eshendetsia.controller.base.BaseController;

@@ -1,4 +1,4 @@
-package edu.unipr.eshendetsia.http.request;
+package edu.unipr.eshendetsia.http.request.body;
 
 import edu.unipr.eshendetsia.model.History;
 
