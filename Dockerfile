@@ -9,7 +9,7 @@ RUN mvn clean install
 FROM eclipse-temurin:21-jdk-jammy
 
 WORKDIR /edu.unipr.eshendetsia
-COPY --from=build /app/target/*.jar e-shendetsia.jar
+COPY --from=build /edu.unipr.eshendetsia/target/*.jar e-shendetsia.jar
 
 EXPOSE 8080
 ENTRYPOINT ["java", "--enable-preview", "-jar", "e-shendetsia.jar"]
