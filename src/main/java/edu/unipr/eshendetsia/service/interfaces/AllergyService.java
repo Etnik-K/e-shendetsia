@@ -4,6 +4,7 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import edu.unipr.eshendetsia.exception.concrete.NotFoundException;
 import edu.unipr.eshendetsia.exception.concrete.UnauthorizedException;
 import edu.unipr.eshendetsia.model.entity.Allergy;
+import edu.unipr.eshendetsia.model.entity.UserAllergy;
 
 import java.util.List;
 
@@ -30,10 +31,10 @@ public interface AllergyService {
      * @param userId ID e perdoruesit
      * @return lista e alergjive
      * @throws JWTVerificationException Nese JWT tokeni nuk eshte valid
-     * @throws UnauthorizedException Nese perdoruesi nuk eshte i autorizuar
-     * @throws NotFoundException Nese alergjia nuk eshte gjetur
+     * @throws UnauthorizedException    Nese perdoruesi nuk eshte i autorizuar
+     * @throws NotFoundException        Nese alergjia nuk eshte gjetur
      */
-    List<Allergy> getByUserId(Long userId, String authHeader) throws JWTVerificationException, UnauthorizedException, NotFoundException;
+    List<UserAllergy> getByUserId(Long userId, String authHeader) throws JWTVerificationException, UnauthorizedException, NotFoundException;
 
     /**
      * Fshin nje alergji nga sistemi
