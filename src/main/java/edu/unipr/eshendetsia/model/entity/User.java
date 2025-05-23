@@ -97,14 +97,10 @@ public class User {
     }
 
     public boolean isAdmin() {
-        if (this.admin == null)
-            return true;
-        return false;
+        return this.admin != null;
     }
 
     public boolean isDoctor() {
-        if (this.admin == null)
-            return true;
-        return false;
+        return this.doctor == null;
     }
 }

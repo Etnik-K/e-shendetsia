@@ -14,7 +14,7 @@ import java.util.List;
 @Service
 public class PerscriptionServiceImplementation implements PerscriptionService {
     
-    private PerscriptionRepository persciptionRepository;
+    private final PerscriptionRepository persciptionRepository;
 
     /**
      * Konstruktori i klases

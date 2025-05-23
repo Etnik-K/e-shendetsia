@@ -44,17 +44,20 @@ public class UserServiceImplementation implements UserService {
      * @throws UnauthorizedException Ne momentin kur Useri qe e invokon metoden nuk ka privilegje te adminit
      * @throws JWTVerificationException Ne momentin kur kemi token invalid
      */
-    public List<User> getAllUsers(String requestJwt) throws UnauthorizedException, JWTVerificationException {
+    public List<User> getAllUsers(String requestJwt) throws UnauthorizedException {
 
         DecodedJWT jwt = JWT.decode(requestJwt);
         long userId = Long.parseLong(jwt.getSubject());
 
         // kushtin duhet me zv me !this.isAdmin(userId)
-        if (!this.userRepository.getRoleById(userId).getName().equals("admin"))
+        Optional<User> optUser = this.userRepository.findById(userId);
+        if (optUser.isEmpty())
+            throw new UnauthorizedException("Nuk jeni i autorizuar!");
+
+        if (optUser.get().getRoles().stream().noneMatch(role -> role.getName().equalsIgnoreCase("admin")))
             throw new UnauthorizedException("Nuk jeni i autorizuar!");
 
         return this.userRepository.findAll();
-
     }
 
     /**
@@ -66,24 +69,28 @@ public class UserServiceImplementation implements UserService {
      * @throws JWTVerificationException Ne momentin kur kemi token invalid
      * @throws NotFoundException ne momenitn kur nuk ka profil me id viewUserId
      */
-    public User getUserById(Long viewUserId, String requestJwt) throws UnauthorizedException, JWTVerificationException, NotFoundException {
+    public User getUserById(Long viewUserId, String requestJwt) throws UnauthorizedException, NotFoundException {
 
         DecodedJWT jwt = JWT.decode(requestJwt);
         long userId = Long.parseLong(jwt.getSubject());
 
-        if (!(this.userRepository.getRoleById(userId).getName().equals("admin") || (viewUserId == userId)))
+        Optional<User> optUser = this.userRepository.findById(viewUserId);
+        if (optUser.isEmpty())
+            throw new NotFoundException("Nuk jeni i autorizuar!");
+
+        if (!(optUser.get().getRoles().stream().noneMatch(role -> role.getName().equalsIgnoreCase("ADMIN")) || (viewUserId == userId)))
             throw new UnauthorizedException("Nuk jeni i autorizuar!");
 
-        Optional<User> optUser = this.userRepository.findById(userId);
-
-        if (optUser.isEmpty())
-            throw new NotFoundException("Useri nuk u gjet");
 
         return optUser.get();
 
     }
 
     /**
+     * Kjo n'kushte normale ka me u fshi.
+     * .
+     * .
+     * .
      * Kjo metode kthen userin me id perkatese. Nuk kerkon authentikim. Perdoret vetem nga serveri per qellime te brendshme dhe *NUK DUHET* te ekspozohet ne endpointa
      * @param id ID e userit per me kthy
      * @return Useri me ID perkatese
@@ -104,13 +111,15 @@ public class UserServiceImplementation implements UserService {
      * @param userId Useri, rolet e te cilit na duhen.
      * @return Seti me rolet e userit me id perkatese.
      */
-    public Set<Role> findRolesById(long userId) throws NotFoundException {
-        Optional<Set<Role>> roles = this.userRepository.findRolesById(userId);
+    public Set<Role> findRolesById(Long userId, String authHeader) throws NotFoundException {
+        Long requestUserId = Long.parseLong(JWT.decode(authHeader).getSubject());
 
-        if (roles.isEmpty())
-            throw new NotFoundException("Nuk ka role per kete user");
+        User user = this.getUserById(userId);
 
-        return roles.get();
+        if (!requestUserId.equals(userId) && !user.isAdmin())
+            throw new UnauthorizedException("Nuk jeni i autorizuar!");
+
+        return user.getRoles();
     }
 
     /**
@@ -120,12 +129,12 @@ public class UserServiceImplementation implements UserService {
      * @throws UnauthorizedException Ne momentin kur nje user tentoj te fshije nje llogari mbi te cilat nuk ka qasje administrative
      * @throws JWTVerificationException Ne momentin qe tokeni eshte i skaduar, apo jo-valid
      */
-    public void deleteUser(Long deleteUserId, String requestJwt) throws UnauthorizedException, JWTVerificationException {
+    public void deleteUser(Long deleteUserId, String requestJwt) throws UnauthorizedException {
+        Long requestUserId = Long.parseLong(JWT.decode(requestJwt).getSubject());
 
-        DecodedJWT jwt = JWT.decode(requestJwt);
-        long userId = Long.parseLong(jwt.getSubject());
+        User user = this.getUserById(requestUserId);
 
-        if (!(deleteUserId == userId) || this.userRepository.getRoleById(userId).getName().equals("admin"))
+        if (!user.isAdmin() && !deleteUserId.equals(requestUserId))
             throw new UnauthorizedException("Nuk jeni i autorizuar!");
 
         this.userRepository.deleteById(deleteUserId);
@@ -157,10 +166,8 @@ public class UserServiceImplementation implements UserService {
      * @param password fjalekalimi i userit
      * @return Userin me id perkatese nese ka sukses, pperndryshe null
      */
-
     private User authenticate(Long id, String password) throws NotFoundException, InvalidCredentialsException {
-        User user = this.userRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Useri nuk u gjet"));
+        User user = this.getUserById(id);
 
         String salt = user.getSalt(); // This assumes User has a getSalt() method
         String passwordHash = this.hasherService.generateSaltedHash(password, salt);
@@ -199,22 +206,20 @@ public class UserServiceImplementation implements UserService {
      * @return Historine e userit
      */
     @Cacheable(value = "history", key = "#userId")
-    public User getUserHistory(Long userId, String requestJwt) throws JWTVerificationException, UnauthorizedException, NotFoundException {
+    public String getUserHistory(Long userId, String requestJwt) throws UnauthorizedException, NotFoundException {
         DecodedJWT jwt = JWT.decode(requestJwt);
-        long jwtSubject = Long.parseLong(jwt.getSubject());
+        Long jwtSubject = Long.valueOf(jwt.getSubject());
 
-        if (!(this.userRepository.getRoleById(jwtSubject).getName().equals("admin") ||
-                jwtSubject == userId))
+        User user = this.getUserById(userId, requestJwt);
+
+        if (!user.isAdmin() &&
+                !jwtSubject.equals(userId))
             throw new UnauthorizedException("Nuk jeni i autorizuar!");
 
-        Optional<User> validUser = this.userRepository.findById(userId);
+        return user.getHistory();
+    }
 
-        if (validUser.isEmpty())
-            throw new NotFoundException("User not found");
-
-        User user = validUser.get();
-        System.out.println(STR."Returning user: \{user.getId()}, \{user.getEmail()}, \{user.getHistory()}");
-
-        return user;
+    private User getUserById(Long id) throws NotFoundException {
+        return this.userRepository.findById(id).orElseThrow(() -> new NotFoundException("Useri nuk u gjet"));
     }
 }

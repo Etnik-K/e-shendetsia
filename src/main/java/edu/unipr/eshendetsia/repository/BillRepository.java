@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface BillRepository extends JpaRepository<Bill, Long> {
     List<Bill> findByUserId(Long userId);
-    List<Bill> findByIsPaid(boolean isPaid);
+    List<Bill> findByPaid(boolean paid);
 }

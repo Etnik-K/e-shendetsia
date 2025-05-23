@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface BillService {
 
-    Bill save(Bill bill);
+    void save(Bill bill);
 
     List<Bill> getByUser(Long userId);
 

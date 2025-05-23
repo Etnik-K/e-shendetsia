@@ -1,5 +1,8 @@
 package edu.unipr.eshendetsia.service.interfaces;
 
+import edu.unipr.eshendetsia.exception.concrete.InvalidCredentialsException;
+import edu.unipr.eshendetsia.exception.concrete.NotFoundException;
+import edu.unipr.eshendetsia.exception.concrete.UnauthorizedException;
 import edu.unipr.eshendetsia.model.entity.Role;
 import edu.unipr.eshendetsia.model.entity.User;
 
@@ -13,7 +16,7 @@ public interface UserService {
      * @param requestJwt Tokeni authentifikues
      * @return Nje Liste me te gjithe Userat
      */
-    List<User> getAllUsers(String requestJwt);
+    List<User> getAllUsers(String requestJwt) throws UnauthorizedException;
 
     /**
      * Kjo metode eshte implementimi i logjikes per endpointin GET /api/users/{viewUserId}
@@ -21,14 +24,14 @@ public interface UserService {
      * @param requestJwt Tokeni authentifikues
      * @return Userin me ID perkatese
      */
-    User getUserById(Long viewUserId, String requestJwt);
+    User getUserById(Long viewUserId, String requestJwt) throws UnauthorizedException, NotFoundException;
 
     /**
      * Kjo metode eshte implementimi i logjikes per endpointin DELETE /api/users/{deleteUserId}
      * @param deleteUserId ID per fshirje
      * @param requestJwt Tokeni authentifikues
      */
-    void deleteUser(Long deleteUserId, String requestJwt);
+    void deleteUser(Long deleteUserId, String requestJwt) throws UnauthorizedException;
 
     /**
      * Kjo metode eshte implementimi i logjikes per endpointin POST /api/users/login
@@ -36,16 +39,16 @@ public interface UserService {
      * @param password Fjalekalimi
      * @return JWT tokenin authentifikues
      */
-    String login(Long id, String password);
+    String login(Long id, String password) throws InvalidCredentialsException, NotFoundException;
 
-    User getUserHistory(Long id, String requestJwt);
+    String getUserHistory(Long id, String requestJwt) throws UnauthorizedException, NotFoundException;
 
-    User getUserByIdForServer(Long id);
+    User getUserByIdForServer(Long id) throws NotFoundException;
 
     /**
      * Kthen nje set roles
      * @param userId Useri, rolet e te cilit na duhen.
      * @return Seti me rolet e userit me id perkatese.
      */
-    Set<Role> findRolesById(long userId);
+    Set<Role> findRolesById(Long userId, String authHeader) throws NotFoundException;
 }

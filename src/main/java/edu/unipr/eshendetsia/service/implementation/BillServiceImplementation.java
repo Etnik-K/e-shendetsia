@@ -31,10 +31,9 @@ public class BillServiceImplementation implements BillService {
      * Ruan faturen ne databaze
      *
      * @param bill fatura qe do te ruhet
-     * @return fatura e ruajtur
      */
-    public Bill save(Bill bill) {
-        return billRepository.save(bill);
+    public void save(Bill bill) {
+        billRepository.save(bill);
     }
 
     /**
@@ -54,7 +53,7 @@ public class BillServiceImplementation implements BillService {
      * @return lista e faturave sipas statusit
      */
     public List<Bill> getByPaymentStatus(boolean isPaid) {
-        return billRepository.findByIsPaid(isPaid);
+        return billRepository.findByPaid(isPaid);
     }
 
     /**

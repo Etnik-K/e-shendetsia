@@ -8,11 +8,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
 /**
  * Kjo klase sherben per menaxhimin e njoftimeve
  * dhe implementon nderfaqen NotificationService
  */
+@Service
 public class NotificationServiceImplementation implements NotificationService {
 
     private final NotificationRepository notificationRepository;

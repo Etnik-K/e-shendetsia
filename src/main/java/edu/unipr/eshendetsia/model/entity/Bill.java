@@ -43,7 +43,7 @@ public class Bill {
      * Tregon nese fatura eshte paguar apo jo
      */
     @Column(name = "is_paid", nullable = false)
-    private boolean isPaid = false;
+    private boolean paid = false;
 
     /**
      * Data dhe ora kur eshte leshuar fatura

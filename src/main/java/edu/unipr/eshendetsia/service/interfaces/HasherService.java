@@ -1,8 +1,5 @@
 package edu.unipr.eshendetsia.service.interfaces;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-
 public interface HasherService {
 
     /**

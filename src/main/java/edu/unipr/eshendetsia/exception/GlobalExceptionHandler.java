@@ -32,4 +32,9 @@ public class GlobalExceptionHandler {
         return this.error(e.getMessage(), HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<String> handleException(Exception e) {
+        return this.error(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
 }

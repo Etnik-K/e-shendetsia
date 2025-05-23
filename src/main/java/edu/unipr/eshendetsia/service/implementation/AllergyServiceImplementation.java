@@ -5,7 +5,6 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import edu.unipr.eshendetsia.exception.concrete.NotFoundException;
 import edu.unipr.eshendetsia.exception.concrete.UnauthorizedException;
-import edu.unipr.eshendetsia.model.entity.Admin;
 import edu.unipr.eshendetsia.model.entity.Allergy;
 import edu.unipr.eshendetsia.model.entity.User;
 import edu.unipr.eshendetsia.repository.AllergyRepository;
@@ -53,7 +52,7 @@ public class AllergyServiceImplementation implements AllergyService {
 
         User user = userService.getUserById(userId, authHeader);
 
-        if (!user.isAdmin())
+        if (user.isAdmin())
             throw new UnauthorizedException("Nuk jeni i autorizuar");
 
         return allergyRepository.save(allergy);
@@ -92,7 +91,8 @@ public class AllergyServiceImplementation implements AllergyService {
 
         User user = userService.getUserById(userId, authHeader);
 
-        if
+        if (user.isAdmin())
+            throw new UnauthorizedException("Nuk jeni i autorizuar");
 
         allergyRepository.deleteById(id);
     }

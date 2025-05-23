@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface TestResultService {
 
-    TestResult save(TestResult testResult);
+    void save(TestResult testResult);
 
     List<TestResult> getByUserId(Long userId);
 

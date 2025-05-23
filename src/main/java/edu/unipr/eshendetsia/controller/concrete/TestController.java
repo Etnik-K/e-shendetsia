@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("test")
 public class TestController extends BaseController {
+    @SuppressWarnings("SameReturnValue")
     @GetMapping
     public String test() {
         return "Hello from /api/test";
