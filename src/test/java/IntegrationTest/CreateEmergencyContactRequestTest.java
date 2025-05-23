@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 import edu.unipr.eshendetsia.http.request.body.CreateEmergencyContactRequest;
-import edu.unipr.eshendetsia.model.EmergencyContact;
+import edu.unipr.eshendetsia.model.entity.EmergencyContact;
 
 /**
  * Klasa test per verifikimin e funksionalitetit te krijimit te kontakteve emergjente.

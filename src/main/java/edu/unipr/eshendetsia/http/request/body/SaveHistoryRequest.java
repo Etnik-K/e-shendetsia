@@ -1,6 +1,6 @@
 package edu.unipr.eshendetsia.http.request.body;
 
-import edu.unipr.eshendetsia.model.History;
+import edu.unipr.eshendetsia.model.entity.History;
 
 import java.time.LocalDateTime;
 

@@ -5,6 +5,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -22,8 +23,14 @@ public class LoggingFilter implements Filter {
                          ServletResponse response,
                          FilterChain chain)
             throws IOException, ServletException {
+        System.out.println(STR."Jemi ne \{this.getClass().getSimpleName()}");
 
-        logger.info("{}, {}, {}", new Date(), request.getRemoteAddr(), request);
+        HttpServletRequest httpRequest = (HttpServletRequest) request;
+        String method = httpRequest.getMethod();
+        String uri = httpRequest.getRequestURI();
+        String ip = httpRequest.getRemoteAddr();
+
+        logger.info(STR."\{new Date()} - \{method} \{uri} from \{ip}");
 
         chain.doFilter(request, response);
     }

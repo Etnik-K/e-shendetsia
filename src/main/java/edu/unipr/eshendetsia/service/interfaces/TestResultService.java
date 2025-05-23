@@ -1,6 +1,6 @@
 package edu.unipr.eshendetsia.service.interfaces;
 
-import edu.unipr.eshendetsia.model.TestResult;
+import edu.unipr.eshendetsia.model.entity.TestResult;
 
 import java.util.List;
 

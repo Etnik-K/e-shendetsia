@@ -2,7 +2,7 @@ package edu.unipr.eshendetsia.controller;
 
 import edu.unipr.eshendetsia.exception.NotFoundException;
 import edu.unipr.eshendetsia.exception.UnauthorizedException;
-import edu.unipr.eshendetsia.model.Clinic;
+import edu.unipr.eshendetsia.model.entity.Clinic;
 import edu.unipr.eshendetsia.service.interfaces.ClinicService;
 import edu.unipr.eshendetsia.http.response.ApiResponse;
 import edu.unipr.eshendetsia.controller.base.BaseController;

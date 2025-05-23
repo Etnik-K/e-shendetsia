@@ -6,7 +6,7 @@ import edu.unipr.eshendetsia.exception.NotFoundException;
 import edu.unipr.eshendetsia.exception.UnauthorizedException;
 import edu.unipr.eshendetsia.http.request.body.SubmitFeedbackRequest;
 import edu.unipr.eshendetsia.http.response.ApiResponse;
-import edu.unipr.eshendetsia.model.Feedback;
+import edu.unipr.eshendetsia.model.entity.Feedback;
 import edu.unipr.eshendetsia.service.interfaces.FeedbackService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

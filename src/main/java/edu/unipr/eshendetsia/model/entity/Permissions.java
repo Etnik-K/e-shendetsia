@@ -1,4 +1,4 @@
-package edu.unipr.eshendetsia.model;
+package edu.unipr.eshendetsia.model.entity;
 
 import jakarta.persistence.*;
 
@@ -8,6 +8,7 @@ import java.util.Set;
  * Klasa qe perfaqeson lejet ne sistem.
  * Permban te gjitha lejet qe mund te jepen per perdoruesit.
  */
+
 @Entity
 @Table(name = "permissions")
 public class Permissions {

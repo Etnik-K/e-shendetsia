@@ -1,6 +1,6 @@
 package edu.unipr.eshendetsia.service.interfaces;
 
-import edu.unipr.eshendetsia.model.Role;
+import edu.unipr.eshendetsia.model.entity.Role;
 
 /*
     todo: roleservice & implementation

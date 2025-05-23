@@ -1,6 +1,9 @@
 package edu.unipr.eshendetsia.service.interfaces;
 
+import com.auth0.jwt.exceptions.JWTCreationException;
+import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import edu.unipr.eshendetsia.exception.UnauthorizedException;
 
 import java.util.Map;
 
@@ -17,13 +20,14 @@ public interface JWTService {
      * @param id     Identifikatori unik i perdoruesit
      * @return Token-i i krijuar ne forme teksti
      */
-    String createToken(Map<String, String> claims, long id);
+    String createToken(Map<String, String> claims, long id) throws IllegalArgumentException, JWTCreationException;
 
     /**
-     * Verifikon nese nje token JWT eshte valid
+     * Verifikon vlefshmerin e një token-i JWT
      *
-     * @param token Token-i qe do te verifikohet
-     * @return Objekti DecodedJWT qe permban te dhenat e token-it
+     * @param token Token-i për tu verifikuar
+     * @return Token-i i dekoduar JWT
+     * @throws JWTVerificationException Nese token-i eshte i pavlefshëm
      */
-    DecodedJWT verifyToken(String token);
+    DecodedJWT verifyToken(String token) throws JWTVerificationException, IllegalArgumentException;
 }

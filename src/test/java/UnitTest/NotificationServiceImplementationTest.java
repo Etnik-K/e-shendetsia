@@ -3,7 +3,7 @@ package UnitTest;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-import edu.unipr.eshendetsia.model.Notification;
+import edu.unipr.eshendetsia.model.entity.Notification;
 import edu.unipr.eshendetsia.repository.NotificationRepository;
 import edu.unipr.eshendetsia.service.implementation.NotificationServiceImplementation;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,7 +13,6 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Testi per implementimin e sherbimit te njoftimeve

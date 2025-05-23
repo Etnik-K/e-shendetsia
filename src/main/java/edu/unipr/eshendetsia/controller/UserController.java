@@ -4,7 +4,7 @@ import edu.unipr.eshendetsia.http.request.body.LoginRequest;
 import edu.unipr.eshendetsia.exception.InvalidCredentialsException;
 import edu.unipr.eshendetsia.exception.NotFoundException;
 import edu.unipr.eshendetsia.exception.UnauthorizedException;
-import edu.unipr.eshendetsia.model.User;
+import edu.unipr.eshendetsia.model.entity.User;
 import edu.unipr.eshendetsia.service.interfaces.UserService;
 import edu.unipr.eshendetsia.http.response.ApiResponse;
 import edu.unipr.eshendetsia.controller.base.BaseController;
@@ -83,6 +83,7 @@ public class UserController extends BaseController{
      */
     @PostMapping("/login")
     public ResponseEntity<ApiResponse<String>> login(@RequestBody LoginRequest loginRequest) {
+        System.out.println(STR."Jemi ne \{this.getClass().getSimpleName()}.login()");
         try{
             return this.ok(this.userService.login(loginRequest.id(), loginRequest.password()));
         } catch (NotFoundException | InvalidCredentialsException exception) {

@@ -1,6 +1,6 @@
 package edu.unipr.eshendetsia.repository;
 
-import edu.unipr.eshendetsia.model.Notification;
+import edu.unipr.eshendetsia.model.entity.Notification;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

@@ -1,6 +1,6 @@
 package UnitTest;
 
-import edu.unipr.eshendetsia.model.Insurance;
+import edu.unipr.eshendetsia.model.entity.Insurance;
 import edu.unipr.eshendetsia.repository.InsuranceRepository;
 import edu.unipr.eshendetsia.service.implementation.InsuranceServiceImplementation;
 import org.junit.jupiter.api.BeforeEach;

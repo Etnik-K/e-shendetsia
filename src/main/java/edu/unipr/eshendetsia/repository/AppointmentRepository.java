@@ -1,6 +1,6 @@
 package edu.unipr.eshendetsia.repository;
 
-import edu.unipr.eshendetsia.model.Appointment;
+import edu.unipr.eshendetsia.model.entity.Appointment;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface AppointmentRepository extends JpaRepository<Appointment, Long> {

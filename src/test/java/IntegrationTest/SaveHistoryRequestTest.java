@@ -3,7 +3,7 @@ package IntegrationTest;
 import static org.junit.jupiter.api.Assertions.*;
 
 import edu.unipr.eshendetsia.http.request.body.SaveHistoryRequest;
-import edu.unipr.eshendetsia.model.History;
+import edu.unipr.eshendetsia.model.entity.History;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
