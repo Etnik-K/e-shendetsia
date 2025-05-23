@@ -1,6 +1,8 @@
 package edu.unipr.eshendetsia.model.entity;
 
+import edu.unipr.eshendetsia.model.enums.HttpMethod;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 
 import java.util.Set;
 
@@ -20,13 +22,16 @@ public class Permissions {
     /**
      * Metoda HTTP e lejuar per kete leje
      */
+    @NotBlank
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private HttpMethod httpMethod;
 
     /**
      * URL e burimit per te cilin vlen kjo leje
      */
-    @Column
+    @NotBlank
+    @Column(nullable = false)
     private String resourceUrl;
 
     /**

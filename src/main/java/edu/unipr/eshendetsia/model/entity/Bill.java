@@ -3,6 +3,7 @@ package edu.unipr.eshendetsia.model.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
@@ -21,31 +22,40 @@ public class Bill {
     @GeneratedValue
     private Long id;
 
-    @Column(nullable = false)
-    private Long userId;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     /**
      * Shuma e pageses ne monedhen perkatese
      */
     @Column(nullable = false)
-    private Double amount;
+    private BigDecimal amount;
 
     /**
      * Pershkrimi i fatures dhe arsyeja e pageses
      */
+    @Lob
     @Column(nullable = false)
     private String description;
 
     /**
      * Tregon nese fatura eshte paguar apo jo
      */
-    @Column
+    @Column(name = "is_paid", nullable = false)
     private boolean isPaid = false;
 
     /**
      * Data dhe ora kur eshte leshuar fatura
      */
-    @Column
+    @Column(nullable = false)
     private LocalDateTime issuedAt = LocalDateTime.now();
+
+    @PrePersist
+    public void prePersist() {
+        if (issuedAt == null) {
+            issuedAt = LocalDateTime.now();
+        }
+    }
 
 }

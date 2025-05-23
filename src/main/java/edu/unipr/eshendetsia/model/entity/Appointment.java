@@ -1,6 +1,9 @@
 package edu.unipr.eshendetsia.model.entity;
 
+import edu.unipr.eshendetsia.model.enums.AppointmentStatus;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -22,18 +25,28 @@ public class Appointment {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(nullable = false)
-    private Long userId;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
-    @Column(nullable = false)
-    private Long doctorId;
+    @ManyToOne
+    @JoinColumn(name = "doctor_id", nullable = false)
+    private Doctor doctor;
 
+    @Future(message = "Appointment time must be in the future")
     @Column(nullable = false)
     private LocalDateTime appointmentTime;
 
-    @Column(nullable = false)
+    @NotBlank
+    @Lob
     private String reason;
 
-    @Column
-    private String Status;
+    @Enumerated(EnumType.STRING)
+    private AppointmentStatus status = AppointmentStatus.SCHEDULED;
+
+    @PrePersist
+    public void prePersist() {
+        if (status == null)
+            status = AppointmentStatus.SCHEDULED;
+    }
 }

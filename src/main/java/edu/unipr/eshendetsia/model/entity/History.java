@@ -26,12 +26,13 @@ public class History {
     @GeneratedValue
     private Long id;
 
-    //KlinikaID
-    @Column(nullable = false)
-    private Long userId;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
-    @Column(nullable = false)
-    private Long doctorId;
+    @ManyToOne
+    @JoinColumn(name = "doctor_id", nullable = false)
+    private Doctor doctor;
 
     @Column(nullable = false)
     private String description;
@@ -44,4 +45,10 @@ public class History {
 
     @Column(nullable = false)
     private LocalDateTime date;
+
+    @PrePersist
+    public void prePersist() {
+        if (date == null)
+            date = LocalDateTime.now();
+    }
 }

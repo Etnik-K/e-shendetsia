@@ -2,6 +2,7 @@ package edu.unipr.eshendetsia.model.entity;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 /**
@@ -18,24 +19,33 @@ import lombok.*;
 @NoArgsConstructor
 @Data
 @Entity
-@Table
+@Table(
+    name = "insurance_table",
+    uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"user_id", "policyNumber"})
+    }
+)
 public class Insurance {
     @Id
     @GeneratedValue
     private Long id;
 
-    @Column(nullable = false)
-    private Long userId;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
+    @NotBlank
     @Column(nullable = false)
     private String provider;
 
+    @NotBlank
     @Column(nullable = false)
     private String policyNumber;
 
-    @Column
+    @Lob
     private String coverageDetails;
 
-    @Column
+    @Column(nullable = false)
     private boolean active = true;
+
 }

@@ -1,7 +1,8 @@
 package edu.unipr.eshendetsia.model.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
+import jakarta.validation.constraints.NotBlank;
+import lombok.Data;
 
 import java.util.Set;
 
@@ -10,7 +11,7 @@ import java.util.Set;
  * Permban informacionin bazik si id dhe emer, si dhe
  * lidhjet me te drejtat e perdoruesit dhe perdoruesit qe kane kete rol.
  */
-@Getter
+@Data
 @Entity
 @Table(name = "role_table")
 public class Role {
@@ -19,6 +20,7 @@ public class Role {
     private Long id;
 
     @Column(nullable = false)
+    @NotBlank
     private String name;
 
     @ManyToMany

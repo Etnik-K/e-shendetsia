@@ -20,14 +20,16 @@ public class TestResult {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(nullable=false)
-    private Long userId;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     /**
      * Identifikuesi i mjekut qe ka kryer testin
      */
-    @Column(nullable=false)
-    private Long doctorId;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "doctor_id", nullable = false)
+    private Doctor doctor;
 
     /**
      * Lloji i testit mjekesor
@@ -50,6 +52,12 @@ public class TestResult {
     /**
      * Data dhe ora kur eshte kryer testi
      */
-    @Column
+    @Column(nullable = false)
     private LocalDateTime timestamp;
+
+    @PrePersist
+    public void prePersist() {
+        if (timestamp == null)
+            timestamp = LocalDateTime.now();
+    }
 }

@@ -1,4 +1,4 @@
-package edu.unipr.eshendetsia.model.entity;
+package edu.unipr.eshendetsia.model.enums;
 
 /**
  * Percakton metodat e ndryshme HTTP qe perdoren ne aplikacion.

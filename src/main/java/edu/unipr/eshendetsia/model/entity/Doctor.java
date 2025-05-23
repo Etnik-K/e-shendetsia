@@ -1,7 +1,7 @@
 package edu.unipr.eshendetsia.model.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
+import lombok.Data;
 
 import java.util.Set;
 
@@ -18,7 +18,7 @@ import java.util.Set;
  * - profesioni: Specializimi i doktorit
  * - licensa: Numri i licenses profesionale
  */
-@Getter
+@Data
 @Entity
 @Table(name = "doctor_table")
 public class Doctor {
@@ -31,7 +31,7 @@ public class Doctor {
     @JoinColumn(name = "id")
     private User user;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "employed_by",
             joinColumns = @JoinColumn(name = "doctor_id"),
@@ -40,7 +40,7 @@ public class Doctor {
     private Set<Clinic> employedBy;
 
     @Column(nullable = false)
-    private String profesioni;
+    private String specializimi;
 
     @Column(nullable = false)
     private String licensa;
