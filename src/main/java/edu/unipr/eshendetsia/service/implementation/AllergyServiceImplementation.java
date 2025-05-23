@@ -7,13 +7,16 @@ import edu.unipr.eshendetsia.exception.concrete.NotFoundException;
 import edu.unipr.eshendetsia.exception.concrete.UnauthorizedException;
 import edu.unipr.eshendetsia.model.entity.Allergy;
 import edu.unipr.eshendetsia.model.entity.User;
+import edu.unipr.eshendetsia.model.entity.UserAllergy;
 import edu.unipr.eshendetsia.repository.AllergyRepository;
+import edu.unipr.eshendetsia.repository.UserAllergyRepository;
 import edu.unipr.eshendetsia.service.interfaces.AllergyService;
 import edu.unipr.eshendetsia.service.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Implementimi i sherbimit per menaxhimin e alergjive
@@ -23,6 +26,7 @@ import java.util.List;
 @Service
 public class AllergyServiceImplementation implements AllergyService {
 
+    private final UserAllergyRepository userAllergyRepository;
     private final AllergyRepository allergyRepository;
 
     private final UserService userService;
@@ -30,10 +34,11 @@ public class AllergyServiceImplementation implements AllergyService {
     /**
      * Konstruktori i klases
      *
-     * @param allergyRepository repository per akses ne te dhenat e alergjive
+     * @param userAllergyRepository repository per akses ne te dhenat e alergjive
      */
     @Autowired
-    public AllergyServiceImplementation(AllergyRepository allergyRepository, UserService userService) {
+    public AllergyServiceImplementation(UserAllergyRepository userAllergyRepository, AllergyRepository allergyRepository, UserService userService) {
+        this.userAllergyRepository = userAllergyRepository;
         this.allergyRepository = allergyRepository;
         this.userService = userService;
     }
@@ -64,17 +69,25 @@ public class AllergyServiceImplementation implements AllergyService {
      * @param allergyUserId ID e perdoruesit
      * @return lista e alergjive
      * @throws JWTVerificationException Nese JWT tokeni nuk eshte valid
-     * @throws UnauthorizedException Nese perdoruesi nuk eshte i autorizuar
-     * @throws NotFoundException Nese alergjia nuk eshte gjetur
+     * @throws UnauthorizedException    Nese perdoruesi nuk eshte i autorizuar
+     * @throws NotFoundException        Nese alergjia nuk eshte gjetur
      */
-    public List<Allergy> getByUserId(Long allergyUserId, String authHeader) throws UnauthorizedException{
+    public List<UserAllergy> getByUserId(Long allergyUserId, String authHeader) throws UnauthorizedException{
         DecodedJWT decodedJWT = JWT.decode(authHeader);
         Long userId = Long.parseLong(decodedJWT.getSubject());
 
         if (!userId.equals(allergyUserId)) // userId != allergyUserId
             throw new UnauthorizedException("Nuk jeni i autorizuar");
 
-        return allergyRepository.findByUserId(userId);
+        User user = new User();
+        user.setId(userId);
+
+        Optional<List<UserAllergy>> allergyList = userAllergyRepository.findByUser(user);
+
+        if (allergyList.isEmpty())
+            throw new NotFoundException("Useri nuk ka alergji");
+
+        return allergyList.get();
     }
 
     /**
@@ -94,6 +107,6 @@ public class AllergyServiceImplementation implements AllergyService {
         if (user.isAdmin())
             throw new UnauthorizedException("Nuk jeni i autorizuar");
 
-        allergyRepository.deleteById(id);
+        userAllergyRepository.deleteById(id);
     }
 }
