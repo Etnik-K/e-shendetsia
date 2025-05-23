@@ -2,7 +2,7 @@ package IntegrationTest;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import edu.unipr.eshendetsia.exception.InvalidCredentialsException;
+import edu.unipr.eshendetsia.exception.concrete.InvalidCredentialsException;
 import org.junit.jupiter.api.Test;
 
 /**

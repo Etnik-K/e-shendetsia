@@ -1,10 +1,10 @@
-package edu.unipr.eshendetsia.controller;
+package edu.unipr.eshendetsia.controller.concrete;
 
 
 import edu.unipr.eshendetsia.model.entity.Doctor;
 import edu.unipr.eshendetsia.service.interfaces.DoctorService;
 import edu.unipr.eshendetsia.http.response.ApiResponse;
-import edu.unipr.eshendetsia.controller.abstracts.BaseController;
+import edu.unipr.eshendetsia.controller.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

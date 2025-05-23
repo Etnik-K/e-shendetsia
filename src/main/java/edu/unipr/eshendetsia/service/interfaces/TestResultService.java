@@ -5,8 +5,13 @@ import edu.unipr.eshendetsia.model.entity.TestResult;
 import java.util.List;
 
 public interface TestResultService {
-    public TestResult save(TestResult testResult);
-    public List<TestResult> getByUserId(Long userId);
-    public List<TestResult> getByDoctorId(Long doctorId);
-    public void delete(Long id);
+
+    TestResult save(TestResult testResult);
+
+    List<TestResult> getByUserId(Long userId);
+
+    List<TestResult> getByDoctorId(Long doctorId);
+
+    void delete(Long id);
+
 }

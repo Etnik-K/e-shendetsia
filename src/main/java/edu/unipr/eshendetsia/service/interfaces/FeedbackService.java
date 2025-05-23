@@ -6,11 +6,12 @@ import java.util.List;
 
 public interface FeedbackService {
 
-    public Feedback save(Feedback feedback);
+    Feedback save(Feedback feedback);
 
-    public List<Feedback> getByDoctorId(Long doctorId);
+    List<Feedback> getByDoctorId(Long doctorId);
 
-    public List<Feedback> getByUserId(Long userId);
+    List<Feedback> getByUserId(Long userId);
 
-    public void delete(Long id);
+    void delete(Long id);
+
 }

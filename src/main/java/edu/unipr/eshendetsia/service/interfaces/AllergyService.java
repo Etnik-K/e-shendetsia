@@ -5,9 +5,9 @@ import edu.unipr.eshendetsia.model.entity.Allergy;
 import java.util.List;
 
 public interface AllergyService {
-    public Allergy save(Allergy allergy);
+    Allergy save(Allergy allergy);
 
-    public List<Allergy> getByUserId(Long userId);
+    List<Allergy> getByUserId(Long userId);
 
-    public void delete(Long id);
+    void delete(Long id);
 }

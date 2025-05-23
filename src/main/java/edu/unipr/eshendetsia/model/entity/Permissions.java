@@ -3,6 +3,7 @@ package edu.unipr.eshendetsia.model.entity;
 import edu.unipr.eshendetsia.model.enums.HttpMethod;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import lombok.Data;
 
 import java.util.Set;
 
@@ -11,13 +12,14 @@ import java.util.Set;
  * Permban te gjitha lejet qe mund te jepen per perdoruesit.
  */
 
+@Data
 @Entity
-@Table(name = "permissions")
+@Table(name = "permission_table")
 public class Permissions {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long id;
+    private Long id;
 
     /**
      * Metoda HTTP e lejuar per kete leje

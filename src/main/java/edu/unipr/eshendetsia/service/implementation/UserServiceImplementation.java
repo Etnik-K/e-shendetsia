@@ -1,9 +1,8 @@
 package edu.unipr.eshendetsia.service.implementation;
 
-import edu.unipr.eshendetsia.exception.InvalidCredentialsException;
-import edu.unipr.eshendetsia.exception.NoRolesException;
-import edu.unipr.eshendetsia.exception.NotFoundException;
-import edu.unipr.eshendetsia.exception.UnauthorizedException;
+import edu.unipr.eshendetsia.exception.concrete.InvalidCredentialsException;
+import edu.unipr.eshendetsia.exception.concrete.NotFoundException;
+import edu.unipr.eshendetsia.exception.concrete.UnauthorizedException;
 import edu.unipr.eshendetsia.model.entity.Role;
 import edu.unipr.eshendetsia.model.entity.User;
 import edu.unipr.eshendetsia.repository.UserRepository;
@@ -105,11 +104,11 @@ public class UserServiceImplementation implements UserService {
      * @param userId Useri, rolet e te cilit na duhen.
      * @return Seti me rolet e userit me id perkatese.
      */
-    public Set<Role> findRolesById(long userId) throws NoRolesException {
+    public Set<Role> findRolesById(long userId) throws NotFoundException {
         Optional<Set<Role>> roles = this.userRepository.findRolesById(userId);
 
         if (roles.isEmpty())
-            throw new NoRolesException("Nuk ka role per kete user");
+            throw new NotFoundException("Nuk ka role per kete user");
 
         return roles.get();
     }

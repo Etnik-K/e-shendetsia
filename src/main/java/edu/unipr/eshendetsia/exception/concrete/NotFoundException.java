@@ -1,18 +1,21 @@
-package edu.unipr.eshendetsia.exception;
+package edu.unipr.eshendetsia.exception.concrete;
+
+import edu.unipr.eshendetsia.exception.HttpException;
+import org.springframework.http.HttpStatus;
 
 /**
  * Perben nje perjashtim qe hidhet kur nje burim nuk gjendet
- * Ky perjashtim zgjeron RuntimeException dhe perdoret per te treguar
+ * Ky perjashtim zgjeron HttpException dhe perdoret per te treguar
  * rastet kur nje kerkese per nje burim specifik deshtoi sepse
  * burimi nuk ekziston
  */
-public class NotFoundException extends RuntimeException {
+public class NotFoundException extends HttpException {
     /**
      * Konstruktori i perjashtimit
      *
      * @param message Mesazhi pershkrues i arsyes se perjashtimit
      */
     public NotFoundException(String message) {
-        super(message);
+        super(message, HttpStatus.NOT_FOUND);
     }
 }

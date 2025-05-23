@@ -2,11 +2,11 @@
  * Ky file permban logjiken e kontrollerit per menaxhimin e recetave
  * Ne kete kontroller implementohen te gjitha metodat qe kane te bejne me recetat
  */
-package edu.unipr.eshendetsia.controller;
+package edu.unipr.eshendetsia.controller.concrete;
 
 import com.auth0.jwt.exceptions.JWTVerificationException;
-import edu.unipr.eshendetsia.controller.abstracts.BaseController;
-import edu.unipr.eshendetsia.exception.UnauthorizedException;
+import edu.unipr.eshendetsia.controller.BaseController;
+import edu.unipr.eshendetsia.exception.concrete.UnauthorizedException;
 import edu.unipr.eshendetsia.http.request.body.CreatePerscriptionRequest;
 import edu.unipr.eshendetsia.http.response.ApiResponse;
 import edu.unipr.eshendetsia.service.interfaces.PerscriptionService;

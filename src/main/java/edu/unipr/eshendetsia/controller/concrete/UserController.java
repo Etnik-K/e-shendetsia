@@ -1,13 +1,13 @@
-package edu.unipr.eshendetsia.controller;
+package edu.unipr.eshendetsia.controller.concrete;
 
 import edu.unipr.eshendetsia.http.request.body.LoginRequest;
-import edu.unipr.eshendetsia.exception.InvalidCredentialsException;
-import edu.unipr.eshendetsia.exception.NotFoundException;
-import edu.unipr.eshendetsia.exception.UnauthorizedException;
+import edu.unipr.eshendetsia.exception.concrete.InvalidCredentialsException;
+import edu.unipr.eshendetsia.exception.concrete.NotFoundException;
+import edu.unipr.eshendetsia.exception.concrete.UnauthorizedException;
 import edu.unipr.eshendetsia.model.entity.User;
 import edu.unipr.eshendetsia.service.interfaces.UserService;
 import edu.unipr.eshendetsia.http.response.ApiResponse;
-import edu.unipr.eshendetsia.controller.abstracts.BaseController;
+import edu.unipr.eshendetsia.controller.BaseController;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
