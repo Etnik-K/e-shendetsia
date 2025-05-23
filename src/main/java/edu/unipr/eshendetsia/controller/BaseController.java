@@ -1,4 +1,4 @@
-package edu.unipr.eshendetsia.controller.abstracts;
+package edu.unipr.eshendetsia.controller;
 
 import edu.unipr.eshendetsia.http.response.ApiResponse;
 import org.springframework.http.HttpStatusCode;

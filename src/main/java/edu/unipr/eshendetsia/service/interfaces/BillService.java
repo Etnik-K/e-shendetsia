@@ -5,9 +5,15 @@ import edu.unipr.eshendetsia.model.entity.Bill;
 import java.util.List;
 
 public interface BillService {
-    public Bill save(Bill bill);
-    public List<Bill> getByUser(Long userId);
-    public List<Bill> getByPaymentStatus(boolean isPaid);
-    public void markAsPaid(Long id);
-    public void delete(Long id);
+
+    Bill save(Bill bill);
+
+    List<Bill> getByUser(Long userId);
+
+    List<Bill> getByPaymentStatus(boolean isPaid);
+
+    void markAsPaid(Long id);
+
+    void delete(Long id);
+
 }

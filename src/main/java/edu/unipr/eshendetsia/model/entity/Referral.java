@@ -21,7 +21,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name = "referrals")
+@Table(name = "referral_table")
 public class Referral {
     @Id
     @GeneratedValue

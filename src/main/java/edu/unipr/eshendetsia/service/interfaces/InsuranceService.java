@@ -5,11 +5,13 @@ import edu.unipr.eshendetsia.model.entity.Insurance;
 import java.util.List;
 
 public interface InsuranceService {
-    public Insurance save(Insurance insurance);
 
-    public List<Insurance> getByUserId(Long userId);
+    Insurance save(Insurance insurance);
 
-    public Insurance updateStatus(Long id, boolean active);
+    List<Insurance> getByUserId(Long userId);
 
-    public void delete(Long id);
+    Insurance updateStatus(Long id, boolean active);
+
+    void delete(Long id);
+
 }

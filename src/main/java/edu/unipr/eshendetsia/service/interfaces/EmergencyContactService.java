@@ -5,9 +5,11 @@ import edu.unipr.eshendetsia.model.entity.EmergencyContact;
 import java.util.List;
 
 public interface EmergencyContactService {
-    public EmergencyContact save(EmergencyContact contact);
 
-    public List<EmergencyContact> getByUserId(Long userId);
+    EmergencyContact save(EmergencyContact contact);
 
-    public void delete(Long id);
+    List<EmergencyContact> getByUserId(Long userId);
+
+    void delete(Long id);
+
 }

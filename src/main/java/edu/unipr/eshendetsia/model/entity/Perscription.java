@@ -21,7 +21,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name="perscriptions_table")
+@Table(name="perscription_table")
 public class Perscription {
 
     @Id

@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "user_allergies_table")
+@Table(name = "user_allergy_table")
 public class UserAllergy {
 
     @EmbeddedId

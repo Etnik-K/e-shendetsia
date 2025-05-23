@@ -3,7 +3,6 @@ package edu.unipr.eshendetsia.service.interfaces;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import edu.unipr.eshendetsia.exception.UnauthorizedException;
 
 import java.util.Map;
 
