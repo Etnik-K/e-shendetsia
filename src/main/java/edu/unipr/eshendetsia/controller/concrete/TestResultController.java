@@ -37,13 +37,9 @@ public class TestResultController extends BaseController {
      * @return rezultati i testit i ruajtur
      */
     @PostMapping
-    public ResponseEntity<ApiResponse<String>> create(@RequestBody CreateTestResultRequest testResultRequest) {
-        try{
-            this.testResultService.save(testResultRequest.toTestResult());
-            return this.ok("Rezultati i testit u ruajt me sukses");
-        } catch (UnauthorizedException | JWTVerificationException e) {
-            return this.error("Nuk jeni i autorizuar", HttpStatus.UNAUTHORIZED);
-        }
+    public ResponseEntity<String> create(@RequestBody CreateTestResultRequest testResultRequest) {
+        this.testResultService.save(testResultRequest.toTestResult());
+        return this.ok("Rezultati i testit u ruajt me sukses");
     }
 
     /**
@@ -53,7 +49,7 @@ public class TestResultController extends BaseController {
      * @return lista e rezultateve te testeve
      */
     @GetMapping("/user/{userId}")
-    public ResponseEntity<ApiResponse<List<TestResult>>> getByUser(@PathVariable Long userId) {
+    public ResponseEntity<List<TestResult>> getByUser(@PathVariable Long userId) {
         return this.ok(testResultService.getByUserId(userId));
     }
 
@@ -75,13 +71,9 @@ public class TestResultController extends BaseController {
      * @return pergjigje bosh
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponse<String>> delete(@PathVariable Long id) {
-        try{
-            this.testResultService.delete(id);
-            return this.ok("Rezultati i testit u fshi me sukses");
-        } catch (JWTVerificationException | UnauthorizedException exception) {
-            return this.error("Nuk jeni i autorizuar", HttpStatus.UNAUTHORIZED);
-        }
+    public ResponseEntity<String> delete(@PathVariable Long id) {
+        this.testResultService.delete(id);
+        return this.ok("Rezultati i testit u fshi me sukses");
     }
 
 }
