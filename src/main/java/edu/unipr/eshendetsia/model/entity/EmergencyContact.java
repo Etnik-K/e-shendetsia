@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 /**
  * Entiteti qe perfaqeson kontaktin emergjent te pacientit
  * Permban informacionet kryesore te personit qe duhet kontaktuar ne raste emergjente
@@ -14,20 +13,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Entity
-@Table
+@Table(name = "emergency_contact_table")
 public class EmergencyContact {
     @Id
     @GeneratedValue
     private Long id;
 
-    @Column(nullable = false)
-    private Long userId;
-
-    @Column(nullable = false)
-    private String name;
-
-    @Column(nullable = false)
-    private String phone;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     @Column
     private String relationship;

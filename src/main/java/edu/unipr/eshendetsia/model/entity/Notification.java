@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
  */
 @Data
 @Entity
-@Table(name = "noticiations")
+@Table(name = "notifications_table")
 public class Notification {
 
     @Id
@@ -21,8 +21,9 @@ public class Notification {
     /**
      * Identifikuesi i perdoruesit qe do te marre njoftimin
      */
-    @Column(nullable = false)
-    private Long userId;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     /**
      * Mesazhi i njoftimit
@@ -39,7 +40,13 @@ public class Notification {
     /**
      * Koha kur eshte krijuar njoftimi
      */
-    @Column
-    private LocalDateTime timestamp = LocalDateTime.now();
+    @Column(nullable = false)
+    private LocalDateTime timestamp;
+
+    @PrePersist
+    public void prePersist() {
+        if (timestamp == null)
+            timestamp = LocalDateTime.now();
+    }
 
 }

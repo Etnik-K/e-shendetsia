@@ -2,6 +2,9 @@ package edu.unipr.eshendetsia.model.entity;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -17,7 +20,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name = "feedback")
+@Table(name = "feedback_table")
 public class Feedback {
 
     /**
@@ -30,31 +33,40 @@ public class Feedback {
     /**
      * Identifikuesi i perdoruesit qe ka derguar reagimin
      */
-    @Column(nullable = false)
-    private Long userId;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     /**
      * Identifikuesi i doktorit per te cilin eshte derguar reagimi
      */
-    @Column(nullable = false)
-    private Long doctorId;
+    @ManyToOne
+    @JoinColumn(name = "doctor_id", nullable = false)
+    private Doctor doctor;
 
     /**
      * Mesazhi i reagimit nga pacienti per doktorin
      */
-    @Column(nullable = false)
+    @NotBlank
+    @Column(nullable = false, length = 510)
     private String message;
 
     /**
      * Vleresimi numerik nga 1-5 per doktorin
      */
-    @Column
+    @Min(1)
+    @Max(5)
     private Integer rating;
 
     /**
      * Data dhe ora kur eshte derguar reagimi
      */
-    @Column
+    @Column(nullable = false)
     private LocalDateTime submittedAt = LocalDateTime.now();
 
+    @PrePersist
+    public void prePersist() {
+        if (submittedAt == null)
+            submittedAt = LocalDateTime.now();
+    }
 }

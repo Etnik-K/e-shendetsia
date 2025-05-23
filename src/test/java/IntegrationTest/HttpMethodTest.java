@@ -3,7 +3,7 @@ package IntegrationTest;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
-import edu.unipr.eshendetsia.model.entity.HttpMethod;
+import edu.unipr.eshendetsia.model.enums.HttpMethod;
 
 /**
  * Klasa per testimin e metodave HTTP.

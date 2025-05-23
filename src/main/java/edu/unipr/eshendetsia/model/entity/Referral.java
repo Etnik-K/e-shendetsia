@@ -27,18 +27,27 @@ public class Referral {
     @GeneratedValue
     private Long id;
 
-    @Column(nullable = false)
-    private Long patientId;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "patient_id", nullable = false)
+    private User patient;
 
-    @Column(nullable = false)
-    private Long fromDoctorId;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "from_doctor_id", nullable = false)
+    private Doctor fromDoctor;
 
-    @Column(nullable = false)
-    private Long toDoctorId;
-
-    @Column(nullable = false)
-    private String reason;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "to_doctor_id", nullable = false)
+    private Doctor toDoctor;
 
     @Column
-    private LocalDateTime referralDate = LocalDateTime.now();
+    private String reason;
+
+    @Column(nullable = false)
+    private LocalDateTime referralDate;
+
+    @PrePersist
+    public void prePersist() {
+        if (referralDate == null)
+            referralDate = LocalDateTime.now();
+    }
 }

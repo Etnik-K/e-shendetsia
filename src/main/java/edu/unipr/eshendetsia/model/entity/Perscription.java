@@ -21,18 +21,20 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name="perscriptions")
+@Table(name="perscriptions_table")
 public class Perscription {
 
     @Id
     @GeneratedValue
     private Long id;
 
-    @Column(nullable = false)
-    private Long userId;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
-    @Column(nullable = false)
-    private Long doctorId;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "doctor_id", nullable = false)
+    private Doctor doctor;
 
     @Column(nullable = false)
     private String medication;
@@ -44,9 +46,15 @@ public class Perscription {
     private String frequency;
 
     @Column
-    private String durage;
+    private String duration;
 
-    @Column
-    private LocalDateTime issuedAt = LocalDateTime.now();
+    @Column(nullable = false)
+    private LocalDateTime issuedAt;
+
+    @PrePersist
+    public void prePersist() {
+        if (issuedAt == null)
+            issuedAt = LocalDateTime.now();
+    }
 
 }
