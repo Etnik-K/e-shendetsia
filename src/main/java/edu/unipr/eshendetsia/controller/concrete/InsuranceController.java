@@ -41,13 +41,9 @@ public class InsuranceController extends BaseController {
      * @return sigurimi i krijuar
      */
     @PostMapping
-    public ResponseEntity<ApiResponse<String>> create(@RequestBody CreateInsuranceRequest insuranceRequest) {
-        try{
-            insuranceService.save(insuranceRequest.toInsurance());
-            return this.ok("Kompania e sigurimit u krijua me sukses");
-        } catch (JWTVerificationException | UnauthorizedException exception) {
-            return this.error("Nuk jeni i autorizuar", HttpStatus.UNAUTHORIZED);
-        }
+    public ResponseEntity<String> create(@RequestBody CreateInsuranceRequest insuranceRequest) {
+        insuranceService.save(insuranceRequest.toInsurance());
+        return this.ok("Kompania e sigurimit u krijua me sukses");
     }
 
     /**
@@ -56,14 +52,8 @@ public class InsuranceController extends BaseController {
      * @return lista e sigurimeve te perdoruesit
      */
     @GetMapping("/user/{userId}")
-    public ResponseEntity<ApiResponse<List<Insurance>>> getByUser(@PathVariable Long userId) {
-        try{
-            return this.ok(insuranceService.getByUserId(userId));
-        } catch (JWTVerificationException  | UnauthorizedException e) {
-            return this.error("Nuk jeni i autorizuar!", HttpStatus.UNAUTHORIZED);
-        } catch (NotFoundException e) {
-            return this.error("Perdoruesi nuk u gjet", HttpStatus.UNAUTHORIZED);
-        }
+    public ResponseEntity<List<Insurance>> getByUser(@PathVariable Long userId) {
+        return this.ok(insuranceService.getByUserId(userId));
     }
 
     /**
@@ -73,15 +63,9 @@ public class InsuranceController extends BaseController {
      * @return sigurimi i perditesuar
      */
     @PutMapping("/{id}/status")
-    public ResponseEntity<ApiResponse<String>> updateStatus(@PathVariable Long id, @RequestParam Boolean active) {
-        try{
-            insuranceService.updateStatus(id, active);
-            return this.ok("Statusi i sigurimit u perditesuar me sukses");
-        } catch (JWTVerificationException | UnauthorizedException exception) {
-            return this.error("Nuk jeni i autorizuar", HttpStatus.UNAUTHORIZED);
-        } catch (NotFoundException e) {
-            return this.error("Sigurimi nuk u gjet", HttpStatus.NOT_FOUND);
-        }
+    public ResponseEntity<String> updateStatus(@PathVariable Long id, @RequestParam Boolean active) {
+        insuranceService.updateStatus(id, active);
+        return this.ok("Statusi i sigurimit u perditesuar me sukses");
     }
 
     /**
@@ -90,12 +74,8 @@ public class InsuranceController extends BaseController {
      * @return pergjigjja bosh ne rast suksesi
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponse<String>> delete(@PathVariable Long id) {
-        try{
-            insuranceService.delete(id);
-            return this.ok("Perdoruesi u fshi me sukses");
-        } catch (JWTVerificationException | UnauthorizedException exception) {
-            return this.error("Nuk jeni i autorizuar", HttpStatus.UNAUTHORIZED);
-        }
+    public ResponseEntity<String> delete(@PathVariable Long id) {
+        insuranceService.delete(id);
+        return this.ok("Perdoruesi u fshi me sukses");
     }
 }
