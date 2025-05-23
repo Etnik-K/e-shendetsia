@@ -40,15 +40,9 @@ public class EmergencyContactController extends BaseController {
      * @return kontaktin e krijuar emergjent
      */
     @PostMapping
-    public ResponseEntity<ApiResponse<String>> create(@RequestBody CreateEmergencyContactRequest emergyContactRequest) {
-        try{
-            emergencyContactService.save(emergyContactRequest.toEmergencyContact());
-            return this.ok("Kontakti u krijua me sukses");
-        } catch (JWTVerificationException | UnauthorizedException exception) {
-            return this.error("Nuk jeni i autorizuar", HttpStatus.UNAUTHORIZED);
-        } catch (NotFoundException e) {
-            return this.error("Nuk u gjet", HttpStatus.UNAUTHORIZED);
-        }
+    public ResponseEntity<String> create(@RequestBody CreateEmergencyContactRequest emergyContactRequest) {
+        emergencyContactService.save(emergyContactRequest.toEmergencyContact());
+        return this.ok("Kontakti u krijua me sukses");
     }
 
     /**
@@ -58,12 +52,8 @@ public class EmergencyContactController extends BaseController {
      * @return listen e kontakteve emergjente
      */
     @GetMapping("/user/{userId}")
-    public ResponseEntity<ApiResponse<List<EmergencyContact>>> getByUser(@PathVariable Long userId) {
-        try{
-            return this.ok(emergencyContactService.getByUserId(userId));
-        } catch (JWTVerificationException  | UnauthorizedException exception) {
-            return this.error("Nuk jeni i autorizuar!", HttpStatus.UNAUTHORIZED);
-        }
+    public ResponseEntity<List<EmergencyContact>> getByUser(@PathVariable Long userId) {
+        return this.ok(emergencyContactService.getByUserId(userId));
     }
 
     /**
@@ -73,14 +63,8 @@ public class EmergencyContactController extends BaseController {
      * @return pergjigje bosh me status 204
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponse<String>> delete(@PathVariable Long id) {
-        try{
-            this.emergencyContactService.delete(id);
-            return this.ok("Kontakti u fshi me sukses");
-        } catch (JWTVerificationException | UnauthorizedException exception) {
-            return this.error("Nuk jeni i autorizuar", HttpStatus.UNAUTHORIZED);
-        }catch (NotFoundException exception){
-            return this.error("Nuk eshte gjetur",HttpStatus.NOT_FOUND);
-        }
+    public ResponseEntity<String> delete(@PathVariable Long id) {
+        this.emergencyContactService.delete(id);
+        return this.ok("Kontakti u fshi me sukses");
     }
 }
