@@ -1,14 +1,10 @@
 package edu.unipr.eshendetsia.controller.concrete;
 
-import com.auth0.jwt.exceptions.JWTVerificationException;
 import edu.unipr.eshendetsia.controller.BaseController;
-import edu.unipr.eshendetsia.exception.concrete.UnauthorizedException;
 import edu.unipr.eshendetsia.http.request.body.CreateTestResultRequest;
-import edu.unipr.eshendetsia.http.response.ApiResponse;
 import edu.unipr.eshendetsia.model.entity.TestResult;
 import edu.unipr.eshendetsia.service.interfaces.TestResultService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,13 +33,9 @@ public class TestResultController extends BaseController {
      * @return rezultati i testit i ruajtur
      */
     @PostMapping
-    public ResponseEntity<ApiResponse<String>> create(@RequestBody CreateTestResultRequest testResultRequest) {
-        try{
-            this.testResultService.save(testResultRequest.toTestResult());
-            return this.ok("Rezultati i testit u ruajt me sukses");
-        } catch (UnauthorizedException | JWTVerificationException e) {
-            return this.error("Nuk jeni i autorizuar", HttpStatus.UNAUTHORIZED);
-        }
+    public ResponseEntity<String> create(@RequestBody CreateTestResultRequest testResultRequest) {
+        this.testResultService.save(testResultRequest.toTestResult());
+        return this.ok("Rezultati i testit u ruajt me sukses");
     }
 
     /**
@@ -53,7 +45,7 @@ public class TestResultController extends BaseController {
      * @return lista e rezultateve te testeve
      */
     @GetMapping("/user/{userId}")
-    public ResponseEntity<ApiResponse<List<TestResult>>> getByUser(@PathVariable Long userId) {
+    public ResponseEntity<List<TestResult>> getByUser(@PathVariable Long userId) {
         return this.ok(testResultService.getByUserId(userId));
     }
 
@@ -75,13 +67,9 @@ public class TestResultController extends BaseController {
      * @return pergjigje bosh
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponse<String>> delete(@PathVariable Long id) {
-        try{
-            this.testResultService.delete(id);
-            return this.ok("Rezultati i testit u fshi me sukses");
-        } catch (JWTVerificationException | UnauthorizedException exception) {
-            return this.error("Nuk jeni i autorizuar", HttpStatus.UNAUTHORIZED);
-        }
+    public ResponseEntity<String> delete(@PathVariable Long id) {
+        this.testResultService.delete(id);
+        return this.ok("Rezultati i testit u fshi me sukses");
     }
 
 }
