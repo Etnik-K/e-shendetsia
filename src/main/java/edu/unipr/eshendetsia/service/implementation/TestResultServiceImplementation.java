@@ -42,7 +42,7 @@ public class TestResultServiceImplementation implements TestResultService {
      * @param userId ID e pacientit
      * @return lista e rezultateve te testeve
      */
-    public List<TestResult> getByUserId(Long userId) {
+    public List<TestResult> getByUserId(Long userId, String requestJwt) {
         return testResultRepository.findByUserId(userId);
     }
 
@@ -52,7 +52,7 @@ public class TestResultServiceImplementation implements TestResultService {
      * @param doctorId ID e doktorit
      * @return lista e rezultateve te testeve
      */
-    public List<TestResult> getByDoctorId(Long doctorId) {
+    public List<TestResult> getByDoctorId(Long doctorId, String requestJwt) {
         return testResultRepository.findByDoctorId(doctorId);
     }
 
@@ -61,7 +61,7 @@ public class TestResultServiceImplementation implements TestResultService {
      *
      * @param id ID e rezultatit per tu fshire
      */
-    public void delete(Long id) {
+    public void delete(Long id, String requestJwt) {
         testResultRepository.deleteById(id);
     }
 }

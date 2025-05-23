@@ -5,7 +5,7 @@ import edu.unipr.eshendetsia.exception.concrete.UnauthorizedException;
 import edu.unipr.eshendetsia.model.entity.Clinic;
 import edu.unipr.eshendetsia.service.interfaces.ClinicService;
 import edu.unipr.eshendetsia.controller.BaseController;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,16 +16,12 @@ import java.util.List;
  * Ofron funksionalitete per krijimin, leximin, perditesimin dhe fshirjen e klinikave.
  * Sherben si nderfaqe RESTful per menaxhimin e te dhenave te klinikave.
  */
+@AllArgsConstructor
 @RestController
 @RequestMapping("/clinics")
 public class ClinicController extends BaseController {
 
     private final ClinicService clinicService;
-
-    @Autowired
-    public ClinicController(ClinicService clinicService) {
-        this.clinicService = clinicService;
-    }
 
     /**
      * Kthen listen e te gjitha klinikave
@@ -35,7 +31,7 @@ public class ClinicController extends BaseController {
      */
     @GetMapping
     public ResponseEntity<List<Clinic>> getAllClinics(@RequestHeader("Authorization") String authHeader) throws UnauthorizedException {
-            return this.ok(this.clinicService.getAllClinics(authHeader));
+        return this.ok(this.clinicService.getAllClinics(authHeader));
     }
 
     /**
@@ -47,8 +43,8 @@ public class ClinicController extends BaseController {
      */
     @GetMapping("/{clinicId}")
     public ResponseEntity<Clinic> getClinicById(@RequestHeader("Authorization") String authHeader, @PathVariable("clinicId") Long clinicId) throws UnauthorizedException {
-            Clinic clinic = this.clinicService.getClinicById(clinicId, authHeader);
-            return this.ok(clinic);
+        Clinic clinic = this.clinicService.getClinicById(clinicId, authHeader);
+        return this.ok(clinic);
     }
 
     /**
@@ -60,32 +56,29 @@ public class ClinicController extends BaseController {
      */
     @PostMapping
     public ResponseEntity<String> createClinic(@RequestHeader("Authorization") String authHeader, @RequestBody Clinic clinic) {
-            clinicService.saveClinic(clinic, authHeader);
-            return this.ok( "Klinika u ruajt me sukses");
+        clinicService.saveClinic(clinic, authHeader);
+        return this.ok( "Klinika u ruajt me sukses");
     }
 
     /**
      * Perditeson kliniken ekzistuese
      *
      * @param authHeader tokeni i autentikimit
-     * @param clinicId   ID e klinikes
      * @param clinic     te dhenat e reja te klinikes
      * @return mesazhi i suksesit
      */
-    @PutMapping("/{clinicId}")
+    @PutMapping
     public ResponseEntity<String> updateClinic(
             @RequestHeader("Authorization") String authHeader,
-            @PathVariable("clinicId") Long clinicId,
             @RequestBody Clinic clinic)
                 throws UnauthorizedException, NotFoundException {
 
-            this.clinicService.updateClinic(clinicId, clinic, authHeader);
-            return this.ok("Klinika u perditsua me sukses");
+        this.clinicService.updateClinic( clinic, authHeader);
+        return this.ok("Klinika u perditsua me sukses");
     }
 
     /**
      * Fshin kliniken me ID-ne e specifikuar
-     *
      * @param authHeader tokeni i autentikimit
      * @param clinicId   ID e klinikes
      * @return mesazhi i suksesit
@@ -95,7 +88,7 @@ public class ClinicController extends BaseController {
             @RequestHeader("Authorization") String authHeader,
             @PathVariable("clinicId") Long clinicId)
                 throws UnauthorizedException, NotFoundException {
-            this.clinicService.deleteClinic(clinicId, authHeader);
-            return this.ok("Klinika u fshi me sukses");
+        this.clinicService.deleteClinic(clinicId, authHeader);
+        return this.ok("Klinika u fshi me sukses");
     }
 }

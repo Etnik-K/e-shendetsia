@@ -1,15 +1,10 @@
 package edu.unipr.eshendetsia.controller.concrete;
 
-import com.auth0.jwt.exceptions.JWTVerificationException;
 import edu.unipr.eshendetsia.controller.BaseController;
-import edu.unipr.eshendetsia.exception.concrete.NotFoundException;
-import edu.unipr.eshendetsia.exception.concrete.UnauthorizedException;
 import edu.unipr.eshendetsia.http.request.body.SubmitFeedbackRequest;
-import edu.unipr.eshendetsia.http.response.ApiResponse;
 import edu.unipr.eshendetsia.model.entity.Feedback;
 import edu.unipr.eshendetsia.service.interfaces.FeedbackService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -49,8 +44,8 @@ public class FeedbackController extends BaseController {
      * @return lista e feedback-eve per doktorin
      */
     @GetMapping("/doctor/{doctorId}")
-    public ResponseEntity<List<Feedback>> getByDoctor(@PathVariable Long doctorId) {
-        return this.ok(feedbackService.getByDoctorId(doctorId));
+    public ResponseEntity<List<Feedback>> getByDoctor(@PathVariable Long doctorId, @RequestHeader("Authorization") String authHeader) {
+        return this.ok(feedbackService.getByDoctorId(doctorId, authHeader));
     }
 
     /**
@@ -60,8 +55,8 @@ public class FeedbackController extends BaseController {
      * @return lista e feedback-eve nga perdoruesi
      */
     @GetMapping("/user/{userId}")
-    public ResponseEntity<List<Feedback>> getByUser(@PathVariable Long userId) {
-        return this.ok(feedbackService.getByUserId(userId));
+    public ResponseEntity<List<Feedback>> getByUser(@PathVariable Long userId, @RequestHeader("Authorization") String authHeader) {
+        return this.ok(feedbackService.getByUserId(userId, authHeader));
     }
 
     /**
@@ -71,8 +66,8 @@ public class FeedbackController extends BaseController {
      * @return pergjigje pa permbajtje
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable Long id) {
-        this.feedbackService.delete(id);
+    public ResponseEntity<String> delete(@PathVariable Long id, @RequestHeader("Authorization") String authHeader) {
+        this.feedbackService.delete(id, authHeader);
         return this.ok("Feedback-u u fshi me sukses");
     }
 

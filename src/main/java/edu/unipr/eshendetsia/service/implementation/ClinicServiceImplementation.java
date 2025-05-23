@@ -1,14 +1,16 @@
 package edu.unipr.eshendetsia.service.implementation;
 
+import com.auth0.jwt.exceptions.JWTDecodeException;
+import edu.unipr.eshendetsia.exception.concrete.InternalServerErrorException;
 import edu.unipr.eshendetsia.exception.concrete.NotFoundException;
 import edu.unipr.eshendetsia.exception.concrete.UnauthorizedException;
 import edu.unipr.eshendetsia.model.entity.Clinic;
+import edu.unipr.eshendetsia.model.entity.User;
 import edu.unipr.eshendetsia.repository.ClinicRepository;
-import edu.unipr.eshendetsia.repository.UserRepository;
 import edu.unipr.eshendetsia.service.interfaces.ClinicService;
 import com.auth0.jwt.JWT;
-import com.auth0.jwt.interfaces.DecodedJWT;
-import org.springframework.beans.factory.annotation.Autowired;
+import edu.unipr.eshendetsia.service.interfaces.UserService;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,23 +20,13 @@ import java.util.Optional;
  * Implementimi i sherbimit per menaxhimin e klinikave mjekesore.
  * Sherben si nderlidhes mes shtresave te kontrollerit dhe repositories.
  */
+@AllArgsConstructor
 @Service
 public class ClinicServiceImplementation implements ClinicService {
 
     private final ClinicRepository clinicRepository;
-    private final UserRepository userRepository;
 
-    /**
-     * Konstruktori per inicializimin e sherbimit te klinikave.
-     *
-     * @param clinicRepository repository per qasje ne te dhenat e klinikave
-     * @param userRepository   repository per qasje ne te dhenat e perdoruesve
-     */
-    @Autowired
-    public ClinicServiceImplementation(ClinicRepository clinicRepository, UserRepository userRepository) {
-        this.clinicRepository = clinicRepository;
-        this.userRepository = userRepository;
-    }
+    private final UserService userService;
 
     /**
      * Merr listen e te gjitha klinikave ne sistem.
@@ -42,13 +34,15 @@ public class ClinicServiceImplementation implements ClinicService {
      * @param authToken tokeni i autentifikimit
      * @return lista e klinikave
      * @throws UnauthorizedException nese perdoruesi nuk eshte admin
+     * @throws JWTDecodeException JWT jo-valid
+     * @throws NumberFormatException JWT jo-valid
      */
-    public List<Clinic> getAllClinics(String authToken) throws UnauthorizedException {
+    public List<Clinic> getAllClinics(String authToken) throws UnauthorizedException, JWTDecodeException, NumberFormatException {
+        Long jwtSubject = Long.parseLong(JWT.decode(authToken).getSubject());
 
-        DecodedJWT jwt = JWT.decode(authToken);
-        long jwtSubject = Long.parseLong(jwt.getSubject());
+        User user = this.userService.getUserById(jwtSubject);
 
-        if (!this.userRepository.getRoleById(jwtSubject).getName().equals("admin"))
+        if (!user.isAdmin())
             throw new UnauthorizedException("Nuk jeni i autorizuar");
 
         return clinicRepository.findAll();
@@ -62,20 +56,23 @@ public class ClinicServiceImplementation implements ClinicService {
      * @return klinika e kerkuar
      * @throws UnauthorizedException nese perdoruesi nuk eshte admin ose drejtor i klinikes
      */
-    public Clinic getClinicById(Long clinicId, String authHeader) throws UnauthorizedException {
-        DecodedJWT jwt = JWT.decode(authHeader);
-        long jwtSubject = Long.parseLong(jwt.getSubject());
+    public Clinic getClinicById(Long clinicId, String authHeader) throws UnauthorizedException, JWTDecodeException, NumberFormatException, NotFoundException {
+        Long jwtSubject = Long.parseLong(JWT.decode(authHeader).getSubject());
 
-        Optional<Clinic> validClinic = this.clinicRepository.findById(clinicId);
+        Optional<Clinic> optClinic = this.clinicRepository.findById(clinicId);
 
-        if (validClinic.isEmpty())
-            throw new UnauthorizedException("Oops, dicka shkoi gabim");
+        User user = this.userService.getUserById(jwtSubject);
 
-        if (!(validClinic.get().getDrejtori().getId() == jwtSubject || // is drejtor
-                this.userRepository.getRoleById(jwtSubject).getName().equals("admin"))) // isadmin
+        if (optClinic.isEmpty())
+            throw new InternalServerErrorException("Oops, dicka shkoi gabim");
+
+        Clinic clinic = optClinic.get();
+        User drejtori = clinic.getDrejtori();
+
+        if (!user.isAdmin() && !user.equals(drejtori))
             throw new UnauthorizedException("Nuk jeni i autorizuar");
 
-        return validClinic.get();
+        return clinic;
     }
 
     /**
@@ -85,19 +82,20 @@ public class ClinicServiceImplementation implements ClinicService {
      * @param authHeader tokeni i autentifikimit
      * @throws UnauthorizedException nese perdoruesi nuk eshte admin ose drejtor i klinikes
      */
-    public void saveClinic(Clinic clinic, String authHeader) throws UnauthorizedException {
+    public void saveClinic(Clinic clinic, String authHeader) throws UnauthorizedException, JWTDecodeException, NumberFormatException, NotFoundException {
+        Long jwtSubject = Long.parseLong(JWT.decode(authHeader).getSubject());
 
-        DecodedJWT jwt = JWT.decode(authHeader);
-        long jwtSubject = Long.parseLong(jwt.getSubject());
+        Optional<Clinic> optClinic = this.clinicRepository.findById(clinic.getId());
 
-        Optional<Clinic> validClinic = this.clinicRepository.findById(clinic.getId());
+        User user = this.userService.getUserById(jwtSubject);
 
-        if (validClinic.isEmpty())
-            throw new RuntimeException("Oops, dicka shkoi gabim");
+        if (optClinic.isEmpty())
+            throw new InternalServerErrorException("Oops, dicka shkoi gabim");
 
-//        !isAdminOrDirector(jwt)
-        if (!(validClinic.get().getDrejtori().getId() == jwtSubject || // is drejtor
-                this.userRepository.getRoleById(jwtSubject).getName().equals("admin"))) // isadmin
+        Clinic validClinic = optClinic.get();
+
+        if (!user.equals(validClinic.getDrejtori()) && // is drejtor
+                !user.isAdmin()) // isadmin
             throw new UnauthorizedException("Nuk jeni i autorizuar");
 
         clinicRepository.save(clinic);
@@ -106,34 +104,32 @@ public class ClinicServiceImplementation implements ClinicService {
     /**
      * Perditeson te dhenat e klinikes.
      *
-     * @param updateClinicId ID e klinikes per tu perditesuar
      * @param updateClinic   klinika me te dhenat e reja
      * @param authHeader     tokeni i autentifikimit
      * @throws UnauthorizedException nese perdoruesi nuk eshte admin ose drejtor i klinikes
      */
-    public void updateClinic(Long updateClinicId, Clinic updateClinic, String authHeader) throws UnauthorizedException {
-        DecodedJWT jwt = JWT.decode(authHeader);
-        long jwtSubject = Long.parseLong(jwt.getSubject());
+    public void updateClinic(Clinic updateClinic, String authHeader) throws UnauthorizedException, JWTDecodeException, NumberFormatException, InternalServerErrorException{
+        Long jwtSubject = Long.parseLong(JWT.decode(authHeader).getSubject());
 
-        Optional<Clinic> validClinic = clinicRepository.findById(updateClinicId);
+        User user = this.userService.getUserById(jwtSubject);
 
-        if (validClinic.isEmpty())
-            throw new RuntimeException("Oops, dicka shkoi gabim");
+        Optional<Clinic> optClinic = clinicRepository.findById(updateClinic.getId());
 
-        if (!(validClinic.get().getDrejtori().getId() == jwtSubject || // is drejtor
-                this.userRepository.getRoleById(jwtSubject).getName().equals("admin")))
+        if (optClinic.isEmpty())
+            throw new InternalServerErrorException("Oops, dicka shkoi gabim");
+
+        Clinic clinic = optClinic.get();
+
+        if (!user.equals(clinic.getDrejtori()) &&
+                !user.isAdmin())
             throw new UnauthorizedException("Nuk jeni i autorizuar");
 
-        Clinic clinic = validClinic.get();
         clinic.setAddress(updateClinic.getAddress());
         clinic.setEmail(updateClinic.getEmail());
         clinic.setPhone(updateClinic.getPhone());
         clinic.setWebsite(updateClinic.getWebsite());
         clinic.setDrejtori(updateClinic.getDrejtori());
 
-        // qit metod kishim mujt edhe direkt me bo update, pa i metodat e me siperme, po e bojm per me gjujt error, edhe me handle kontrolleri n try/catch
-        // errori n qit case gjuhet veq per arsye qe e ka annotations n Cliic.java
-        // megjithate, duhet me perdor dto per qita, jo me perdor entitetin si dto
         clinicRepository.save(clinic);
     }
 
@@ -145,17 +141,20 @@ public class ClinicServiceImplementation implements ClinicService {
      * @throws UnauthorizedException nese perdoruesi nuk eshte admin ose drejtor i klinikes
      * @throws NotFoundException     nese klinika nuk gjendet
      */
-    public void deleteClinic(Long id, String authHeader) throws UnauthorizedException, NotFoundException {
-        DecodedJWT jwt = JWT.decode(authHeader);
-        long jwtSubject = Long.parseLong(jwt.getSubject());
+    public void deleteClinic(Long id, String authHeader) throws UnauthorizedException, NotFoundException, JWTDecodeException, NumberFormatException, InternalServerErrorException {
+        Long jwtSubject = Long.parseLong(JWT.decode(authHeader).getSubject());
 
         Optional<Clinic> validClinic = clinicRepository.findById(id);
 
-        if (validClinic.isEmpty())
-            throw new UnauthorizedException("Oops, dicka shkoi gabim");
+        User user = this.userService.getUserById(jwtSubject);
 
-        if (!(validClinic.get().getDrejtori().getId() == jwtSubject ||
-                this.userRepository.getRoleById(jwtSubject).getName().equals("admin")))
+        if (validClinic.isEmpty())
+            throw new InternalServerErrorException("Oops, dicka shkoi gabim");
+
+        Clinic clinic = validClinic.get();
+
+        if (!user.equals(clinic.getDrejtori()) &&
+                !user.isAdmin())
             throw new UnauthorizedException("Nuk jeni i autorizuar");
 
         if (!clinicRepository.existsById(id))

@@ -4,32 +4,23 @@
  */
 package edu.unipr.eshendetsia.controller.concrete;
 
-import com.auth0.jwt.exceptions.JWTVerificationException;
 import edu.unipr.eshendetsia.controller.BaseController;
-import edu.unipr.eshendetsia.exception.concrete.UnauthorizedException;
 import edu.unipr.eshendetsia.http.request.body.CreatePerscriptionRequest;
-import edu.unipr.eshendetsia.http.response.ApiResponse;
 import edu.unipr.eshendetsia.service.interfaces.PerscriptionService;
-import org.springframework.http.HttpStatus;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Kontrolleri per menaxhimin e recetave
  * Permban logjiken e nevojshme per krijimin dhe ruajtjen e recetave te reja
  */
+@AllArgsConstructor
 @RestController
 @RequestMapping("/perscriptions")
 public class PerscriptionController extends BaseController {
 
     private final PerscriptionService perscriptionService;
-
-    public PerscriptionController(PerscriptionService perscriptionService) {
-        this.perscriptionService = perscriptionService;
-    }
 
     /**
      * Krijon nje recete te re
@@ -38,8 +29,8 @@ public class PerscriptionController extends BaseController {
      * @return receta e krijuar dhe ruajtur ne databaze
      */
     @PostMapping
-    public ResponseEntity<String> create(@RequestBody CreatePerscriptionRequest prescriptionRequest) {
-        perscriptionService.save(prescriptionRequest.toPerscription());
+    public ResponseEntity<String> create(@RequestBody CreatePerscriptionRequest prescriptionRequest, @RequestHeader("Authorization") String authHeader) {
+        this.perscriptionService.save(prescriptionRequest.toPerscription(), authHeader);
         return this.ok("Receta u krijua me sukses");
     }
 }

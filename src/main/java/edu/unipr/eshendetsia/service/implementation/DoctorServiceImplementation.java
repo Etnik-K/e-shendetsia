@@ -1,13 +1,14 @@
 package edu.unipr.eshendetsia.service.implementation;
 
 import com.auth0.jwt.JWT;
-import edu.unipr.eshendetsia.exception.concrete.NotFoundException;
+import com.auth0.jwt.exceptions.JWTDecodeException;
 import edu.unipr.eshendetsia.exception.concrete.UnauthorizedException;
 import edu.unipr.eshendetsia.model.entity.Doctor;
+import edu.unipr.eshendetsia.model.entity.User;
 import edu.unipr.eshendetsia.repository.DoctorRepository;
+import edu.unipr.eshendetsia.repository.UserRepository;
 import edu.unipr.eshendetsia.service.interfaces.DoctorService;
-import edu.unipr.eshendetsia.service.interfaces.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,52 +18,45 @@ import java.util.Optional;
  * Implementimi i sherbimit te doktorit qe perfshin
  * operacionet themelore per menaxhimin e doktoreve
  */
+@AllArgsConstructor
 @Service
 public class DoctorServiceImplementation implements DoctorService {
 
     private final DoctorRepository doctorRepository;
-    private final UserService userService;
-
-    /**
-     * Konstruktori i klases
-     *
-     * @param doctorRepository repository per qasje ne te dhenat e doktoreve
-     */
-    @Autowired
-    public DoctorServiceImplementation(DoctorRepository doctorRepository, UserService userService) {
-        this.doctorRepository = doctorRepository;
-        this.userService = userService;
-    }
+    private final UserRepository userRepository;
 
     /**
      * Merr listen e te gjithe doktoreve
      *
      * @return lista e doktoreve ne sistem
      */
-    public List<Doctor> getAllDoctors() {
+    public List<Doctor> getAllDoctors(String requestJwt) throws UnauthorizedException, JWTDecodeException {
+        Long doctorId = Long.parseLong(JWT.decode(requestJwt).getSubject());
+
+        Optional<User> user = this.userRepository.findById(doctorId);
+        if (user.isEmpty())
+            throw new UnauthorizedException("Nuk jeni i autorizuar!");
+
+        if (user.get().getRoles().stream().noneMatch(role -> role.getName().equalsIgnoreCase("admin")))
+            throw new UnauthorizedException("Nuk jeni i autorizuar!");
+
         return doctorRepository.findAll();
     }
 
     /**
      * Gjen doktorin sipas identifikuesit
      *
-     * @param viewUserId identifikuesi i doktorit
+     * @param id identifikuesi i doktorit
      * @return doktori i gjetur ose Optional bosh
      */
-    public Doctor getDoctorById(Long viewUserId, String authHeader)
-            throws UnauthorizedException, NumberFormatException, NotFoundException
-            {
-        Long requestUserId = Long.parseLong(JWT.decode(authHeader).getSubject());
+    public Optional<Doctor> getDoctorById(Long id, String requestJwt) throws UnauthorizedException, JWTDecodeException, NumberFormatException {
+        Long doctorId = Long.parseLong(JWT.decode(requestJwt).getSubject());
+        Optional<Doctor> doctor = this.doctorRepository.findById(doctorId);
 
-        if (!requestUserId.equals(viewUserId) &&
-                !this.userService.getUserById(requestUserId).isAdmin())
-            throw new UnauthorizedException("Nuk jeni i autorizuar");
+        if (doctor.isEmpty() || !(doctorId.equals(id)))
+            throw new UnauthorizedException("Nuk jeni i autorizuar!");
 
-        Optional<Doctor> doctor = this.doctorRepository.findById(viewUserId);
-        if (doctor.isEmpty())
-            throw new NotFoundException("Nuk u gjet doktori!");
-
-        return doctor.get();
+        return doctorRepository.findById(id);
     }
 
 }

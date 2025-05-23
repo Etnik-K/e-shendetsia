@@ -7,7 +7,7 @@ import edu.unipr.eshendetsia.exception.concrete.UnauthorizedException;
 import edu.unipr.eshendetsia.http.request.body.CreateBillRequest;
 import edu.unipr.eshendetsia.model.entity.Bill;
 import edu.unipr.eshendetsia.service.interfaces.BillService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,16 +17,13 @@ import java.util.List;
  * Kontrolluesi per menaxhimin e faturave ne sistem
  * Ofron funksionalitete per krijimin, leximin, perditesimin dhe fshirjen e faturave
  */
+@AllArgsConstructor
 @RestController
 @RequestMapping("/bills")
 public class BillingController extends BaseController {
 
     private final BillService billService;
 
-    @Autowired
-    public BillingController(BillService billService) {
-            this.billService = billService;
-        }
 
     /**
      * Krijon nje fature te re
@@ -35,9 +32,9 @@ public class BillingController extends BaseController {
      * @return Mesazh konfirmues
      */
     @PostMapping
-    public ResponseEntity<String> create(@RequestBody CreateBillRequest billRequest) throws UnauthorizedException {
-            billService.save(billRequest.toBill());
-            return this.ok("Faktura u krijua me sukses");
+    public ResponseEntity<String> create(@RequestBody CreateBillRequest billRequest, @RequestHeader("Authorization") String requestJwt) throws UnauthorizedException {
+        billService.save(billRequest.toBill(), requestJwt);
+        return this.ok("Faktura u krijua me sukses");
     }
 
     /**
@@ -47,8 +44,8 @@ public class BillingController extends BaseController {
      * @return Lista e faturave
      */
     @GetMapping("/user/{userId}")
-    public ResponseEntity<List<Bill>> getByUser(@PathVariable Long userId)throws UnauthorizedException, NotFoundException {
-            return this.ok(billService.getByUser(userId));
+    public ResponseEntity<List<Bill>> getByUser(@PathVariable Long userId, @RequestHeader("Authorization") String requestJwt)throws UnauthorizedException, NotFoundException {
+        return this.ok(billService.getByUser(userId, requestJwt));
     }
 
     /**
@@ -58,8 +55,8 @@ public class BillingController extends BaseController {
      * @return Lista e faturave
      */
     @GetMapping("/status/{paid}")
-    public ResponseEntity<List<Bill>> getByStatus(@PathVariable Boolean paid) throws UnauthorizedException, NotFoundException {
-            return this.ok(billService.getByPaymentStatus(paid));
+    public ResponseEntity<List<Bill>> getByStatus(@PathVariable Boolean paid, @RequestHeader("Authorization") String requestJwt) throws UnauthorizedException, NotFoundException {
+        return this.ok(billService.getByPaymentStatus(paid, requestJwt));
     }
 
     /**
@@ -69,10 +66,10 @@ public class BillingController extends BaseController {
      * @return Pergjigje bosh
      */
     @PutMapping("/{id}/pay")
-    public ResponseEntity<String> markAsPaid(@PathVariable Long id) throws UnauthorizedException, NotFoundException {
-            this.billService.markAsPaid(id);
-            return this.ok("Eshte paguar");
-        }
+    public ResponseEntity<String> markAsPaid(@PathVariable Long id, @RequestHeader("Authorization") String requestJwt) throws UnauthorizedException, NotFoundException {
+        this.billService.markAsPaid(id, requestJwt);
+        return this.ok("Eshte paguar");
+    }
 
     /**
      * Fshin nje fature
@@ -81,8 +78,8 @@ public class BillingController extends BaseController {
      * @return Pergjigje bosh
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable Long id) throws UnauthorizedException, NotFoundException {
-            this.billService.delete(id);
+    public ResponseEntity<String> delete(@PathVariable Long id, @RequestHeader("Authorization") String requestJwt) throws UnauthorizedException, NotFoundException {
+            this.billService.delete(id, requestJwt);
             return this.ok("Faktura u fshi me sukses");
         }
     }

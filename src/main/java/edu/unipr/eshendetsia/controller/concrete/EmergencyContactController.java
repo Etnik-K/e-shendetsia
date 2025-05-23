@@ -1,16 +1,12 @@
 package edu.unipr.eshendetsia.controller.concrete;
 
-import com.auth0.jwt.exceptions.JWTVerificationException;
+
 import edu.unipr.eshendetsia.controller.BaseController;
-import edu.unipr.eshendetsia.exception.concrete.NotFoundException;
-import edu.unipr.eshendetsia.exception.concrete.UnauthorizedException;
 import edu.unipr.eshendetsia.http.request.body.CreateEmergencyContactRequest;
-import edu.unipr.eshendetsia.http.response.ApiResponse;
 import edu.unipr.eshendetsia.model.entity.EmergencyContact;
 import edu.unipr.eshendetsia.service.interfaces.EmergencyContactService;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -52,8 +48,8 @@ public class EmergencyContactController extends BaseController {
      * @return listen e kontakteve emergjente
      */
     @GetMapping("/user/{userId}")
-    public ResponseEntity<List<EmergencyContact>> getByUser(@PathVariable Long userId) {
-        return this.ok(emergencyContactService.getByUserId(userId));
+    public ResponseEntity<List<EmergencyContact>> getByUser(@PathVariable Long userId, @RequestHeader("Authorization") String requestJwt) {
+        return this.ok(emergencyContactService.getByUserId(userId, requestJwt));
     }
 
     /**
@@ -63,8 +59,8 @@ public class EmergencyContactController extends BaseController {
      * @return pergjigje bosh me status 204
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable Long id) {
-        this.emergencyContactService.delete(id);
+    public ResponseEntity<String> delete(@PathVariable Long id, @RequestHeader("Authorization") String requestJwt, Long userId) {
+        this.emergencyContactService.delete(id, requestJwt, userId);
         return this.ok("Kontakti u fshi me sukses");
     }
 }

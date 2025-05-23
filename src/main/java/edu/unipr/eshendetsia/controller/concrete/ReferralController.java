@@ -1,18 +1,13 @@
 package edu.unipr.eshendetsia.controller.concrete;
 
-import com.auth0.jwt.exceptions.JWTVerificationException;
 import edu.unipr.eshendetsia.controller.BaseController;
-import edu.unipr.eshendetsia.exception.concrete.NotFoundException;
-import edu.unipr.eshendetsia.exception.concrete.UnauthorizedException;
 import edu.unipr.eshendetsia.http.request.body.CreateReferralRequest;
-import edu.unipr.eshendetsia.http.response.ApiResponse;
 import edu.unipr.eshendetsia.model.entity.Referral;
 import edu.unipr.eshendetsia.service.interfaces.ReferralService;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,8 +36,8 @@ public class ReferralController extends BaseController {
      * @return Referimi i krijuar
      */
     @PostMapping
-    public ResponseEntity<String> create(@RequestBody CreateReferralRequest referralRequest) {
-        referralService.save(referralRequest.toReferral());
+    public ResponseEntity<String> create(@RequestBody CreateReferralRequest referralRequest, @RequestHeader("Authorization") String authHeader) {
+        referralService.save(referralRequest.toReferral(), authHeader);
         return this.ok("Referimi u krijua me sukses");
     }
 
@@ -53,19 +48,8 @@ public class ReferralController extends BaseController {
      * @return Lista e referimeve
      */
     @GetMapping("/patient/{patientId}")
-    public ResponseEntity<List<Referral>> getByPatient(@PathVariable Long patientId) {
-        return this.ok(referralService.getByPatient(patientId));
-    }
-
-    /**
-     * Merr te gjitha referimet per nje doktor.
-     *
-     * @param doctorId ID e doktorit
-     * @return Lista e referimeve
-     */
-    @GetMapping("/doctor/{doctorId}")
-    public ResponseEntity<List<Referral>> getByDoctor(@PathVariable Long doctorId) {
-        return this.ok(referralService.getByReceivingDoctor(doctorId));
+    public ResponseEntity<List<Referral>> getByPatient(@PathVariable Long patientId, @RequestHeader("Authorization") String authHeader) {
+        return this.ok(referralService.getByPatient(patientId, authHeader));
     }
 
     /**
@@ -75,8 +59,8 @@ public class ReferralController extends BaseController {
      * @return Pergjigje pa permbajtje
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable Long id) {
-        this.referralService.delete(id);
+    public ResponseEntity<String> delete(@PathVariable Long id, @RequestHeader("Authorization") String authHeader) {
+        this.referralService.delete(id, authHeader);
         return this.ok("Referimi u fshi me sukses");
     }
 }
