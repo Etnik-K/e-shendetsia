@@ -4,7 +4,7 @@ package edu.unipr.eshendetsia.controller;
 import edu.unipr.eshendetsia.model.entity.Doctor;
 import edu.unipr.eshendetsia.service.interfaces.DoctorService;
 import edu.unipr.eshendetsia.http.response.ApiResponse;
-import edu.unipr.eshendetsia.controller.base.BaseController;
+import edu.unipr.eshendetsia.controller.abstracts.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

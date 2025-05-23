@@ -7,7 +7,7 @@ import edu.unipr.eshendetsia.exception.UnauthorizedException;
 import edu.unipr.eshendetsia.model.entity.User;
 import edu.unipr.eshendetsia.service.interfaces.UserService;
 import edu.unipr.eshendetsia.http.response.ApiResponse;
-import edu.unipr.eshendetsia.controller.base.BaseController;
+import edu.unipr.eshendetsia.controller.abstracts.BaseController;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -83,7 +83,6 @@ public class UserController extends BaseController{
      */
     @PostMapping("/login")
     public ResponseEntity<ApiResponse<String>> login(@RequestBody LoginRequest loginRequest) {
-        System.out.println(STR."Jemi ne \{this.getClass().getSimpleName()}.login()");
         try{
             return this.ok(this.userService.login(loginRequest.id(), loginRequest.password()));
         } catch (NotFoundException | InvalidCredentialsException exception) {
