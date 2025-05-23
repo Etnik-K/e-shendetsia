@@ -39,24 +39,14 @@ public class NotificationController extends BaseController {
     }
 
     @PutMapping("/{id}/read")
-    public ResponseEntity<ApiResponse<String>> markAsRead(@PathVariable Long id) {
-        try{
-            this.notificationService.markAsRead(id);
-            return this.ok("Eshte vendosur njoftimi");
-        } catch (JWTVerificationException | UnauthorizedException exception) {
-            return this.error("Nuk jeni i autorizuar", HttpStatus.UNAUTHORIZED);
-        }catch (NotFoundException exception){
-            return this.error("Nuk eshte gjetur",HttpStatus.NOT_FOUND);
-        }
+    public ResponseEntity<String> markAsRead(@PathVariable Long id) {
+        this.notificationService.markAsRead(id);
+        return this.ok("Eshte vendosur njoftimi");
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponse<String>> delete(@PathVariable Long id) {
-        try{
-            this.notificationService.delete(id);
-            return this.ok("Notification u fshi me sukses");
-        } catch (JWTVerificationException | UnauthorizedException exception) {
-            return this.error("Nuk jeni i autorizuar", HttpStatus.UNAUTHORIZED);
-        }
+    public ResponseEntity<String> delete(@PathVariable Long id) {
+        this.notificationService.delete(id);
+        return this.ok("Notification u fshi me sukses");
     }
 }

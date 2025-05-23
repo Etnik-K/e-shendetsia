@@ -37,13 +37,9 @@ public class FeedbackController extends BaseController {
      * @return feedback-u i ruajtur
      */
     @PostMapping
-    public ResponseEntity<ApiResponse<String>> submit(@RequestBody SubmitFeedbackRequest feedbackRequest) {
-        try{
-            feedbackService.save(feedbackRequest.toFeedback());
-            return this.ok("Feedback-u u ruajt me sukses");
-        } catch (UnauthorizedException | JWTVerificationException e) {
-            return this.error("Nuk jeni i autorizuar", HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<String> submit(@RequestBody SubmitFeedbackRequest feedbackRequest) {
+        feedbackService.save(feedbackRequest.toFeedback());
+        return this.ok("Feedback-u u ruajt me sukses");
     }
 
     /**
@@ -53,14 +49,8 @@ public class FeedbackController extends BaseController {
      * @return lista e feedback-eve per doktorin
      */
     @GetMapping("/doctor/{doctorId}")
-    public ResponseEntity<ApiResponse<List<Feedback>>> getByDoctor(@PathVariable Long doctorId) {
-        try{
-            return this.ok(feedbackService.getByDoctorId(doctorId));
-        } catch (UnauthorizedException | JWTVerificationException e) {
-            return this.error("Nuk jeni i autorizuar", HttpStatus.UNAUTHORIZED);
-        } catch (NotFoundException e) {
-            return this.error("Doktori nuk eshte gjetur", HttpStatus.NOT_FOUND);
-        }
+    public ResponseEntity<List<Feedback>> getByDoctor(@PathVariable Long doctorId) {
+        return this.ok(feedbackService.getByDoctorId(doctorId));
     }
 
     /**
@@ -70,14 +60,8 @@ public class FeedbackController extends BaseController {
      * @return lista e feedback-eve nga perdoruesi
      */
     @GetMapping("/user/{userId}")
-    public ResponseEntity<ApiResponse<List<Feedback>>> getByUser(@PathVariable Long userId) {
-        try{
-            return this.ok(feedbackService.getByUserId(userId));
-        } catch (UnauthorizedException | JWTVerificationException e) {
-            return this.error("Nuk jeni i autorizuar", HttpStatus.UNAUTHORIZED);
-        } catch (NotFoundException e) {
-            return this.error("Useri nuk eshte gjetur", HttpStatus.NOT_FOUND);
-        }
+    public ResponseEntity<List<Feedback>> getByUser(@PathVariable Long userId) {
+        return this.ok(feedbackService.getByUserId(userId));
     }
 
     /**
@@ -87,13 +71,9 @@ public class FeedbackController extends BaseController {
      * @return pergjigje pa permbajtje
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponse<String>> delete(@PathVariable Long id) {
-        try{
-            this.feedbackService.delete(id);
-            return this.ok("Feedback-u u fshi me sukses");
-        } catch (JWTVerificationException | UnauthorizedException exception) {
-            return this.error("Nuk jeni i autorizuar", HttpStatus.UNAUTHORIZED);
-        }
+    public ResponseEntity<String> delete(@PathVariable Long id) {
+        this.feedbackService.delete(id);
+        return this.ok("Feedback-u u fshi me sukses");
     }
 
 }

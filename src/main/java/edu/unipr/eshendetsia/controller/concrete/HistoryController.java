@@ -33,12 +33,8 @@ public class HistoryController extends BaseController {
      * @return pergjigjen me historikun e ruajtur
      */
     @PostMapping("/save")
-    public ResponseEntity<ApiResponse<String>> saveUserHistory(@RequestBody SaveHistoryRequest historyRequest){
-        try{
-            historyService.save(historyRequest.toHistory());
-            return this.ok("Historiku u ruajt me sukses");
-        } catch (UnauthorizedException | JWTVerificationException e) {
-            return this.error("Nuk jeni i autorizuar", HttpStatus.UNAUTHORIZED );
-        }
+    public ResponseEntity<String> saveUserHistory(@RequestBody SaveHistoryRequest historyRequest){
+        historyService.save(historyRequest.toHistory());
+        return this.ok("Historiku u ruajt me sukses");
     }
 }
