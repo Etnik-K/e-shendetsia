@@ -1,13 +1,9 @@
 package edu.unipr.eshendetsia.controller.concrete;
-
-import com.auth0.jwt.exceptions.JWTVerificationException;
 import edu.unipr.eshendetsia.controller.BaseController;
 import edu.unipr.eshendetsia.exception.concrete.UnauthorizedException;
 import edu.unipr.eshendetsia.http.request.body.CreateAppointmentRequest;
-import edu.unipr.eshendetsia.http.response.ApiResponse;
 import edu.unipr.eshendetsia.service.interfaces.AppointmentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,13 +32,9 @@ public class AppointmentController extends BaseController {
      * @return terminin e krijuar
      */
     @PostMapping("/appointments")
-    public ResponseEntity<ApiResponse<String>> create(@RequestBody CreateAppointmentRequest appointmentRequest) {
-        try{
-            appointmentService.save(appointmentRequest.toAppointment());
-            return this.ok("Termini u caktua me sukses");
-        } catch (UnauthorizedException | JWTVerificationException e) {
-            return this.error("Nuk jeni i autorizuar", HttpStatus.UNAUTHORIZED);
-        }
+    public ResponseEntity<String> create(@RequestBody CreateAppointmentRequest appointmentRequest) throws UnauthorizedException {
+        appointmentService.save(appointmentRequest.toAppointment());
+        return this.ok("Termini u caktua me sukses");
     }
 
     /**
@@ -52,14 +44,8 @@ public class AppointmentController extends BaseController {
      * @return pergjigje bosh me status 204
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponse<String>> cancel(@PathVariable Long id) {
-        try {
-            this.appointmentService.cancel(id);
-            return this.ok("Termini eshte anuluar me sukses");
-        } catch (JWTVerificationException | UnauthorizedException exception) {
-            return this.error("Nuk jeni i autorizuar", HttpStatus.UNAUTHORIZED);
-        } catch (Exception e) {
-            return this.error("Termini nuk eshte anuluar", HttpStatus.NOT_FOUND);
-        }
+    public ResponseEntity<String> cancel(@PathVariable Long id) throws UnauthorizedException {
+        this.appointmentService.cancel(id);
+        return this.ok("Termini eshte anuluar me sukses");
     }
 }

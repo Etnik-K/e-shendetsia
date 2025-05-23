@@ -7,7 +7,6 @@ import edu.unipr.eshendetsia.exception.concrete.UnauthorizedException;
 import edu.unipr.eshendetsia.http.request.body.CreateAllergyRequest;
 import edu.unipr.eshendetsia.model.entity.Allergy;
 import edu.unipr.eshendetsia.service.interfaces.AllergyService;
-import edu.unipr.eshendetsia.service.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +24,7 @@ public class AllergyController extends BaseController {
     private final AllergyService allergyService;
 
     @Autowired
-    public AllergyController(AllergyService allergyService, UserService userService) {
+    public AllergyController(AllergyService allergyService) {
         this.allergyService = allergyService;
     }
 
