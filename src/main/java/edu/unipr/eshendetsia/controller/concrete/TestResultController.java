@@ -1,14 +1,10 @@
 package edu.unipr.eshendetsia.controller.concrete;
 
-import com.auth0.jwt.exceptions.JWTVerificationException;
 import edu.unipr.eshendetsia.controller.BaseController;
-import edu.unipr.eshendetsia.exception.concrete.UnauthorizedException;
 import edu.unipr.eshendetsia.http.request.body.CreateTestResultRequest;
-import edu.unipr.eshendetsia.http.response.ApiResponse;
 import edu.unipr.eshendetsia.model.entity.TestResult;
 import edu.unipr.eshendetsia.service.interfaces.TestResultService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
