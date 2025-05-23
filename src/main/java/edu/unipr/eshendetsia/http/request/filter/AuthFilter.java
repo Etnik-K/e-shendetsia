@@ -57,11 +57,6 @@ public class AuthFilter implements Filter {
 
         String path = httpRequest.getServletPath();
 
-        System.out.println(STR."Jemi ne \{this.getClass().getSimpleName()}");
-        System.out.println(STR."httpRequest: \{httpRequest.toString()}");
-        System.out.println(STR."httpResponse: \{httpResponse.toString()}");
-        System.out.println(STR."path: \{path}");
-
         if (AuthFilter.PUBLIC_RESOURCES.stream().anyMatch(p -> AuthFilter.pathMatcher.match(p, path))) {
             System.out.println("U plotsu kushti");
             chain.doFilter(request, response);

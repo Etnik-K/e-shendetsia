@@ -141,7 +141,6 @@ public class UserServiceImplementation implements UserService {
      * @throws InvalidCredentialsException Ne rast te fjalekalimit te gabuar
      */
     public String login(Long id, String password) throws InvalidCredentialsException, NotFoundException{
-        System.out.println(STR."Jemi ne fillim te \{this.getClass().getSimpleName()}.login()");
         User validUser = this.authenticateNoHash(id, password);
 //        User validUser = this.authenticate(id, password);
 
@@ -150,7 +149,6 @@ public class UserServiceImplementation implements UserService {
         claims.put("last_name", validUser.getLastName());
         claims.put("email", validUser.getEmail());
 
-        System.out.println(STR."Jemi ne fund te \{this.getClass().getSimpleName()}.login()");
         return this.jwtService.createToken(claims, validUser.getId());
     }
 
