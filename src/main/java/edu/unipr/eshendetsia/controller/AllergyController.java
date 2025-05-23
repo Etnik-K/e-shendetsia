@@ -6,7 +6,7 @@ import edu.unipr.eshendetsia.exception.NotFoundException;
 import edu.unipr.eshendetsia.exception.UnauthorizedException;
 import edu.unipr.eshendetsia.http.request.body.CreateAllergyRequest;
 import edu.unipr.eshendetsia.http.response.ApiResponse;
-import edu.unipr.eshendetsia.model.Allergy;
+import edu.unipr.eshendetsia.model.entity.Allergy;
 import edu.unipr.eshendetsia.service.interfaces.AllergyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

@@ -1,6 +1,6 @@
 package edu.unipr.eshendetsia.service.implementation;
 
-import edu.unipr.eshendetsia.model.Referral;
+import edu.unipr.eshendetsia.model.entity.Referral;
 import edu.unipr.eshendetsia.repository.ReferralRepository;
 import edu.unipr.eshendetsia.service.interfaces.ReferralService;
 import org.springframework.beans.factory.annotation.Autowired;

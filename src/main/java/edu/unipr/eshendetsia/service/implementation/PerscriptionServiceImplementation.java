@@ -1,6 +1,6 @@
 package edu.unipr.eshendetsia.service.implementation;
 
-import edu.unipr.eshendetsia.model.Perscription;
+import edu.unipr.eshendetsia.model.entity.Perscription;
 import edu.unipr.eshendetsia.repository.PerscriptionRepository;
 import edu.unipr.eshendetsia.service.interfaces.PerscriptionService;
 import org.springframework.beans.factory.annotation.Autowired;

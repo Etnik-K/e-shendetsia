@@ -7,7 +7,7 @@ import edu.unipr.eshendetsia.exception.NotFoundException;
 import edu.unipr.eshendetsia.exception.UnauthorizedException;
 import edu.unipr.eshendetsia.http.request.body.CreateInsuranceRequest;
 import edu.unipr.eshendetsia.http.response.ApiResponse;
-import edu.unipr.eshendetsia.model.Insurance;
+import edu.unipr.eshendetsia.model.entity.Insurance;
 import edu.unipr.eshendetsia.service.interfaces.InsuranceService;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import lombok.Getter;

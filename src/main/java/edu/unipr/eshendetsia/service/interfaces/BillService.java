@@ -1,6 +1,6 @@
 package edu.unipr.eshendetsia.service.interfaces;
 
-import edu.unipr.eshendetsia.model.Bill;
+import edu.unipr.eshendetsia.model.entity.Bill;
 
 import java.util.List;
 

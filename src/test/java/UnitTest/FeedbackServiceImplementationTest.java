@@ -1,6 +1,6 @@
 package UnitTest;
 
-import edu.unipr.eshendetsia.model.Feedback;
+import edu.unipr.eshendetsia.model.entity.Feedback;
 import edu.unipr.eshendetsia.repository.FeedbackRepository;
 import edu.unipr.eshendetsia.service.implementation.FeedbackServiceImplementation;
 import org.junit.jupiter.api.BeforeEach;

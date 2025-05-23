@@ -1,6 +1,6 @@
 package edu.unipr.eshendetsia.service.implementation;
 
-import edu.unipr.eshendetsia.model.Appointment;
+import edu.unipr.eshendetsia.model.entity.Appointment;
 import edu.unipr.eshendetsia.repository.AppointmentRepository;
 import edu.unipr.eshendetsia.service.interfaces.AppointmentService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,6 @@
 package edu.unipr.eshendetsia.service.implementation;
 
-import edu.unipr.eshendetsia.model.Feedback;
+import edu.unipr.eshendetsia.model.entity.Feedback;
 import edu.unipr.eshendetsia.repository.FeedbackRepository;
 import edu.unipr.eshendetsia.service.interfaces.FeedbackService;
 import org.springframework.beans.factory.annotation.Autowired;

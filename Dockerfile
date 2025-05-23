@@ -9,6 +9,10 @@ RUN mvn clean install
 FROM eclipse-temurin:21-jdk-jammy
 
 WORKDIR /edu.unipr.eshendetsia
+
+#krijo qita per mi majt logsat
+RUN mkdir -p /edu.unipr.eshendetsia/logs
+
 COPY --from=build /edu.unipr.eshendetsia/target/*.jar e-shendetsia.jar
 
 EXPOSE 8080

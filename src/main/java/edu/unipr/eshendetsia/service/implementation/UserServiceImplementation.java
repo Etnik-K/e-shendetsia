@@ -4,8 +4,8 @@ import edu.unipr.eshendetsia.exception.InvalidCredentialsException;
 import edu.unipr.eshendetsia.exception.NoRolesException;
 import edu.unipr.eshendetsia.exception.NotFoundException;
 import edu.unipr.eshendetsia.exception.UnauthorizedException;
-import edu.unipr.eshendetsia.model.Role;
-import edu.unipr.eshendetsia.model.User;
+import edu.unipr.eshendetsia.model.entity.Role;
+import edu.unipr.eshendetsia.model.entity.User;
 import edu.unipr.eshendetsia.repository.UserRepository;
 import edu.unipr.eshendetsia.service.interfaces.UserService;
 import edu.unipr.eshendetsia.service.interfaces.JWTService;
@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import edu.unipr.eshendetsia.service.interfaces.HasherService;
-import edu.unipr.eshendetsia.service.implementation.HasherServiceImplementation;
 
 
 import com.auth0.jwt.JWT;
@@ -30,11 +29,13 @@ public class UserServiceImplementation implements UserService {
 
     private final UserRepository userRepository;
     private final JWTService jwtService;
+    private final HasherService hasherService;
 
     @Autowired
-    public UserServiceImplementation(UserRepository userRepository, JWTService jwtService) {
+    public UserServiceImplementation(UserRepository userRepository, JWTService jwtService, HasherService hasherService) {
         this.userRepository = userRepository;
         this.jwtService = jwtService;
+        this.hasherService = hasherService;
     }
 
     /**
@@ -140,6 +141,7 @@ public class UserServiceImplementation implements UserService {
      * @throws InvalidCredentialsException Ne rast te fjalekalimit te gabuar
      */
     public String login(Long id, String password) throws InvalidCredentialsException, NotFoundException{
+        System.out.println(STR."Jemi ne fillim te \{this.getClass().getSimpleName()}.login()");
         User validUser = this.authenticateNoHash(id, password);
 //        User validUser = this.authenticate(id, password);
 
@@ -148,6 +150,7 @@ public class UserServiceImplementation implements UserService {
         claims.put("last_name", validUser.getLastName());
         claims.put("email", validUser.getEmail());
 
+        System.out.println(STR."Jemi ne fund te \{this.getClass().getSimpleName()}.login()");
         return this.jwtService.createToken(claims, validUser.getId());
     }
 
@@ -157,14 +160,13 @@ public class UserServiceImplementation implements UserService {
      * @param password fjalekalimi i userit
      * @return Userin me id perkatese nese ka sukses, pperndryshe null
      */
-    private final HasherService hasherService = new HasherServiceImplementation();
 
     private User authenticate(Long id, String password) throws NotFoundException, InvalidCredentialsException {
         User user = this.userRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Useri nuk u gjet"));
 
         String salt = user.getSalt(); // This assumes User has a getSalt() method
-        String passwordHash = hasherService.generateSaltedHash(password, salt);
+        String passwordHash = this.hasherService.generateSaltedHash(password, salt);
 
         if (!passwordHash.equals(user.getPassword())) {
             throw new InvalidCredentialsException();

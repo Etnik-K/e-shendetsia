@@ -1,6 +1,6 @@
 package UnitTest;
 
-import edu.unipr.eshendetsia.model.Referral;
+import edu.unipr.eshendetsia.model.entity.Referral;
 import edu.unipr.eshendetsia.repository.ReferralRepository;
 import edu.unipr.eshendetsia.service.implementation.ReferralServiceImplementation;
 import org.junit.jupiter.api.BeforeEach;

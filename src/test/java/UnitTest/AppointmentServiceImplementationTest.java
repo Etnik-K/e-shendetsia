@@ -1,6 +1,6 @@
 package UnitTest;
 
-import edu.unipr.eshendetsia.model.Appointment;
+import edu.unipr.eshendetsia.model.entity.Appointment;
 import edu.unipr.eshendetsia.repository.AppointmentRepository;
 import edu.unipr.eshendetsia.service.implementation.AppointmentServiceImplementation;
 import org.junit.jupiter.api.BeforeEach;

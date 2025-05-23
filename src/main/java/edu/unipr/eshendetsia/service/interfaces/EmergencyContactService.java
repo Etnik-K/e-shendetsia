@@ -1,6 +1,6 @@
 package edu.unipr.eshendetsia.service.interfaces;
 
-import edu.unipr.eshendetsia.model.EmergencyContact;
+import edu.unipr.eshendetsia.model.entity.EmergencyContact;
 
 import java.util.List;
 

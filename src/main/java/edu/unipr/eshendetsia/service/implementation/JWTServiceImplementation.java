@@ -3,6 +3,7 @@ package edu.unipr.eshendetsia.service.implementation;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTCreator;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.interfaces.JWTVerifier;
@@ -29,7 +30,7 @@ public class JWTServiceImplementation implements JWTService {
      * @param id     ID-ja e përdoruesit
      * @return Token-i i krijuar JWT
      */
-    public String createToken(Map<String, String> claims, long id) {
+    public String createToken(Map<String, String> claims, long id) throws IllegalArgumentException, JWTCreationException {
         Algorithm algorithm = Algorithm.HMAC256(SECRET_KEY);
 
         Date expirationDate = new Date(System.currentTimeMillis() + 3600000);
@@ -47,23 +48,13 @@ public class JWTServiceImplementation implements JWTService {
     }
 
     /**
-     * Krijon një token JWT me ID-në e perdoruesit
-     *
-     * @param id ID-ja e perdoruesit
-     * @return Token-i i krijuar JWT
-     */
-    public String createToken(long id) {
-        return createToken(new HashMap<>(), id);
-    }
-
-    /**
      * Verifikon vlefshmerin e një token-i JWT
      *
      * @param token Token-i për tu verifikuar
      * @return Token-i i dekoduar JWT
      * @throws JWTVerificationException Nese token-i eshte i pavlefshëm
      */
-    public DecodedJWT verifyToken(String token) throws JWTVerificationException {
+    public DecodedJWT verifyToken(String token) throws JWTVerificationException, IllegalArgumentException {
         Algorithm algorithm = Algorithm.HMAC256(SECRET_KEY);
         JWTVerifier verifier = JWT.require(algorithm)
                 .withIssuer(ISSUER)

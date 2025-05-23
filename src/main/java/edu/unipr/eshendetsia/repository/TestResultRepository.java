@@ -1,6 +1,6 @@
 package edu.unipr.eshendetsia.repository;
 
-import edu.unipr.eshendetsia.model.TestResult;
+import edu.unipr.eshendetsia.model.entity.TestResult;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

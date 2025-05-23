@@ -1,9 +1,9 @@
-package edu.unipr.eshendetsia.model;
+package edu.unipr.eshendetsia.model.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.Data;
 
 import java.util.Set;
 
@@ -11,8 +11,9 @@ import java.util.Set;
  * Klasa User perfaqeson nje perdorues ne sistemin e shendetesise.
  * Permban informacionin baze te perdoruesit dhe lidhjet me rolet.
  */
-@Getter
-@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 @Entity
 @Table(name = "user_table")
 public class User {

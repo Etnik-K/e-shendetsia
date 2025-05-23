@@ -1,12 +1,14 @@
 package edu.unipr.eshendetsia.service.implementation;
 
 import edu.unipr.eshendetsia.service.interfaces.HasherService;
+import org.springframework.stereotype.Service;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Base64;
 
+@Service
 public class HasherServiceImplementation implements HasherService {
     private static final int SALT_LENGTH = 32; // length of salt in bytes
     private static final int HASH_LENGTH = 256; // length of hash in bytes

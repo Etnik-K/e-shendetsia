@@ -6,7 +6,7 @@ import edu.unipr.eshendetsia.exception.NotFoundException;
 import edu.unipr.eshendetsia.exception.UnauthorizedException;
 import edu.unipr.eshendetsia.http.request.body.CreateReferralRequest;
 import edu.unipr.eshendetsia.http.response.ApiResponse;
-import edu.unipr.eshendetsia.model.Referral;
+import edu.unipr.eshendetsia.model.entity.Referral;
 import edu.unipr.eshendetsia.service.interfaces.ReferralService;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import lombok.Getter;

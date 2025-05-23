@@ -1,6 +1,6 @@
 package edu.unipr.eshendetsia.service.implementation;
 
-import edu.unipr.eshendetsia.model.Doctor;
+import edu.unipr.eshendetsia.model.entity.Doctor;
 import edu.unipr.eshendetsia.repository.DoctorRepository;
 import edu.unipr.eshendetsia.service.interfaces.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;

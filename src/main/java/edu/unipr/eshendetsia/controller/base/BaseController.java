@@ -16,8 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @ResponseBody
-@RequestMapping("/api")
-public class BaseController {
+public abstract class BaseController {
 
     /**
      * Kthen nje pergjigje te suksesshme me te dhenat e dhena
@@ -39,16 +38,6 @@ public class BaseController {
     protected <T> ResponseEntity<ApiResponse<T>> error(String errorMessage, HttpStatusCode code) {
         return ResponseEntity.status(code)
                 .body(new ApiResponse<>(false, null, errorMessage));
-    }
-
-    /**
-     * Metode testuese e thjeshte per te verifikuar funksionimin e API
-     *
-     * @return Pergjigje testuese
-     */
-    @GetMapping("/test")
-    public ResponseEntity<ApiResponse<String>> test(){
-    	return this.ok("Pershendetje nga Backend");
     }
 
 }
