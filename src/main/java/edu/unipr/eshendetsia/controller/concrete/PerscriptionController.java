@@ -38,12 +38,8 @@ public class PerscriptionController extends BaseController {
      * @return receta e krijuar dhe ruajtur ne databaze
      */
     @PostMapping
-    public ResponseEntity<ApiResponse<String>> create(@RequestBody CreatePerscriptionRequest prescriptionRequest) {
-        try{
-            perscriptionService.save(prescriptionRequest.toPerscription());
-            return this.ok("Receta u krijua me sukses");
-        } catch (UnauthorizedException | JWTVerificationException e){
-            return this.error("Nuk jeni i autorizuar", HttpStatus.UNAUTHORIZED);
-        }
+    public ResponseEntity<String> create(@RequestBody CreatePerscriptionRequest prescriptionRequest) {
+        perscriptionService.save(prescriptionRequest.toPerscription());
+        return this.ok("Receta u krijua me sukses");
     }
 }
