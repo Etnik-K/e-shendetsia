@@ -22,7 +22,8 @@ public class UserController extends BaseController{
     }
 
     /**
-     * Kjo Metode eshte endpoint e cila kthen te gjithe userat ne qofte se useri qe e invokon eshte admin, perndryshe njofton userin qe nuk eshte i autorizuar
+     * Kjo Metode eshte endpoint e cila kthen te gjithe userat ne qofte se useri qe e invokon eshte admin,
+     * perndryshe njofton userin qe nuk eshte i autorizuar
      * @param requestJwt tokeni authentifikues
      * @return Userat, ose mesazhi njoftues
      */
@@ -33,12 +34,15 @@ public class UserController extends BaseController{
     }
 
     /**
-     * Kjo Metode eshte endpoint e cila kthen te userin ne baze te userId-se ne qofte se useri qe e invokon eshte ka te drejte te inspektoj ate user. Perndryshe njofton userin qe nuk eshte i autorizuar.
+     * Kjo Metode eshte endpoint e cila kthen te userin ne baze te userId-se ne qofte se useri qe e invokon
+     * ka te drejte te inspektoj ate user. Perndryshe njofton userin qe nuk eshte i autorizuar.
      * @param requestJwt tokeni authentifikues
      * @return Userin, ose mesazhis njoftues
      */
     @GetMapping("/{userId}")
-    public ResponseEntity<User> getUserById(@PathVariable("userId") Long viewUserId, @RequestHeader("Authorization") String requestJwt) {
+    public ResponseEntity<User> getUserById(
+            @PathVariable("userId") Long viewUserId,
+            @RequestHeader("Authorization") String requestJwt) {
         User user = userService.getUserById(viewUserId, requestJwt);
         return this.ok(user);
     }
@@ -51,7 +55,9 @@ public class UserController extends BaseController{
      * @return - Mesazh konfirmues se a eshte fshire useri, ne baze te
      */
     @DeleteMapping("/{userId}")
-    public ResponseEntity<String> deleteUser(@PathVariable("userId") Long deleteUserId, @RequestHeader("Authorization") String requestJwt) {
+    public ResponseEntity<String> deleteUser(
+            @PathVariable("userId") Long deleteUserId,
+            @RequestHeader("Authorization") String requestJwt) {
         this.userService.deleteUser(deleteUserId, requestJwt);
         return this.ok("Perdoruesi u fshi me sukses");
     }
@@ -67,7 +73,9 @@ public class UserController extends BaseController{
     }
 
     @GetMapping("{id}/history")
-    public ResponseEntity<String> getUserHistory(@PathVariable Long id, @RequestHeader("Authorization") String requestJwt) {
+    public ResponseEntity<String> getUserHistory(
+            @PathVariable Long id,
+            @RequestHeader("Authorization") String requestJwt) {
         return this.ok(this.userService.getUserHistory(id, requestJwt));
     }
 
