@@ -9,7 +9,9 @@ public record CreateAllergyRequest(
         String reaction,
         String notes
 ) {
+
     public Allergy toAllergy() {
-        return new Allergy(id, userId, allergen, reaction, notes);
+        return new Allergy(id, null, allergen, notes);
     }
+
 }

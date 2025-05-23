@@ -5,11 +5,10 @@ import edu.unipr.eshendetsia.controller.BaseController;
 import edu.unipr.eshendetsia.exception.concrete.NotFoundException;
 import edu.unipr.eshendetsia.exception.concrete.UnauthorizedException;
 import edu.unipr.eshendetsia.http.request.body.CreateAllergyRequest;
-import edu.unipr.eshendetsia.http.response.ApiResponse;
 import edu.unipr.eshendetsia.model.entity.Allergy;
 import edu.unipr.eshendetsia.service.interfaces.AllergyService;
+import edu.unipr.eshendetsia.service.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,7 +25,7 @@ public class AllergyController extends BaseController {
     private final AllergyService allergyService;
 
     @Autowired
-    public AllergyController(AllergyService allergyService) {
+    public AllergyController(AllergyService allergyService, UserService userService) {
         this.allergyService = allergyService;
     }
 
@@ -37,13 +36,11 @@ public class AllergyController extends BaseController {
      * @return Alergjia e krijuar me sukses
      */
     @PostMapping
-    public ResponseEntity<ApiResponse<String>> create(@RequestBody CreateAllergyRequest allergyRequest) {
-        try{
-            allergyService.save(allergyRequest.toAllergy());
-            return this.ok("Alergjia u krijua me sukses");
-        } catch (UnauthorizedException | JWTVerificationException e) {
-            return this.error("Nuk jeni i autorizuar", HttpStatus.UNAUTHORIZED);
-        }
+    public ResponseEntity<String> create(@RequestBody CreateAllergyRequest allergyRequest, @RequestHeader("Authorization") String authHeader)
+            throws JWTVerificationException, UnauthorizedException {
+        Allergy allergy = allergyRequest.toAllergy();
+        allergyService.save(allergy, authHeader);
+        return this.ok("Alergjia u krijua me sukses");
     }
 
     /**
@@ -53,14 +50,8 @@ public class AllergyController extends BaseController {
      * @return Lista e alergjive te pacientit
      */
     @GetMapping("/user/{userId}")
-    public ResponseEntity<ApiResponse<List<Allergy>>> getByUser(@PathVariable Long userId) {
-        try{
-            return this.ok(allergyService.getByUserId(userId));
-        } catch (UnauthorizedException | JWTVerificationException e) {
-            return this.error("Nuk jeni i autorizuar", HttpStatus.UNAUTHORIZED);
-        } catch (NotFoundException e) {
-            return this.error("Useri nuk eshte gjetur", HttpStatus.NOT_FOUND);
-        }
+    public ResponseEntity<List<Allergy>> getByUser(@PathVariable Long userId, @RequestHeader("Authorization") String authHeader) throws JWTVerificationException, UnauthorizedException, NotFoundException {
+        return this.ok(allergyService.getByUserId(userId, authHeader));
     }
 
     /**
@@ -70,14 +61,8 @@ public class AllergyController extends BaseController {
      * @return Pergjigje pa permbajtje
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponse<String>> delete(@PathVariable Long id) {
-        try{
-            allergyService.delete(id);
-            return this.ok("Alergjia u fshi me sukses");
-        } catch (UnauthorizedException | JWTVerificationException e) {
-            return this.error("Nuk jeni i autorizuar", HttpStatus.UNAUTHORIZED);
-        } catch (NotFoundException e) {
-            return this.error("Alergjia nuk eshte gjetur", HttpStatus.NOT_FOUND);
-        }
+    public ResponseEntity<String> delete(@PathVariable Long id, @RequestHeader("Authorization") String authHeader) {
+        allergyService.delete(id, authHeader);
+        return this.ok("Alergjia u fshi me sukses");
     }
 }

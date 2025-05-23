@@ -95,4 +95,16 @@ public class User {
     public String toString() {
         return STR."User{id=\{id}, firstName='\{firstName}', lastName='\{lastName}', email='\{email}', password='\{password}', phoneNumber=\{phoneNumber}, salt='\{salt}'}";
     }
+
+    public boolean isAdmin() {
+        if (this.admin == null)
+            return true;
+        return false;
+    }
+
+    public boolean isDoctor() {
+        if (this.admin == null)
+            return true;
+        return false;
+    }
 }

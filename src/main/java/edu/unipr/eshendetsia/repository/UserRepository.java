@@ -10,7 +10,9 @@ import java.util.Set;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
+
     Role getRoleById(long id);
 
     Optional<Set<Role>> findRolesById(long userId);
+
 }
