@@ -3,18 +3,12 @@ package edu.unipr.eshendetsia.controller.concrete;
 
 import edu.unipr.eshendetsia.model.entity.Doctor;
 import edu.unipr.eshendetsia.service.interfaces.DoctorService;
-import edu.unipr.eshendetsia.http.response.ApiResponse;
 import edu.unipr.eshendetsia.controller.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Kontrolleri per menaxhimin e doktoreve ne sistem.
@@ -43,8 +37,8 @@ public class DoctorController extends BaseController {
      * @return lista e te gjithe doktoreve
      */
     @GetMapping
-    public List<Doctor> getAllDoctors(){
-        return doctorService.getAllDoctors();
+    public ResponseEntity<List<Doctor>> getAllDoctors(){
+        return this.ok(doctorService.getAllDoctors());
     }
 
     /**
@@ -54,9 +48,8 @@ public class DoctorController extends BaseController {
      * @return doktori i gjetur ose error nese nuk ekziston
      */
     @GetMapping("/{doctorId}")
-    public ResponseEntity<ApiResponse<Doctor>> getDoctorById(@PathVariable("doctorId") Long doctorId){
-        Optional<Doctor> doctor = doctorService.getDoctorById(doctorId);
-        return doctor.map(this::ok).orElseGet(() -> this.error(STR."Doktorri me id \{doctorId} nuk ekziston", HttpStatus.NOT_FOUND));
+    public ResponseEntity<Doctor> getDoctorById(@PathVariable("doctorId") Long doctorId, @RequestHeader("Authorization") String authHeader){
+        return this.ok(doctorService.getDoctorById(doctorId, authHeader));
     }
 
 }

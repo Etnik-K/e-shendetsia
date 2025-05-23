@@ -27,6 +27,14 @@ public interface UserService {
     User getUserById(Long viewUserId, String requestJwt) throws UnauthorizedException, NotFoundException;
 
     /**
+     * Kjo metode kthen userin sipas ID-se nese ekziston
+     * @param viewUserId useri per ta kthyer
+     * @return Useri, nese ekziston
+     * @throws NotFoundException Nese useri nuk ekziston
+     */
+    User getUserById(Long viewUserId) throws NotFoundException;
+
+    /**
      * Kjo metode eshte implementimi i logjikes per endpointin DELETE /api/users/{deleteUserId}
      * @param deleteUserId ID per fshirje
      * @param requestJwt Tokeni authentifikues

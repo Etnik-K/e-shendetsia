@@ -179,9 +179,6 @@ public class UserServiceImplementation implements UserService {
         return user;
     }
 
-
-
-
     /**
      * Kjo metode shfrytzohet eksluzivisht per perdorim zhvillues.
      * Me qellim per me testu loginin permes insertimit te userave pa passwordav te hashuar direkt ne databaze.
@@ -219,7 +216,7 @@ public class UserServiceImplementation implements UserService {
         return user.getHistory();
     }
 
-    private User getUserById(Long id) throws NotFoundException {
+    public User getUserById(Long id) throws NotFoundException {
         return this.userRepository.findById(id).orElseThrow(() -> new NotFoundException("Useri nuk u gjet"));
     }
 }
