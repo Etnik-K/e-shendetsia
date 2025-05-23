@@ -5,7 +5,7 @@
 package edu.unipr.eshendetsia.controller;
 
 import com.auth0.jwt.exceptions.JWTVerificationException;
-import edu.unipr.eshendetsia.controller.base.BaseController;
+import edu.unipr.eshendetsia.controller.abstracts.BaseController;
 import edu.unipr.eshendetsia.exception.UnauthorizedException;
 import edu.unipr.eshendetsia.http.request.body.CreatePerscriptionRequest;
 import edu.unipr.eshendetsia.http.response.ApiResponse;
