@@ -24,8 +24,8 @@ public class NotificationController extends BaseController {
     }
 
     @PostMapping
-    public ResponseEntity<String> send(@RequestBody Notification notification) {
-        notificationService.save(notification);
+    public ResponseEntity<String> send(@RequestBody Notification notification, @RequestHeader("Authorization") String authHeader) {
+        notificationService.save(notification, authHeader);
         return this.ok("U ruajt me sukses");
     }
 

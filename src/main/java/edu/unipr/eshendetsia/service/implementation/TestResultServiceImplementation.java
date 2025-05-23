@@ -32,8 +32,8 @@ public class TestResultServiceImplementation implements TestResultService {
      * @param testResult rezultati i testit per tu ruajtur
      * @return rezultati i ruajtur
      */
-    public TestResult save(TestResult testResult){
-        return testResultRepository.save(testResult);
+    public void save(TestResult testResult){
+        testResultRepository.save(testResult);
     }
 
     /**
@@ -61,7 +61,7 @@ public class TestResultServiceImplementation implements TestResultService {
      *
      * @param id ID e rezultatit per tu fshire
      */
-    public void delete(Long id, String requestJwt) {
+    public void delete(Long id) {
         testResultRepository.deleteById(id);
     }
 }

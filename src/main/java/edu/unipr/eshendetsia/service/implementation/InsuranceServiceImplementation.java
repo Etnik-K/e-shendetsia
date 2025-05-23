@@ -10,7 +10,6 @@ import edu.unipr.eshendetsia.repository.InsuranceRepository;
 import edu.unipr.eshendetsia.service.interfaces.InsuranceService;
 import edu.unipr.eshendetsia.service.interfaces.UserService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

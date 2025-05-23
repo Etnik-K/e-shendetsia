@@ -51,9 +51,7 @@ public class DoctorController extends BaseController {
      */
     @GetMapping("/{doctorId}")
     public ResponseEntity<Doctor> getDoctorById(@PathVariable("doctorId") Long doctorId, @RequestHeader("Authorization") String requestJwt){
-        Optional<Doctor> doctor = doctorService.getDoctorById(doctorId, requestJwt);
-
-        return doctor.map(this::ok).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        return this.ok(doctorService.getDoctorById(doctorId, requestJwt));
     }
 
 }

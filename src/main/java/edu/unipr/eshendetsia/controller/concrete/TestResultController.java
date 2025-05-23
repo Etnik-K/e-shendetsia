@@ -31,7 +31,7 @@ public class TestResultController extends BaseController {
      */
     @PostMapping
     public ResponseEntity<String> create(@RequestBody CreateTestResultRequest testResultRequest, @RequestHeader("Authorization") String authHeader) {
-        this.testResultService.save(testResultRequest.toTestResult(), authHeader);
+        this.testResultService.save(testResultRequest.toTestResult());
         return this.ok("Rezultati i testit u ruajt me sukses");
     }
 

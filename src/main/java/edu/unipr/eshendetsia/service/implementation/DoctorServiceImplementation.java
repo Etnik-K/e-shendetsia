@@ -11,6 +11,7 @@ import edu.unipr.eshendetsia.service.interfaces.DoctorService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.print.Doc;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,14 +50,30 @@ public class DoctorServiceImplementation implements DoctorService {
      * @param id identifikuesi i doktorit
      * @return doktori i gjetur ose Optional bosh
      */
-    public Optional<Doctor> getDoctorById(Long id, String requestJwt) throws UnauthorizedException, JWTDecodeException, NumberFormatException {
+    public Doctor getDoctorById(Long id, String requestJwt) throws UnauthorizedException, JWTDecodeException, NumberFormatException {
         Long doctorId = Long.parseLong(JWT.decode(requestJwt).getSubject());
-        Optional<Doctor> doctor = this.doctorRepository.findById(doctorId);
+        Optional<Doctor> optDoctor = this.doctorRepository.findById(doctorId);
 
-        if (doctor.isEmpty() || !(doctorId.equals(id)))
+        if (optDoctor.isEmpty() || !(doctorId.equals(id)))
             throw new UnauthorizedException("Nuk jeni i autorizuar!");
 
-        return doctorRepository.findById(id);
+        return optDoctor.get();
+    }
+
+    /**
+     * kjo eshte nje metode qe spo kom kohe me dokumentu
+     * @param id hajt se e din ti ma mir se un
+     * @return ishalla na len profa 10
+     * @throws UnauthorizedException KLM
+     */
+    @Override
+    public Doctor getDoctorById(Long id) throws UnauthorizedException {
+        Optional<Doctor> optDoctor = this.doctorRepository.findById(id);
+
+        if (optDoctor.isEmpty())
+            throw new UnauthorizedException("Nuk jeni i autorizuar!");
+
+        return optDoctor.get();
     }
 
 }
