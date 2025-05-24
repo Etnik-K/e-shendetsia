@@ -1,19 +1,12 @@
 package edu.unipr.eshendetsia.controller.concrete;
 
 
-import com.auth0.jwt.exceptions.JWTVerificationException;
 import edu.unipr.eshendetsia.controller.BaseController;
-import edu.unipr.eshendetsia.exception.concrete.NotFoundException;
-import edu.unipr.eshendetsia.exception.concrete.UnauthorizedException;
 import edu.unipr.eshendetsia.http.request.body.CreateInsuranceRequest;
-import edu.unipr.eshendetsia.http.response.ApiResponse;
 import edu.unipr.eshendetsia.model.entity.Insurance;
 import edu.unipr.eshendetsia.service.interfaces.InsuranceService;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
-import lombok.Getter;
-import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,17 +16,12 @@ import java.util.List;
  * Kontrolleri per menaxhimin e sigurimeve shendetesore.
  * Mundeson krijimin, leximin, perditesimin dhe fshirjen e sigurimeve.
  */
-@Getter
-@Setter
+@AllArgsConstructor
 @RestController
 @RequestMapping("/insurance")
 public class InsuranceController extends BaseController {
-    private final InsuranceService insuranceService;
 
-    @Autowired
-    public InsuranceController(InsuranceService insuranceService) {
-        this.insuranceService = insuranceService;
-    }
+    private final InsuranceService insuranceService;
 
     /**
      * Krijon nje sigurim te ri shendetsor
@@ -41,8 +29,8 @@ public class InsuranceController extends BaseController {
      * @return sigurimi i krijuar
      */
     @PostMapping
-    public ResponseEntity<String> create(@RequestBody CreateInsuranceRequest insuranceRequest) {
-        insuranceService.save(insuranceRequest.toInsurance());
+    public ResponseEntity<String> create(@RequestBody CreateInsuranceRequest insuranceRequest, @RequestHeader("Authorization") String authHeader) {
+        this.insuranceService.save(insuranceRequest.toInsurance(), authHeader);
         return this.ok("Kompania e sigurimit u krijua me sukses");
     }
 
@@ -52,8 +40,8 @@ public class InsuranceController extends BaseController {
      * @return lista e sigurimeve te perdoruesit
      */
     @GetMapping("/user/{userId}")
-    public ResponseEntity<List<Insurance>> getByUser(@PathVariable Long userId) {
-        return this.ok(insuranceService.getByUserId(userId));
+    public ResponseEntity<List<Insurance>> getByUser(@PathVariable Long userId, @RequestHeader("Authorization") String authHeader) {
+        return this.ok(insuranceService.getByUserId(userId, authHeader));
     }
 
     /**
@@ -63,8 +51,8 @@ public class InsuranceController extends BaseController {
      * @return sigurimi i perditesuar
      */
     @PutMapping("/{id}/status")
-    public ResponseEntity<String> updateStatus(@PathVariable Long id, @RequestParam Boolean active) {
-        insuranceService.updateStatus(id, active);
+    public ResponseEntity<String> updateStatus(@PathVariable Long id, @RequestParam Boolean active, @RequestHeader("Authorization") String authHeader) {
+        this.insuranceService.updateStatus(id, active, authHeader);
         return this.ok("Statusi i sigurimit u perditesuar me sukses");
     }
 
@@ -74,8 +62,8 @@ public class InsuranceController extends BaseController {
      * @return pergjigjja bosh ne rast suksesi
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable Long id) {
-        insuranceService.delete(id);
+    public ResponseEntity<String> delete(@PathVariable Long id, @RequestHeader("Authorization") String authHeader) {
+        this.insuranceService.delete(id, authHeader);
         return this.ok("Perdoruesi u fshi me sukses");
     }
 }

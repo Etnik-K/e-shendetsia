@@ -2,7 +2,7 @@ package edu.unipr.eshendetsia.repository;
 
 import edu.unipr.eshendetsia.model.entity.Appointment;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface AppointmentRepository extends JpaRepository<Appointment, Long> {
-
-}
+@Repository
+public interface AppointmentRepository extends JpaRepository<Appointment, Long> { }

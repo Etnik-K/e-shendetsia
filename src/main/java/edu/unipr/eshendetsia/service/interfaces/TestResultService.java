@@ -6,11 +6,11 @@ import java.util.List;
 
 public interface TestResultService {
 
-    void save(TestResult testResult);
+    TestResult save(TestResult testResult, String requestJwt);
 
-    List<TestResult> getByUserId(Long userId);
+    List<TestResult> getByUserId(Long userId, String requestJwt);
 
-    List<TestResult> getByDoctorId(Long doctorId);
+    List<TestResult> getByDoctorId(Long doctorId, String requestJwt);
 
     void delete(Long id);
 

@@ -1,6 +1,5 @@
 package edu.unipr.eshendetsia.model.entity;
 
-
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
